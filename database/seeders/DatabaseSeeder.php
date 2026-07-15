@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
             QuestionSeeder::class,
         ]);
         
-        // Memanggil factory untuk generate 10 mahasiswa dummy tambahan
-        \App\Models\User::factory(10)->create();
+        // HAPUS baris \App\Models\User::factory(10)->create(); di bawah sini
     }
 }
