@@ -1,31 +1,33 @@
 <?php
 
-/**
- * VERCEL SERVERLESS SCRIPT
- * Memaksa Laravel menggunakan folder /tmp untuk semua aktivitas storage
- */
+// 1. Muat sistem otomatisasi (autoload) dan bootstrap Laravel
+require __DIR__ . '/../vendor/autoload.php';
+$app = require_once __DIR__ . '/../bootstrap/app.php';
 
-$newStoragePath = '/tmp/storage';
+// 2. Alihkan folder storage ke /tmp (satu-satunya folder yang diizinkan Vercel untuk ditulis)
+$app->useStoragePath('/tmp/storage');
 
-// Buat struktur folder framework yang dibutuhkan Laravel secara on-the-fly
-$directories = [
-    $newStoragePath . '/app/public',
-    $newStoragePath . '/framework/cache/data',
-    $newStoragePath . '/framework/sessions',
-    $newStoragePath . '/framework/testing',
-    $newStoragePath . '/framework/views',
-    $newStoragePath . '/logs',
+// 3. Buat folder-folder internal yang dibutuhkan Laravel di dalam /tmp secara otomatis
+$required_dirs = [
+    '/tmp/storage/framework/views',
+    '/tmp/storage/framework/cache',
+    '/tmp/storage/framework/sessions',
+    '/tmp/storage/logs'
 ];
 
-foreach ($directories as $directory) {
-    if (!is_dir($directory)) {
-        mkdir($directory, 0777, true);
+foreach ($required_dirs as $dir) {
+    if (!is_dir($dir)) {
+        mkdir($dir, 0755, true);
     }
 }
 
-// Timpa pengaturan storage bawaan
-$_ENV['APP_STORAGE'] = $newStoragePath;
-putenv('APP_STORAGE=' . $newStoragePath);
+// 4. Jalankan aplikasi Laravel seperti biasa
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
-// Panggil file index bawaan public Laravel
-require __DIR__ . '/../public/index.php';
+$response = $kernel->handle(
+    $request = Illuminate\Http\Request::capture()
+);
+
+$response->send();
+
+$kernel->terminate($request, $response);
