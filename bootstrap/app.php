@@ -11,9 +11,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-    // Tambahkan baris ini untuk memercayai semua proxy dari Vercel
-    $middleware->trustProxies(at: '*');
+        $middleware->trustProxies(at: '*'); // <-- Pastikan penulisannya persis begini
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })->create();   
