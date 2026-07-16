@@ -6,21 +6,18 @@
             "use": "vercel-php@0.6.2"
         },
         {
-            "src": "/public/**",
+            "src": "public/**",
             "use": "@vercel/static"
         }
     ],
     "routes": [
         {
+            "src": "/(css|js|images)/(.*)",
+            "dest": "public/$1/$2"
+        },
+        {
             "src": "/(.*)",
-            "dest": "/api/index.php"
+            "dest": "api/index.php"
         }
-    ],
-    "env": {
-        "APP_ENV": "production",
-        "APP_DEBUG": "false",
-        "CACHE_DRIVER": "array",
-        "SESSION_DRIVER": "cookie",
-        "QUEUE_DRIVER": "sync"
-    }
+    ]
 }
