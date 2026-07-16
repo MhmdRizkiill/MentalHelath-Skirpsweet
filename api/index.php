@@ -1,19 +1,15 @@
 <?php
 
-// 1. Paksa Laravel untuk mengabaikan cache bawaan dengan mengalihkan path cache ke /tmp
+// 1. Jurus Pamungkas HTTPS (Wajib Paling Atas!)
+$_SERVER['HTTPS'] = 'on';
+
+// 2. Alihkan cache ke /tmp (Bawaan Vercel)
 putenv('APP_CONFIG_CACHE=/tmp/config.php');
 putenv('APP_ROUTES_CACHE=/tmp/routes.php');
 putenv('APP_SERVICES_CACHE=/tmp/services.php');
 putenv('APP_PACKAGES_CACHE=/tmp/packages.php');
 
-// 2. Muat sistem otomatisasi (autoload) dan bootstrap Laravel
-require __DIR__ . '/../vendor/autoload.php';
-$app = require_once __DIR__ . '/../bootstrap/app.php';
-
-// 3. Alihkan folder storage ke /tmp (satu-satunya folder yang diizinkan Vercel untuk ditulis)
-$app->useStoragePath('/tmp/storage');
-
-// 4. Buat folder-folder internal yang dibutuhkan Laravel di dalam /tmp secara otomatis
+// 3. Buat folder-folder internal yang dibutuhkan Laravel di dalam /tmp
 $required_dirs = [
     '/tmp/storage/framework/views',
     '/tmp/storage/framework/cache',
@@ -27,21 +23,14 @@ foreach ($required_dirs as $dir) {
     }
 }
 
-// 5. Jalankan aplikasi Laravel seperti biasa
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+// 4. Muat sistem otomatisasi (autoload)
+require __DIR__ . '/../vendor/autoload.php';
 
-$response = $kernel->handle(
-    $request = Illuminate\Http\Request::capture()
-);
+// 5. Muat bootstrap Laravel 11/12
+$app = require_once __DIR__ . '/../bootstrap/app.php';
 
-$response->send();
+// 6. Alihkan folder storage ke /tmp
+$app->useStoragePath('/tmp/storage');
 
-$kernel->terminate($request, $response);
-
-
-// TAMBAHKAN BARIS INI (Jurus Pamungkas Vercel)
-$_SERVER['HTTPS'] = 'on';
-
-// Baris bawaan Laravel di bawahnya...
-require __DIR__.'/../public/index.php'; 
-// atau require __DIR__.'/../vendor/autoload.php'; (Tergantung isi file Anda)
+// 7. Jalankan aplikasi Laravel (Gaya Laravel 11/12 yang benar)
+$app->handleRequest(Illuminate\Http\Request::capture());
