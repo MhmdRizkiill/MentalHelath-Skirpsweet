@@ -14,8 +14,10 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        if (config('app.env') === 'production' || env('VERCEL') === '1') {
-            URL::forceScheme('https');
-        }
+        // Langsung hajar tanpa if-else!
+        URL::forceScheme('https');
+        
+        // (Jika Anda menggunakan Laravel Pagination, tambahkan juga ini biar link next page-nya aman)
+        // \Illuminate\Pagination\Paginator::useTailwind();
     }
 }

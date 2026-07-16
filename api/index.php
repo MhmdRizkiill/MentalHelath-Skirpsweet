@@ -37,3 +37,11 @@ $response = $kernel->handle(
 $response->send();
 
 $kernel->terminate($request, $response);
+
+
+// TAMBAHKAN BARIS INI (Jurus Pamungkas Vercel)
+$_SERVER['HTTPS'] = 'on';
+
+// Baris bawaan Laravel di bawahnya...
+require __DIR__.'/../public/index.php'; 
+// atau require __DIR__.'/../vendor/autoload.php'; (Tergantung isi file Anda)
