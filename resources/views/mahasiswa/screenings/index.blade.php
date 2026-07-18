@@ -128,37 +128,37 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><span class="badge" style="background-color: #22C55E;">Normal</span></td>
-                                    <td class="text-center">0 - 9</td>
-                                    <td class="text-center">0 - 7</td>
-                                    <td class="text-center">0 - 14</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="badge text-dark" style="background-color: #EAB308;">Ringan</span></td>
-                                    <td class="text-center">10 - 13</td>
-                                    <td class="text-center">8 - 9</td>
-                                    <td class="text-center">15 - 18</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="badge" style="background-color: #F97316;">Sedang</span></td>
-                                    <td class="text-center">14 - 20</td>
-                                    <td class="text-center">10 - 14</td>
-                                    <td class="text-center">19 - 25</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="badge" style="background-color: #EF4444;">Parah</span></td>
-                                    <td class="text-center">21 - 27</td>
-                                    <td class="text-center">15 - 19</td>
-                                    <td class="text-center">26 - 33</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="badge" style="background-color: #7C3AED;">Sangat Parah</span></td>
-                                    <td class="text-center fw-bold">> 28</td>
-                                    <td class="text-center fw-bold">> 20</td>
-                                    <td class="text-center fw-bold">> 34</td>
-                                </tr>
-                            </tbody>
+                            <tr>
+                                <td><span class="badge" style="background-color: #22C55E; color: white; border: none;">Normal</span></td>
+                                <td class="text-center">0 - 9</td>
+                                <td class="text-center">0 - 7</td>
+                                <td class="text-center">0 - 14</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge" style="background-color: #EAB308; color: black; border: none;">Ringan</span></td>
+                                <td class="text-center">10 - 13</td>
+                                <td class="text-center">8 - 9</td>
+                                <td class="text-center">15 - 18</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge" style="background-color: #F97316; color: white; border: none;">Sedang</span></td>
+                                <td class="text-center">14 - 20</td>
+                                <td class="text-center">10 - 14</td>
+                                <td class="text-center">19 - 25</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge" style="background-color: #EF4444; color: white; border: none;">Parah</span></td>
+                                <td class="text-center">21 - 27</td>
+                                <td class="text-center">15 - 19</td>
+                                <td class="text-center">26 - 33</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge" style="background-color: #7C3AED; color: white; border: none;">Sangat Parah</span></td>
+                                <td class="text-center fw-bold">28 - 42</td>
+                                <td class="text-center fw-bold">20 - 42</td>
+                                <td class="text-center fw-bold">34 - 42</td>
+                            </tr>
+                        </tbody>
                         </table>
                     </div>
                 </div>
