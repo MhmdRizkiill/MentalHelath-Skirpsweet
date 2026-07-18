@@ -28,12 +28,10 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     
     // Rute Register (Menggunakan RegisterController yang baru kita buat)
-
-// Menampilkan halaman form
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register.form');
-
-// Memproses data form saat tombol diklik
-Route::post('/register', [AuthController::class, 'register'])->name('register');
+    // Menampilkan halaman form
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register.form');
+    // Memproses data form saat tombol diklik
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
 
 // Prosedur Logout (Harus dalam kondisi sudah login)
@@ -43,6 +41,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 // GRUP ROUTE AUTH (Sudah Login)
 // ==========================================
 Route::middleware('auth')->group(function () {
+
+    // ------------------------------------------
+    // RUTE PROFIL (Bisa diakses Admin & Mahasiswa)
+    // ------------------------------------------
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 
     // ------------------------------------------
     // SUB-GRUP: HAK AKSES ADMIN
@@ -67,15 +72,13 @@ Route::middleware('auth')->group(function () {
         
         // Proses Skrining Kesehatan Mental DASS-42
         Route::get('/screenings', [ScreeningController::class, 'index'])->name('screenings.index');
+        
+        // Rute Baru: Halaman Onboarding Sebelum Skrining
+        Route::get('/screenings/onboarding', [ScreeningController::class, 'onboarding'])->name('screenings.onboarding');
+        
         Route::get('/screenings/create', [ScreeningController::class, 'create'])->name('screenings.create');
         Route::post('/screenings', [ScreeningController::class, 'store'])->name('screenings.store');
         Route::get('/screenings/{screening}', [ScreeningController::class, 'show'])->name('screenings.show');
     });
-
-    Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
-});
 
 });

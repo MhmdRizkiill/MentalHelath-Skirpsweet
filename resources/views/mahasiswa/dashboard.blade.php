@@ -81,11 +81,13 @@
                 <div class="mt-auto">
                     @if(($totalScreening ?? 0) == 0)
                         <p class="text-muted small mb-3">Anda belum pernah melakukan skrining.</p>
-                        <a href="{{ route('mahasiswa.screenings.create') }}" class="btn btn-primary px-4 py-2 w-100 rounded-pill shadow-sm">
+                        <!-- Ubah route menjadi onboarding -->
+                        <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-primary px-4 py-2 w-100 rounded-pill shadow-sm">
                             <i class="bi bi-plus-circle me-2"></i> Mulai Skrining Pertama
                         </a>
                     @else
-                        <a href="{{ route('mahasiswa.screenings.create') }}" class="btn btn-outline-primary px-4 py-2 w-100 rounded-pill">
+                        <!-- Ubah route menjadi onboarding -->
+                        <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-outline-primary px-4 py-2 w-100 rounded-pill">
                             <i class="bi bi-arrow-repeat me-2"></i> Lakukan Skrining Baru
                         </a>
                     @endif

@@ -155,4 +155,10 @@ class ScreeningController extends Controller
         if ($score <= 33) return 'Parah';
         return 'Sangat Parah'; 
     }
+
+    public function onboarding()
+{
+    // Cukup kembalikan tampilan view onboarding
+    return view('mahasiswa.screenings.onboarding');
+}
 }
