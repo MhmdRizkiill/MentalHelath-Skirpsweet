@@ -168,7 +168,7 @@
                 </div>
                 <div class="col-lg-5 d-none d-lg-block">
                     <!-- Placeholder Ilustrasi/Gambar -->
-                    <img src="https://ui-avatars.com/api/?name=Mental+Health&background=EFF6FF&color=2563EB&size=500&font-size=0.1" alt="Mental Health Illustration" class="img-fluid rounded-circle shadow-lg" style="animation: float 6s ease-in-out infinite;">
+                    <img src="{{ asset('images/hero-image.png') }}" alt="MindScreen Illustration" class="img-fluid rounded-4 shadow-lg" style="animation: float 6s ease-in-out infinite;">
                 </div>
             </div>
         </div>
