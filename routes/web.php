@@ -6,7 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ScreeningController;
-use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
