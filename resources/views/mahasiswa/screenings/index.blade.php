@@ -27,10 +27,9 @@
         margin-bottom: 0;
     }
 
-    /* Warna Header Tabel (Biru) */
     .custom-table thead th {
-        background: #3B82F6; /* Warna Biru */
-        color: #FFFFFF; /* Teks Putih */
+        background: #3B82F6; 
+        color: #FFFFFF; 
         font-size: 13px;
         font-weight: 600;
         text-transform: uppercase;
@@ -39,21 +38,9 @@
         border: none;
     }
 
-    /* Warna Baris Tabel (Ganjil) */
-    .custom-table tbody tr {
-        background-color: #F8FAFC; 
-        transition: background-color 0.2s ease;
-    }
-
-    /* Warna Baris Tabel (Genap - Efek Belang/Zebra) */
-    .custom-table tbody tr:nth-child(even) {
-        background-color: #EFF6FF; 
-    }
-
-    /* Warna saat kursor diarahkan (Hover) */
-    .custom-table tbody tr:hover {
-        background-color: #DBEAFE; 
-    }
+    .custom-table tbody tr { background-color: #F8FAFC; transition: background-color 0.2s ease; }
+    .custom-table tbody tr:nth-child(even) { background-color: #EFF6FF; }
+    .custom-table tbody tr:hover { background-color: #DBEAFE; }
 
     .custom-table tbody td {
         padding: 18px 20px;
@@ -63,7 +50,7 @@
         vertical-align: middle;
     }
 
-    /* Badge Label dalam Tabel */
+    /* Badge Dasar */
     .badge-status {
         font-size: 12px;
         font-weight: 700;
@@ -73,8 +60,15 @@
         box-shadow: 0 2px 4px rgba(0,0,0,0.08);
         display: inline-flex;
         align-items: center;
-        border: 1px solid rgba(0,0,0,0.1);
     }
+
+    /* CLASS WARNA SPESIFIK (Mengatasi Blokir Inline Style) */
+    .badge-normal { background-color: #22C55E !important; color: #FFFFFF !important; border: none; }
+    .badge-ringan { background-color: #EAB308 !important; color: #000000 !important; border: none; }
+    .badge-sedang { background-color: #F97316 !important; color: #FFFFFF !important; border: none; }
+    .badge-parah { background-color: #EF4444 !important; color: #FFFFFF !important; border: none; }
+    .badge-sangat-parah { background-color: #7C3AED !important; color: #FFFFFF !important; border: none; }
+    .badge-default { background-color: #F1F5F9 !important; color: #334155 !important; border: 1px solid #CBD5E1; }
 
     /* Action Button Custom */
     .btn-detail {
@@ -98,7 +92,6 @@
 
 <div class="container pb-4">
     
-    <!-- Header Halaman -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
         <div>
             <h3 class="fw-bold text-dark mb-1" style="letter-spacing: -0.5px;">Riwayat Skrining</h3>
@@ -111,7 +104,7 @@
         </a>
     </div>
 
-    <!-- Panel Informasi Klasifikasi Skor (Accordion) -->
+    <!-- Panel Informasi Klasifikasi Skor -->
     <div class="accordion mb-4 shadow-sm" id="accordionInformasiSkor" style="border-radius: 16px; overflow: hidden; border: 1px solid rgba(226, 232, 240, 0.8);">
         <div class="accordion-item" style="border: none;">
             <h2 class="accordion-header" id="headingSkor">
@@ -213,23 +206,24 @@
                     </thead>
                     <tbody>
                         
-                        {{-- Logika Anti-Gagal untuk Warna Kapsul --}}
+                        {{-- Logika Mapping Class CSS Aman --}}
                         @php
-                            if (!function_exists('getBadgeStyle')) {
-                                function getBadgeStyle($status) {
-                                    $status = strtolower(trim($status ?? ''));
-                                    if ($status === 'normal') return 'background-color: #22C55E; color: #FFFFFF;';
-                                    if ($status === 'ringan') return 'background-color: #EAB308; color: #000000;';
-                                    if ($status === 'sedang') return 'background-color: #F97316; color: #FFFFFF;';
-                                    if ($status === 'parah') return 'background-color: #EF4444; color: #FFFFFF;';
-                                    if ($status === 'sangat parah') return 'background-color: #7C3AED; color: #FFFFFF;';
-                                    // Fallback kalau kosong/berbeda (Abu-abu, teks gelap, pasti kelihatan)
-                                    return 'background-color: #F1F5F9; color: #334155; border: 1px solid #CBD5E1;';
-                                }
-                            }
+                            $badgeMap = [
+                                'normal' => 'badge-normal',
+                                'ringan' => 'badge-ringan',
+                                'sedang' => 'badge-sedang',
+                                'parah' => 'badge-parah',
+                                'sangat parah' => 'badge-sangat-parah',
+                            ];
                         @endphp
                         
                         @forelse($screenings as $index => $s)
+                        @php
+                            // Ambil nama class berdasarkan status (lowercase), jika tidak cocok pakai default
+                            $classDepresi = $badgeMap[strtolower(trim($s->status_depresi ?? ''))] ?? 'badge-default';
+                            $classCemas = $badgeMap[strtolower(trim($s->status_kecemasan ?? ''))] ?? 'badge-default';
+                            $classStres = $badgeMap[strtolower(trim($s->status_stres ?? ''))] ?? 'badge-default';
+                        @endphp
                         <tr>
                             <td class="text-center fw-bold">
                                 {{ $screenings->firstItem() + $index }}
@@ -240,13 +234,13 @@
                             </td>
                             <td>
                                 <div class="d-flex gap-2 flex-wrap">
-                                    <span class="badge-status" style="{{ getBadgeStyle($s->status_depresi) }}">
+                                    <span class="badge-status {{ $classDepresi }}">
                                         Depresi: {{ ucfirst($s->status_depresi ?? '-') }} ({{ $s->score_depresi ?? 0 }})
                                     </span>
-                                    <span class="badge-status" style="{{ getBadgeStyle($s->status_kecemasan) }}">
+                                    <span class="badge-status {{ $classCemas }}">
                                         Cemas: {{ ucfirst($s->status_kecemasan ?? '-') }} ({{ $s->score_kecemasan ?? 0 }})
                                     </span>
-                                    <span class="badge-status" style="{{ getBadgeStyle($s->status_stres) }}">
+                                    <span class="badge-status {{ $classStres }}">
                                         Stres: {{ ucfirst($s->status_stres ?? '-') }} ({{ $s->score_stres ?? 0 }})
                                     </span>
                                 </div>
