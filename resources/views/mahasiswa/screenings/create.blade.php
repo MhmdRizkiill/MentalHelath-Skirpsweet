@@ -11,8 +11,8 @@
         border-radius: 20px;
         background: #FFFFFF;
         box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.08);
-        overflow: hidden;
         position: relative;
+        /* overflow: hidden; SUDAH DIHAPUS AGAR STICKY BERFUNGSI */
     }
 
     .questionnaire-header {
@@ -20,6 +20,8 @@
         padding: 30px 20px;
         text-align: center;
         color: white;
+        border-top-left-radius: 20px; /* Ditambahkan agar sudut atas tetap melengkung */
+        border-top-right-radius: 20px;
     }
 
     .info-panel {
@@ -42,14 +44,15 @@
 
     /* Progress Bar Sticky */
     .progress-container {
+        position: -webkit-sticky; /* Support untuk browser Safari */
         position: sticky;
-        top: 20px; /* Sesuaikan dengan tinggi navbar Anda jika ada */
-        z-index: 100;
+        top: 90px; /* Jarak aman dari navbar atas */
+        z-index: 1020; /* Nilai tinggi agar selalu di depan */
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         padding: 16px 20px;
         border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.12);
         border: 1px solid rgba(226, 232, 240, 0.8);
         margin-bottom: 30px;
         transition: all 0.3s ease;
@@ -298,15 +301,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fungsi Update Progress Bar
     function updateProgress() {
-        // Hitung berapa blok pertanyaan yang sudah ada radio button ter-check
         const answeredQuestions = document.querySelectorAll('.question-block input[type="radio"]:checked').length;
         const percentage = (answeredQuestions / totalQuestions) * 100;
 
-        // Update lebar bar dan teks
         if (progressBar) progressBar.style.width = percentage + '%';
         if (progressText) progressText.innerText = `${answeredQuestions} / ${totalQuestions} Terjawab`;
 
-        // Ubah warna bar menjadi hijau (success) jika sudah 100%
         if (percentage === 100) {
             progressBar.classList.remove('bg-primary');
             progressBar.classList.add('bg-success');
@@ -316,7 +316,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Panggil sekali saat dimuat (untuk mengatasi kasus user tekan tombol Back di browser)
     updateProgress();
 
     // Event Listener saat user memilih jawaban
@@ -324,13 +323,11 @@ document.addEventListener('DOMContentLoaded', function() {
         input.addEventListener('change', function() {
             isFormDirty = true;
             
-            // Hapus peringatan merah (jika ada)
             const questionBlock = this.closest('.question-block');
             if(questionBlock) {
                 questionBlock.classList.remove('has-error');
             }
 
-            // Panggil fungsi update progress
             updateProgress();
         });
     });
@@ -378,9 +375,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     confirmButtonColor: '#4F46E5',
                     confirmButtonText: 'Baik, Saya Periksa'
                 }).then(() => {
-                    // Posisikan ke pertanyaan yang terlewat, -100px agar tidak tertutup sticky progress bar
                     if (firstErrorBlock) {
-                        const y = firstErrorBlock.getBoundingClientRect().top + window.scrollY - 100;
+                        // Offset -150px agar pertanyaan yang error tidak tertutup sticky progress bar
+                        const y = firstErrorBlock.getBoundingClientRect().top + window.scrollY - 150;
                         window.scrollTo({top: y, behavior: 'smooth'});
                     }
                 });
@@ -392,7 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: "Pastikan semua pertanyaan telah dijawab sesuai dengan apa yang Anda rasakan.",
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonColor: '#22C55E', // Ubah warna konfirmasi jadi hijau agar senada dengan progress 100%
+                confirmButtonColor: '#22C55E', 
                 cancelButtonColor: '#EF4444', 
                 confirmButtonText: '<i class="bi bi-send-check"></i> Ya, Kirim Sekarang',
                 cancelButtonText: 'Cek Kembali',
