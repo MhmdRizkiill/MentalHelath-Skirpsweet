@@ -20,7 +20,7 @@
         padding: 30px 20px;
         text-align: center;
         color: white;
-        border-top-left-radius: 20px; /* Ditambahkan agar sudut atas tetap melengkung */
+        border-top-left-radius: 20px;
         border-top-right-radius: 20px;
     }
 

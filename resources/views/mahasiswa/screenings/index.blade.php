@@ -102,7 +102,70 @@
         </a>
     </div>
 
+    <!-- Panel Informasi Klasifikasi Skor (Accordion) -->
+    <div class="accordion mb-4 shadow-sm" id="accordionInformasiSkor" style="border-radius: 16px; overflow: hidden; border: 1px solid rgba(226, 232, 240, 0.8);">
+        <div class="accordion-item" style="border: none;">
+            <h2 class="accordion-header" id="headingSkor">
+                <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkor" aria-expanded="false" aria-controls="collapseSkor" style="background-color: #F8FAFC; box-shadow: none;">
+                    <i class="bi bi-info-circle text-primary me-2"></i> Klik untuk melihat panduan klasifikasi tingkat keparahan (DASS)
+                </button>
+            </h2>
+            <div id="collapseSkor" class="accordion-collapse collapse" aria-labelledby="headingSkor" data-bs-parent="#accordionInformasiSkor">
+                <div class="accordion-body p-4 bg-white">
+                    <p class="text-muted small mb-3">
+                        Skrining ini menggunakan instrumen standar yang memiliki ambang batas <em>(cutoff)</em> spesifik untuk tiap kondisi. Kategori <strong>"Sangat Parah"</strong> adalah batas maksimal, sehingga angka berapapun yang melewati batas tersebut (meski berjarak jauh) akan masuk dalam kategori yang sama.
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered mb-0" style="font-size: 14px;">
+                            <thead style="background-color: #F1F5F9; color: #475569;">
+                                <tr>
+                                    <th width="25%">Tingkat Keparahan</th>
+                                    <th width="25%" class="text-center">Skor Depresi</th>
+                                    <th width="25%" class="text-center">Skor Kecemasan</th>
+                                    <th width="25%" class="text-center">Skor Stres</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge" style="background-color: #22C55E;">Normal</span></td>
+                                    <td class="text-center">0 - 9</td>
+                                    <td class="text-center">0 - 7</td>
+                                    <td class="text-center">0 - 14</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge text-dark" style="background-color: #EAB308;">Ringan</span></td>
+                                    <td class="text-center">10 - 13</td>
+                                    <td class="text-center">8 - 9</td>
+                                    <td class="text-center">15 - 18</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge" style="background-color: #F97316;">Sedang</span></td>
+                                    <td class="text-center">14 - 20</td>
+                                    <td class="text-center">10 - 14</td>
+                                    <td class="text-center">19 - 25</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge" style="background-color: #EF4444;">Parah</span></td>
+                                    <td class="text-center">21 - 27</td>
+                                    <td class="text-center">15 - 19</td>
+                                    <td class="text-center">26 - 33</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge" style="background-color: #7C3AED;">Sangat Parah</span></td>
+                                    <td class="text-center fw-bold">> 28</td>
+                                    <td class="text-center fw-bold">> 20</td>
+                                    <td class="text-center fw-bold">> 34</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Panel Grafik -->
+    @if(count($labels ?? []) > 0)
     <div class="history-card">
         <div class="history-card-header d-flex align-items-center">
             <div class="bg-primary bg-opacity-10 p-2 rounded-lg me-3">
@@ -118,6 +181,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <!-- Panel Tabel Riwayat -->
     <div class="history-card">
@@ -140,7 +204,6 @@
                     </thead>
                     <tbody>
                         @php
-                            // Properti CSS disisipkan langsung ke dalam array untuk mendandani badge
                             $badgeColors = [
                                 'Normal' => 'background-color: #22C55E; color: white;',
                                 'Ringan' => 'background-color: #EAB308; color: black;',
@@ -152,7 +215,9 @@
                         
                         @forelse($screenings as $index => $s)
                         <tr>
-                            <td class="text-center fw-medium text-muted">{{ $screenings->firstItem() + $index }}</td>
+                            <td class="text-center fw-medium text-muted">
+                                {{ $screenings->firstItem() + $index }}
+                            </td>
                             <td>
                                 <div class="fw-semibold text-dark">{{ $s->created_at->format('d M Y') }}</div>
                                 <div class="text-muted small">{{ $s->created_at->format('H:i') }} WIB</div>
@@ -201,6 +266,9 @@
     </div>
 </div>
 
+@endsection
+
+@push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -208,16 +276,12 @@
         if(!canvas) return;
         const ctx = canvas.getContext('2d');
         
-        // Memastikan format data tepat (menggunakan teknik dari Dashboard)
-        const labels = {!! json_encode($labels ?? []) !!};
-        const dataDepresi = {!! json_encode($dataDepresi ?? []) !!};
-        const dataKecemasan = {!! json_encode($dataKecemasan ?? []) !!};
-        const dataStres = {!! json_encode($dataStres ?? []) !!};
+        const labels = Object.values({!! json_encode($labels ?? []) !!});
+        const dataDepresi = Object.values({!! json_encode($dataDepresi ?? []) !!}).map(Number);
+        const dataKecemasan = Object.values({!! json_encode($dataKecemasan ?? []) !!}).map(Number);
+        const dataStres = Object.values({!! json_encode($dataStres ?? []) !!}).map(Number);
 
-        if(labels.length === 0) {
-            canvas.closest('.history-card').style.display = 'none';
-            return;
-        }
+        if(labels.length === 0) return;
 
         const chartWrapper = document.getElementById('chartWrapper');
         const parentLayar = chartWrapper.parentElement;
@@ -324,4 +388,4 @@
         });
     });
 </script>
-@endsection
+@endpush

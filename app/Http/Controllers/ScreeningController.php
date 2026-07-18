@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Mahasiswa;
 
+use App\Http\Controllers\Controller;
 use App\Models\Question;
 use App\Models\Screening;
 use Illuminate\Http\Request;
@@ -125,6 +126,12 @@ class ScreeningController extends Controller
         return view('mahasiswa.screenings.show', compact('screening', 'questions'));
     }
 
+    public function onboarding()
+    {
+        // Cukup kembalikan tampilan view onboarding
+        return view('mahasiswa.screenings.onboarding');
+    }
+
     // ==========================================
     // FUNGSI KLASIFIKASI DASS-42
     // ==========================================
@@ -140,7 +147,7 @@ class ScreeningController extends Controller
 
     private function hitungStatusKecemasan($score)
     {
-        if ($score <= 6) return 'Normal';
+        if ($score <= 7) return 'Normal'; // Diperbarui menjadi <= 7 agar sesuai dengan UI tabel
         if ($score <= 9) return 'Ringan';
         if ($score <= 14) return 'Sedang';
         if ($score <= 19) return 'Parah';
@@ -155,10 +162,4 @@ class ScreeningController extends Controller
         if ($score <= 33) return 'Parah';
         return 'Sangat Parah'; 
     }
-
-    public function onboarding()
-{
-    // Cukup kembalikan tampilan view onboarding
-    return view('mahasiswa.screenings.onboarding');
-}
 }

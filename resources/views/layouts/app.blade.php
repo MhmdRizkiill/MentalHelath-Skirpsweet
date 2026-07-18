@@ -205,6 +205,65 @@
                 padding: 40px 30px;
             }
         }
+
+        /* ==================================================
+            STYLING UNTUK OPSI JAWABAN SKRINING
+            ================================================== */
+        .option-label { display: block; margin-bottom: 12px; cursor: pointer; }
+        .option-input { display: none; }
+        
+        .option-button {
+            display: flex; align-items: center; width: 100%;
+            padding: 16px 20px; border: 2px solid var(--border);
+            border-radius: var(--radius-md); background-color: var(--card);
+            color: var(--text); font-weight: 600; transition: all 0.2s ease-in-out;
+        }
+
+        .option-label:hover .option-button {
+            border-color: var(--primary); background-color: rgba(79, 70, 229, 0.05);
+        }
+
+        /* STATE SELECTED (Saat Sudah Dipilih) - Kontras Tinggi */
+        .option-input:checked + .option-button {
+            background-color: var(--primary); border-color: var(--primary);
+            color: #ffffff; box-shadow: 0 6px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .option-input:checked + .option-button .text-muted,
+        .option-input:checked + .option-button .option-point {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        .option-icon { margin-right: 12px; font-size: 1.2rem; color: var(--muted); transition: all 0.2s; }
+        .option-input:checked + .option-button .option-icon { color: #ffffff; }
+        
+        /* Ganti Ikon Saat Terpilih */
+        .option-input:checked + .option-button .check-idle { display: none !important; }
+        .option-input:checked + .option-button .check-active { display: inline-block !important; }
+
+        /* ===========================
+           CUSTOM BADGE OUTLINE (UX FIX)
+        =========================== */
+        .badge-status {
+            background-color: transparent !important;
+            border: 1.5px solid;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: default;
+            pointer-events: none;
+        }
+        .status-normal { border-color: #22C55E; color: #16A34A; }
+        .status-ringan { border-color: #3B82F6; color: #2563EB; }
+        .status-sedang { border-color: #F59E0B; color: #D97706; }
+        .status-parah { border-color: #EF4444; color: #DC2626; }
+        .status-sangat-parah { border-color: #9F1239; color: #881337; }
+
     </style>
 </head>
 <body>

@@ -5,8 +5,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ScreeningController;
 use App\Http\Controllers\ProfileController;
+
+// Pastikan mengarah ke folder Mahasiswa sesuai dengan struktur Controller terbaru
+use App\Http\Controllers\Mahasiswa\ScreeningController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +29,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
     
-    // Rute Register (Menggunakan RegisterController yang baru kita buat)
+    // Rute Register 
     // Menampilkan halaman form
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register.form');
     // Memproses data form saat tombol diklik
@@ -78,7 +80,9 @@ Route::middleware('auth')->group(function () {
         
         Route::get('/screenings/create', [ScreeningController::class, 'create'])->name('screenings.create');
         Route::post('/screenings', [ScreeningController::class, 'store'])->name('screenings.store');
-        Route::get('/screenings/{screening}', [ScreeningController::class, 'show'])->name('screenings.show');
+        
+        // Parameter diubah dari {screening} menjadi {id} agar cocok dengan $id di Controller
+        Route::get('/screenings/{id}', [ScreeningController::class, 'show'])->name('screenings.show');
     });
 
 });
