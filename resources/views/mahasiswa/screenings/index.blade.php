@@ -22,56 +22,65 @@
         padding: 20px 24px;
     }
 
-    /* Tabel Modern */
+    /* Tabel Modern - BERWARNA */
     .custom-table {
         margin-bottom: 0;
     }
 
+    /* Warna Header Tabel (Biru) */
     .custom-table thead th {
-        background: #F8FAFC;
-        color: #64748B;
-        font-size: 12px;
-        font-weight: 700;
+        background: #3B82F6; /* Warna Biru */
+        color: #FFFFFF; /* Teks Putih */
+        font-size: 13px;
+        font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         padding: 16px 20px;
-        border-bottom: 1px solid #E2E8F0;
-        border-top: none;
+        border: none;
+    }
+
+    /* Warna Baris Tabel (Ganjil) */
+    .custom-table tbody tr {
+        background-color: #F8FAFC; 
+        transition: background-color 0.2s ease;
+    }
+
+    /* Warna Baris Tabel (Genap - Efek Belang/Zebra) */
+    .custom-table tbody tr:nth-child(even) {
+        background-color: #EFF6FF; 
+    }
+
+    /* Warna saat kursor diarahkan (Hover) */
+    .custom-table tbody tr:hover {
+        background-color: #DBEAFE; 
     }
 
     .custom-table tbody td {
         padding: 18px 20px;
-        color: #334155;
+        color: #1E293B;
         font-size: 14.5px;
-        border-bottom: 1px solid #F1F5F9;
+        border-bottom: 1px solid #E2E8F0;
         vertical-align: middle;
-    }
-
-    .custom-table tbody tr {
-        transition: background-color 0.2s ease;
-    }
-
-    .custom-table tbody tr:hover {
-        background-color: #F8FAFC;
     }
 
     /* Badge Label dalam Tabel */
     .badge-status {
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: 0.3px;
         padding: 6px 12px;
         border-radius: 20px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
         display: inline-flex;
         align-items: center;
+        border: 1px solid rgba(0,0,0,0.1);
     }
 
     /* Action Button Custom */
     .btn-detail {
-        background: #EEF6FF;
+        background: #FFFFFF;
         color: #3B82F6;
-        border: none;
+        border: 1px solid #3B82F6;
         font-weight: 600;
         font-size: 13px;
         padding: 6px 16px;
@@ -113,11 +122,11 @@
             <div id="collapseSkor" class="accordion-collapse collapse" aria-labelledby="headingSkor" data-bs-parent="#accordionInformasiSkor">
                 <div class="accordion-body p-4 bg-white">
                     <p class="text-muted small mb-3">
-                        Skrining ini menggunakan instrumen standar yang memiliki ambang batas <em>(cutoff)</em> spesifik untuk tiap kondisi. Kategori <strong>"Sangat Parah"</strong> adalah batas maksimal, sehingga angka berapapun yang melewati batas tersebut (meski berjarak jauh) akan masuk dalam kategori yang sama.
+                        Skrining ini menggunakan instrumen standar yang memiliki ambang batas <em>(cutoff)</em> spesifik untuk tiap kondisi. Kategori <strong>"Sangat Parah"</strong> adalah batas maksimal.
                     </p>
                     <div class="table-responsive">
                         <table class="table table-bordered mb-0" style="font-size: 14px;">
-                            <thead style="background-color: #F1F5F9; color: #475569;">
+                            <thead style="background-color: #E2E8F0; color: #334155;">
                                 <tr>
                                     <th width="25%">Tingkat Keparahan</th>
                                     <th width="25%" class="text-center">Skor Depresi</th>
@@ -203,35 +212,42 @@
                         </tr>
                     </thead>
                     <tbody>
+                        
+                        {{-- Logika Anti-Gagal untuk Warna Kapsul --}}
                         @php
-                            $badgeColors = [
-                                'Normal' => 'background-color: #22C55E; color: white;',
-                                'Ringan' => 'background-color: #EAB308; color: black;',
-                                'Sedang' => 'background-color: #F97316; color: white;',
-                                'Parah' => 'background-color: #EF4444; color: white;',
-                                'Sangat Parah' => 'background-color: #7C3AED; color: white;'
-                            ];
+                            if (!function_exists('getBadgeStyle')) {
+                                function getBadgeStyle($status) {
+                                    $status = strtolower(trim($status ?? ''));
+                                    if ($status === 'normal') return 'background-color: #22C55E; color: #FFFFFF;';
+                                    if ($status === 'ringan') return 'background-color: #EAB308; color: #000000;';
+                                    if ($status === 'sedang') return 'background-color: #F97316; color: #FFFFFF;';
+                                    if ($status === 'parah') return 'background-color: #EF4444; color: #FFFFFF;';
+                                    if ($status === 'sangat parah') return 'background-color: #7C3AED; color: #FFFFFF;';
+                                    // Fallback kalau kosong/berbeda (Abu-abu, teks gelap, pasti kelihatan)
+                                    return 'background-color: #F1F5F9; color: #334155; border: 1px solid #CBD5E1;';
+                                }
+                            }
                         @endphp
                         
                         @forelse($screenings as $index => $s)
                         <tr>
-                            <td class="text-center fw-medium text-muted">
+                            <td class="text-center fw-bold">
                                 {{ $screenings->firstItem() + $index }}
                             </td>
                             <td>
-                                <div class="fw-semibold text-dark">{{ $s->created_at->format('d M Y') }}</div>
+                                <div class="fw-bold text-dark">{{ $s->created_at->format('d M Y') }}</div>
                                 <div class="text-muted small">{{ $s->created_at->format('H:i') }} WIB</div>
                             </td>
                             <td>
                                 <div class="d-flex gap-2 flex-wrap">
-                                    <span class="badge-status" style="{{ $badgeColors[$s->status_depresi ?? ''] ?? 'background-color: #64748B; color: white;' }}">
-                                        Depresi: {{ $s->status_depresi ?? '-' }} ({{ $s->score_depresi ?? 0 }})
+                                    <span class="badge-status" style="{{ getBadgeStyle($s->status_depresi) }}">
+                                        Depresi: {{ ucfirst($s->status_depresi ?? '-') }} ({{ $s->score_depresi ?? 0 }})
                                     </span>
-                                    <span class="badge-status" style="{{ $badgeColors[$s->status_kecemasan ?? ''] ?? 'background-color: #64748B; color: white;' }}">
-                                        Cemas: {{ $s->status_kecemasan ?? '-' }} ({{ $s->score_kecemasan ?? 0 }})
+                                    <span class="badge-status" style="{{ getBadgeStyle($s->status_kecemasan) }}">
+                                        Cemas: {{ ucfirst($s->status_kecemasan ?? '-') }} ({{ $s->score_kecemasan ?? 0 }})
                                     </span>
-                                    <span class="badge-status" style="{{ $badgeColors[$s->status_stres ?? ''] ?? 'background-color: #64748B; color: white;' }}">
-                                        Stres: {{ $s->status_stres ?? '-' }} ({{ $s->score_stres ?? 0 }})
+                                    <span class="badge-status" style="{{ getBadgeStyle($s->status_stres) }}">
+                                        Stres: {{ ucfirst($s->status_stres ?? '-') }} ({{ $s->score_stres ?? 0 }})
                                     </span>
                                 </div>
                             </td>
@@ -243,7 +259,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="text-center py-5">
+                            <td colspan="4" class="text-center py-5" style="background-color: #FFFFFF;">
                                 <div class="d-flex flex-column align-items-center justify-content-center opacity-50">
                                     <i class="bi bi-inbox fs-1 text-muted mb-3"></i>
                                     <span class="text-muted fw-medium">Belum ada riwayat skrining yang tercatat.</span>
@@ -257,7 +273,7 @@
             
             <!-- Pagination Wrapper -->
             @if($screenings->hasPages())
-                <div class="d-flex justify-content-center pt-4 pb-3 border-top">
+                <div class="d-flex justify-content-center pt-4 pb-3 border-top" style="background-color: #FFFFFF;">
                     {{ $screenings->links('pagination::bootstrap-5') }}
                 </div>
             @endif
