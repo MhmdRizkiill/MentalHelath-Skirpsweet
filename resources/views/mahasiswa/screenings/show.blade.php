@@ -116,16 +116,6 @@
 <div class="container py-4">
     <div class="row justify-content-center">
         <div class="col-lg-10 col-xl-9">
-            
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show d-flex align-items-center border-0 shadow-sm" style="border-radius: 16px;" role="alert">
-                    <i class="bi bi-check-circle-fill fs-5 me-3 text-success"></i>
-                    <div class="flex-grow-1 fw-medium">
-                        {{ session('success') }}
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
 
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
                 <div>
