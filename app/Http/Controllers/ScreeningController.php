@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Mahasiswa;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Question;
 use App\Models\Screening;
 use Illuminate\Http\Request;
@@ -77,7 +76,7 @@ class ScreeningController extends Controller
 
         // 2. Proses Pemisahan Nilai berdasarkan kategori
         foreach ($questions as $index => $question) {
-            $nomorSoal = $index + 1; // Asumsi index 0 adalah soal no 1, dst.
+            $nomorSoal = $index + 1; 
             $nilaiJawaban = $answers[$question->id] ?? 0;
 
             if (in_array($nomorSoal, $kelompokDepresi)) {
@@ -87,7 +86,7 @@ class ScreeningController extends Controller
             } elseif (in_array($nomorSoal, $kelompokStres)) {
                 $score_stres += $nilaiJawaban;
             }
-            $total_score += $nilaiJawaban; // Tetap disimpan sebagai arsip
+            $total_score += $nilaiJawaban; 
         }
 
         // 3. Tentukan Status berdasarkan Skala Masing-masing
@@ -99,7 +98,7 @@ class ScreeningController extends Controller
         $screening = Screening::create([
             'user_id' => Auth::id(),
             'total_score' => $total_score,
-            'status' => 'Selesai', // Diganti menjadi 'Selesai' karena status aslinya sudah dipecah 3
+            'status' => 'Selesai', 
             'answers' => $answers,
             'score_depresi' => $score_depresi,
             'status_depresi' => $status_depresi,
@@ -128,7 +127,6 @@ class ScreeningController extends Controller
 
     public function onboarding()
     {
-        // Cukup kembalikan tampilan view onboarding
         return view('mahasiswa.screenings.onboarding');
     }
 
@@ -147,7 +145,7 @@ class ScreeningController extends Controller
 
     private function hitungStatusKecemasan($score)
     {
-        if ($score <= 7) return 'Normal'; // Diperbarui menjadi <= 7 agar sesuai dengan UI tabel
+        if ($score <= 7) return 'Normal'; 
         if ($score <= 9) return 'Ringan';
         if ($score <= 14) return 'Sedang';
         if ($score <= 19) return 'Parah';
