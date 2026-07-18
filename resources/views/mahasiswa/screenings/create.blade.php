@@ -78,7 +78,6 @@
         margin: 0;
     }
 
-    /* Menyembunyikan input asli tapi tetap bisa difokuskan oleh keyboard */
     .custom-radio .form-check-input {
         position: absolute;
         opacity: 0;
@@ -89,7 +88,6 @@
         margin: 0;
     }
 
-    /* Style untuk Label sebagai Button */
     .custom-radio .form-check-label {
         display: flex;
         align-items: center;
@@ -110,13 +108,11 @@
         z-index: 1;
     }
 
-    /* Hover State */
     .custom-radio:hover .form-check-label {
         border-color: #94A3B8;
         background: #F8FAFC;
     }
 
-    /* Active / Checked State */
     .custom-radio .form-check-input:checked + .form-check-label {
         background: #EEF6FF;
         border-color: #3B82F6;
@@ -126,7 +122,6 @@
         transform: translateY(-2px);
     }
 
-    /* Accessibility / Keyboard Focus */
     .custom-radio .form-check-input:focus-visible + .form-check-label {
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
         outline: none;
@@ -149,7 +144,6 @@
         box-shadow: 0 12px 25px rgba(79, 70, 229, 0.3);
     }
 
-    /* Responsiveness Mobile */
     @media(max-width: 768px) {
         .options-grid {
             grid-template-columns: repeat(2, 1fr);
@@ -184,7 +178,6 @@
             
             <div class="card-body p-4 p-md-5">
                 
-                <!-- Panel Instruksi (Angka sudah dihilangkan sesuai saran sebelumnya) -->
                 <div class="info-panel mb-5">
                     <div class="d-flex align-items-center mb-3">
                         <i class="bi bi-info-circle-fill fs-4 me-2"></i>
@@ -193,7 +186,6 @@
                     <p class="mb-0">Bacalah setiap pernyataan dan pilih jawaban yang paling menggambarkan keadaan Anda selama <strong>SATU MINGGU TERAKHIR</strong>. <em>Tidak ada jawaban yang benar atau salah, jawablah secara jujur.</em></p>
                 </div>
 
-                <!-- Form Kuesioner (Ditambahkan ID 'form-skrining' dan onsubmit dihapus) -->
                 <form id="form-skrining" action="{{ route('mahasiswa.screenings.store') }}" method="POST">
                     @csrf
                     
@@ -203,7 +195,6 @@
                             <span class="text-primary me-1">{{ $index + 1 }}.</span> {{ $q->question_text }}
                         </p>
                         
-                        <!-- Grid Opsi Jawaban Modern -->
                         <div class="options-grid">
                             <div class="custom-radio">
                                 <input class="form-check-input" type="radio" name="answers[{{ $q->id }}]" id="q_{{ $q->id }}_0" value="0" required>
@@ -240,13 +231,16 @@
 @endsection
 
 @push('scripts')
+<!-- Tambahkan CDN SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     let isFormDirty = false;
     const formSkrining = document.getElementById('form-skrining');
     const btnSubmit = document.getElementById('btnSubmit');
 
-    // 1. Pantau jika user sudah mulai mengisi (memilih salah satu radio button)
+    // 1. Pantau jika user sudah mulai mengisi
     const formInputs = document.querySelectorAll('#form-skrining input[type="radio"]');
     formInputs.forEach(input => {
         input.addEventListener('change', () => {
@@ -254,35 +248,47 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 2. Cegah user keluar secara tidak sengaja (Refresh, Back, Close Tab)
+    // 2. Cegah user keluar secara tidak sengaja
     window.addEventListener('beforeunload', function (e) {
         if (isFormDirty) {
             e.preventDefault();
-            e.returnValue = ''; // Memunculkan dialog konfirmasi bawaan browser
+            e.returnValue = ''; 
         }
     });
 
-    // 3. Konfirmasi sebelum Submit Form
+    // 3. Konfirmasi sebelum Submit Form menggunakan SweetAlert2
     if (formSkrining) {
         formSkrining.addEventListener('submit', function(e) {
             e.preventDefault(); // Tahan pengiriman form
 
-            // Dialog konfirmasi
-            const konfirmasi = confirm("Apakah Anda sudah yakin dengan semua jawaban Anda?\n\nPastikan tidak ada pertanyaan yang terlewat sebelum mengirim.");
-
-            if (konfirmasi) {
-                // Matikan peringatan beforeunload agar tidak muncul saat klik submit
-                isFormDirty = false; 
-                
-                // Ubah state tombol menjadi loading
-                if (btnSubmit) {
-                    btnSubmit.disabled = true;
-                    btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Menyimpan...';
+            Swal.fire({
+                title: 'Sudah Yakin?',
+                text: "Pastikan semua pertanyaan telah dijawab sesuai dengan apa yang Anda rasakan.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#4F46E5', // Warna tombol utama (primary)
+                cancelButtonColor: '#EF4444', // Warna tombol batal (danger)
+                confirmButtonText: '<i class="bi bi-send-check"></i> Ya, Kirim Sekarang',
+                cancelButtonText: 'Cek Kembali',
+                reverseButtons: true, // Membalik posisi tombol agar 'Kirim' ada di kanan
+                customClass: {
+                    popup: 'rounded-4' // Membuat sudut popup lebih halus
                 }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Matikan peringatan beforeunload
+                    isFormDirty = false; 
+                    
+                    // Ubah state tombol menjadi loading
+                    if (btnSubmit) {
+                        btnSubmit.disabled = true;
+                        btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Menyimpan...';
+                    }
 
-                // Kirim form secara terprogram
-                this.submit();
-            }
+                    // Kirim form secara terprogram
+                    formSkrining.submit();
+                }
+            });
         });
     }
 });
