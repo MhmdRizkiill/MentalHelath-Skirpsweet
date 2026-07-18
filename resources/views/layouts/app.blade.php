@@ -394,7 +394,7 @@
             const toastElList = document.querySelectorAll('.toast');
             const toastList = [...toastElList].map(toastEl => {
                 // delay: 3500 (3.5 detik) lalu notifikasi otomatis menghilang
-                return new bootstrap.Toast(toastEl, { delay: 3500 });
+                return new bootstrap.Toast(toastEl, { delay: 1500 });
             });
             toastList.forEach(toast => toast.show());
         });
