@@ -184,24 +184,17 @@
             
             <div class="card-body p-4 p-md-5">
                 
-                <!-- Panel Instruksi -->
+                <!-- Panel Instruksi (Angka sudah dihilangkan sesuai saran sebelumnya) -->
                 <div class="info-panel mb-5">
                     <div class="d-flex align-items-center mb-3">
                         <i class="bi bi-info-circle-fill fs-4 me-2"></i>
                         <h5 class="mb-0 fw-bold">Petunjuk Pengisian</h5>
                     </div>
                     <p class="mb-0">Bacalah setiap pernyataan dan pilih jawaban yang paling menggambarkan keadaan Anda selama <strong>SATU MINGGU TERAKHIR</strong>. <em>Tidak ada jawaban yang benar atau salah, jawablah secara jujur.</em></p>
-                    <hr class="border-primary opacity-25 my-3">
-                    <ul class="mb-0 list-unstyled">
-                        <li><i class="bi bi-0-circle-fill text-secondary me-2"></i><strong>0</strong> = Tidak pernah</li>
-                        <li><i class="bi bi-1-circle-fill text-secondary me-2"></i><strong>1</strong> = Kadang-kadang (Terkadang berlaku)</li>
-                        <li><i class="bi bi-2-circle-fill text-secondary me-2"></i><strong>2</strong> = Sering (Sering berlaku)</li>
-                        <li><i class="bi bi-3-circle-fill text-secondary me-2"></i><strong>3</strong> = Hampir Selalu (Sangat sering berlaku)</li>
-                    </ul>
                 </div>
 
-                <!-- Form Kuesioner -->
-                <form action="{{ route('mahasiswa.screenings.store') }}" method="POST" onsubmit="document.getElementById('btnSubmit').disabled = true; document.getElementById('btnSubmit').innerHTML = '<span class=\'spinner-border spinner-border-sm me-2\' role=\'status\' aria-hidden=\'true\'></span>Menyimpan...';">
+                <!-- Form Kuesioner (Ditambahkan ID 'form-skrining' dan onsubmit dihapus) -->
+                <form id="form-skrining" action="{{ route('mahasiswa.screenings.store') }}" method="POST">
                     @csrf
                     
                     @foreach($questions as $index => $q)
@@ -214,19 +207,19 @@
                         <div class="options-grid">
                             <div class="custom-radio">
                                 <input class="form-check-input" type="radio" name="answers[{{ $q->id }}]" id="q_{{ $q->id }}_0" value="0" required>
-                                <label class="form-check-label" for="q_{{ $q->id }}_0">0 - Tidak Pernah</label>
+                                <label class="form-check-label" for="q_{{ $q->id }}_0">Tidak Pernah</label>
                             </div>
                             <div class="custom-radio">
                                 <input class="form-check-input" type="radio" name="answers[{{ $q->id }}]" id="q_{{ $q->id }}_1" value="1" required>
-                                <label class="form-check-label" for="q_{{ $q->id }}_1">1 - Kadang-kadang</label>
+                                <label class="form-check-label" for="q_{{ $q->id }}_1">Kadang-kadang</label>
                             </div>
                             <div class="custom-radio">
                                 <input class="form-check-input" type="radio" name="answers[{{ $q->id }}]" id="q_{{ $q->id }}_2" value="2" required>
-                                <label class="form-check-label" for="q_{{ $q->id }}_2">2 - Sering</label>
+                                <label class="form-check-label" for="q_{{ $q->id }}_2">Sering</label>
                             </div>
                             <div class="custom-radio">
                                 <input class="form-check-input" type="radio" name="answers[{{ $q->id }}]" id="q_{{ $q->id }}_3" value="3" required>
-                                <label class="form-check-label" for="q_{{ $q->id }}_3">3 - Hampir Selalu</label>
+                                <label class="form-check-label" for="q_{{ $q->id }}_3">Hampir Selalu</label>
                             </div>
                         </div>
                     </div>
@@ -245,3 +238,53 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let isFormDirty = false;
+    const formSkrining = document.getElementById('form-skrining');
+    const btnSubmit = document.getElementById('btnSubmit');
+
+    // 1. Pantau jika user sudah mulai mengisi (memilih salah satu radio button)
+    const formInputs = document.querySelectorAll('#form-skrining input[type="radio"]');
+    formInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            isFormDirty = true;
+        });
+    });
+
+    // 2. Cegah user keluar secara tidak sengaja (Refresh, Back, Close Tab)
+    window.addEventListener('beforeunload', function (e) {
+        if (isFormDirty) {
+            e.preventDefault();
+            e.returnValue = ''; // Memunculkan dialog konfirmasi bawaan browser
+        }
+    });
+
+    // 3. Konfirmasi sebelum Submit Form
+    if (formSkrining) {
+        formSkrining.addEventListener('submit', function(e) {
+            e.preventDefault(); // Tahan pengiriman form
+
+            // Dialog konfirmasi
+            const konfirmasi = confirm("Apakah Anda sudah yakin dengan semua jawaban Anda?\n\nPastikan tidak ada pertanyaan yang terlewat sebelum mengirim.");
+
+            if (konfirmasi) {
+                // Matikan peringatan beforeunload agar tidak muncul saat klik submit
+                isFormDirty = false; 
+                
+                // Ubah state tombol menjadi loading
+                if (btnSubmit) {
+                    btnSubmit.disabled = true;
+                    btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Menyimpan...';
+                }
+
+                // Kirim form secara terprogram
+                this.submit();
+            }
+        });
+    }
+});
+</script>
+@endpush
