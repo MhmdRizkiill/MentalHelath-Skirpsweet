@@ -74,15 +74,24 @@
         background-color: #F8FAFC;
     }
 
-    /* Badge & Label */
+    /* Badge Dasar */
     .badge-status {
         font-size: 13px;
-        font-weight: 600;
+        font-weight: 700; /* Dibuat sedikit lebih bold */
         letter-spacing: 0.3px;
         padding: 8px 16px;
         border-radius: 20px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        display: inline-block;
     }
+
+    /* CLASS WARNA SPESIFIK (Vaksin Anti-Blokir Inline Style) */
+    .badge-normal { background-color: #22C55E !important; color: #FFFFFF !important; border: none; }
+    .badge-ringan { background-color: #EAB308 !important; color: #000000 !important; border: none; }
+    .badge-sedang { background-color: #F97316 !important; color: #FFFFFF !important; border: none; }
+    .badge-parah { background-color: #EF4444 !important; color: #FFFFFF !important; border: none; }
+    .badge-sangat-parah { background-color: #7C3AED !important; color: #FFFFFF !important; border: none; }
+    .badge-default { background-color: #F1F5F9 !important; color: #334155 !important; border: 1px solid #CBD5E1; }
     
     .answer-tag {
         background: rgba(59, 130, 246, 0.1);
@@ -142,14 +151,18 @@
                 
                 <div class="card-body p-4 p-md-5">
                     @php
-                        // Logika bawaan PHP dipertahankan 100%
-                        $badgeColors = [
-                            'Normal' => 'background-color: #22C55E; color: white;',
-                            'Ringan' => 'background-color: #EAB308; color: black;',
-                            'Sedang' => 'background-color: #F97316; color: white;',
-                            'Parah' => 'background-color: #EF4444; color: white;',
-                            'Sangat Parah' => 'background-color: #7C3AED; color: white;'
+                        // Logika Anti-Gagal Mapping Class CSS
+                        $badgeMap = [
+                            'normal' => 'badge-normal',
+                            'ringan' => 'badge-ringan',
+                            'sedang' => 'badge-sedang',
+                            'parah' => 'badge-parah',
+                            'sangat parah' => 'badge-sangat-parah',
                         ];
+
+                        $classDepresi = $badgeMap[strtolower(trim($screening->status_depresi ?? ''))] ?? 'badge-default';
+                        $classCemas = $badgeMap[strtolower(trim($screening->status_kecemasan ?? ''))] ?? 'badge-default';
+                        $classStres = $badgeMap[strtolower(trim($screening->status_stres ?? ''))] ?? 'badge-default';
                     @endphp
 
                     <div class="row g-3 g-md-4">
@@ -157,8 +170,8 @@
                             <div class="stat-box">
                                 <h6 class="text-muted fw-semibold text-uppercase mb-2" style="font-size: 12px; letter-spacing: 1px;">Depresi</h6>
                                 <h1 class="fw-bold text-dark mb-3" style="font-size: 2.5rem; letter-spacing: -1px;">{{ $screening->score_depresi ?? 0 }}</h1>
-                                <span class="badge-status w-100 text-center" style="{{ $badgeColors[$screening->status_depresi ?? ''] ?? 'background-color: #64748B; color: white;' }}">
-                                    {{ $screening->status_depresi ?? '-' }}
+                                <span class="badge-status w-100 text-center {{ $classDepresi }}">
+                                    {{ ucfirst($screening->status_depresi ?? '-') }}
                                 </span>
                             </div>
                         </div>
@@ -167,8 +180,8 @@
                             <div class="stat-box">
                                 <h6 class="text-muted fw-semibold text-uppercase mb-2" style="font-size: 12px; letter-spacing: 1px;">Kecemasan</h6>
                                 <h1 class="fw-bold text-dark mb-3" style="font-size: 2.5rem; letter-spacing: -1px;">{{ $screening->score_kecemasan ?? 0 }}</h1>
-                                <span class="badge-status w-100 text-center" style="{{ $badgeColors[$screening->status_kecemasan ?? ''] ?? 'background-color: #64748B; color: white;' }}">
-                                    {{ $screening->status_kecemasan ?? '-' }}
+                                <span class="badge-status w-100 text-center {{ $classCemas }}">
+                                    {{ ucfirst($screening->status_kecemasan ?? '-') }}
                                 </span>
                             </div>
                         </div>
@@ -177,8 +190,8 @@
                             <div class="stat-box">
                                 <h6 class="text-muted fw-semibold text-uppercase mb-2" style="font-size: 12px; letter-spacing: 1px;">Stres</h6>
                                 <h1 class="fw-bold text-dark mb-3" style="font-size: 2.5rem; letter-spacing: -1px;">{{ $screening->score_stres ?? 0 }}</h1>
-                                <span class="badge-status w-100 text-center" style="{{ $badgeColors[$screening->status_stres ?? ''] ?? 'background-color: #64748B; color: white;' }}">
-                                    {{ $screening->status_stres ?? '-' }}
+                                <span class="badge-status w-100 text-center {{ $classStres }}">
+                                    {{ ucfirst($screening->status_stres ?? '-') }}
                                 </span>
                             </div>
                         </div>
