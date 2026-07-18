@@ -325,28 +325,7 @@
         <!-- Content Area -->
         <div class="content-area">
             
-            {{-- FLASHELEMENT SUCCESS --}}
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
-                    <i class="bi bi-check-circle-fill fs-5 me-3"></i>
-                    <div class="flex-grow-1 fw-medium">
-                        {{ session('success') }}
-                    </div>
-                    <button class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            @endif
-
-            {{-- FLASHELEMENT ERROR --}}
-            @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
-                    <i class="bi bi-exclamation-triangle-fill fs-5 me-3"></i>
-                    <div class="flex-grow-1 fw-medium">
-                        {{ session('error') }}
-                    </div>
-                    <button class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            @endif
-
+            {{-- Konten Halaman --}}
             @yield('content')
             
         </div>
@@ -359,10 +338,42 @@
 
     </div>
 
+    <!-- Global Toast Notification Container -->
+    <div class="toast-container position-fixed top-0 end-0 p-3 mt-5" style="z-index: 1060;">
+        
+        {{-- Notifikasi Sukses --}}
+        @if (session('success') || session('status'))
+            <div class="toast align-items-center text-bg-success border-0 shadow rounded-4 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body fw-semibold py-3 px-4 d-flex align-items-center" style="font-size: 14px;">
+                        <i class="bi bi-check-circle-fill me-3 fs-5"></i> 
+                        {{ session('success') ?? session('status') }}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        @endif
+
+        {{-- Notifikasi Error --}}
+        @if (session('error'))
+            <div class="toast align-items-center text-bg-danger border-0 shadow rounded-4 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body fw-semibold py-3 px-4 d-flex align-items-center" style="font-size: 14px;">
+                        <i class="bi bi-exclamation-triangle-fill me-3 fs-5"></i> 
+                        {{ session('error') }}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        @endif
+        
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Logika Mobile Menu Dropdown
             const topMenuToggle = document.getElementById('topMenuToggle');
             const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
 
@@ -378,6 +389,14 @@
                     }
                 });
             }
+
+            // Inisialisasi Toast Notifikasi
+            const toastElList = document.querySelectorAll('.toast');
+            const toastList = [...toastElList].map(toastEl => {
+                // delay: 3500 (3.5 detik) lalu notifikasi otomatis menghilang
+                return new bootstrap.Toast(toastEl, { delay: 3500 });
+            });
+            toastList.forEach(toast => toast.show());
         });
     </script>
 
