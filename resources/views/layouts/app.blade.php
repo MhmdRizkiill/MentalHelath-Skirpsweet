@@ -270,11 +270,13 @@
 
     <div class="main-wrapper">
         
-        <!-- Topbar Utama -->
+     <!-- Topbar Utama yang Sudah Disinkronkan -->
         <div class="topbar shadow-sm">
             <div class="d-flex align-items-center fw-bold text-dark fs-5">
-                <i class="bi bi-heart-pulse-fill text-primary me-2"></i> MentalHealth
+                <!-- Ganti icon dan sesuaikan nama brand -->
+                <i class="bi bi-heart-pulse-fill text-primary me-2"></i> MindScreen
             </div>
+            <!-- Jika ingin tetap pakai teks menu di desktop, pastikan responsive breakpoint-nya pas -->
             <button class="btn btn-light border-0" id="topMenuToggle" style="padding: 6px 10px;">
                 <i class="bi bi-list fs-3 text-dark"></i>
             </button>
