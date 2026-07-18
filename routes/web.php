@@ -14,9 +14,9 @@ use App\Http\Controllers\ProfileController;
 |--------------------------------------------------------------------------
 */
 
-// Mengalihkan halaman utama '/' ke halaman login
+// Halaman Landing Page (Akses Publik)
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('welcome'); // Memanggil file welcome.blade.php
 });
 
 // ==========================================
@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
         // Proses Skrining Kesehatan Mental DASS-42
         Route::get('/screenings', [ScreeningController::class, 'index'])->name('screenings.index');
         
-        // Rute Baru: Halaman Onboarding Sebelum Skrining
+        // Halaman Onboarding Sebelum Skrining
         Route::get('/screenings/onboarding', [ScreeningController::class, 'onboarding'])->name('screenings.onboarding');
         
         Route::get('/screenings/create', [ScreeningController::class, 'create'])->name('screenings.create');
