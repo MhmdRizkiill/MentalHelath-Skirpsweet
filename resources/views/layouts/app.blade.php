@@ -8,7 +8,6 @@
 
     <title>Monitoring Kesehatan Mental (DASS-42)</title>
     
-    <!-- TARUH KODE INI TEPAT DI SINI -->
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -33,7 +32,6 @@
             --muted: #64748B;
             --radius-lg: 18px;
             --radius-md: 14px;
-            --sidebar-width: 260px;
         }
 
         * { box-sizing: border-box; }
@@ -48,107 +46,79 @@
         }
 
         /* ===========================
-                SIDEBAR STYLING (DESKTOP)
+                MAIN LAYOUT
         =========================== */
-        .sidebar {
-            width: var(--sidebar-width);
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            background: #FFFFFF;
-            border-right: 1px solid var(--border);
-            z-index: 1040;
+        .main-wrapper {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 4px 0 24px rgba(15, 23, 42, 0.02);
         }
 
-        .sidebar-brand {
-            padding: 24px 20px;
+        .content-area {
+            flex: 1;
+            padding: 20px 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ===========================
+                TOPBAR NAVIGATION
+        =========================== */
+        .topbar {
             display: flex;
             align-items: center;
-            font-weight: 800;
-            font-size: 18px;
-            color: var(--text);
-            text-decoration: none;
-            border-bottom: 1px dashed var(--border);
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1050;
         }
 
-        .sidebar-brand i {
-            font-size: 24px;
-            color: var(--primary);
-            margin-right: 12px;
-            background: rgba(79, 70, 229, 0.1);
-            padding: 6px 8px;
-            border-radius: 10px;
-        }
-
-        .sidebar-menu {
-            flex: 1;
-            padding: 20px 14px;
+        /* ===========================
+                TOP-DOWN MENU DROPDOWN
+        =========================== */
+        .mobile-menu-dropdown {
+            position: fixed;
+            top: 61px; /* Menyesuaikan tinggi topbar */
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+            z-index: 1040;
+            
+            /* Animasi Sembunyi/Muncul */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            
+            max-height: calc(100vh - 65px);
             overflow-y: auto;
         }
 
-        .nav-item {
-            list-style: none;
-            margin-bottom: 6px;
+        .mobile-menu-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
-        .nav-link {
-            font-weight: 600;
-            font-size: 14.5px;
-            color: var(--muted) !important;
-            padding: 12px 16px !important;
-            border-radius: 12px;
-            transition: all 0.25s ease;
+        .nav-menu-wrapper {
+            padding: 15px 20px 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .mobile-user-profile {
             display: flex;
             align-items: center;
-            text-decoration: none;
-        }
-
-        .nav-link i {
-            font-size: 18px;
-            width: 24px;
-            text-align: center;
-        }
-
-        .nav-link:hover {
-            color: var(--primary) !important;
-            background: rgba(79, 70, 229, 0.05);
-            transform: translateX(4px);
-        }
-
-        .nav-link.active {
-            color: var(--primary) !important;
-            background: rgba(79, 70, 229, 0.1);
-            position: relative;
-        }
-
-        .nav-link.active::before {
-            content: '';
-            position: absolute;
-            left: -14px;
-            top: 10%;
-            height: 80%;
-            width: 4px;
-            background: var(--primary);
-            border-radius: 0 4px 4px 0;
-        }
-
-        .sidebar-footer {
-            padding: 20px;
-            border-top: 1px solid var(--border);
-            background: #FAFAFA;
-        }
-
-        .user-profile-box {
-            display: flex;
-            align-items: center;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed #E2E8F0;
-            margin-bottom: 15px;
+            padding: 10px 15px 20px;
+            border-bottom: 1px dashed var(--border);
+            margin-bottom: 10px;
         }
 
         .user-avatar {
@@ -165,20 +135,46 @@
             flex-shrink: 0;
         }
 
-        /* ===========================
-                MAIN CONTENT
-        =========================== */
-        .main-wrapper {
-            margin-left: var(--sidebar-width);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        .menu-section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 10px 16px 5px;
+            margin-top: 10px;
+            list-style: none;
         }
 
-        .content-area {
-            flex: 1;
-            padding: 30px;
+        .nav-item {
+            list-style: none;
+            margin-bottom: 4px;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            font-size: 14.5px;
+            color: var(--text) !important;
+            padding: 12px 16px !important;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .nav-link i {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+            margin-right: 12px;
+            color: var(--primary);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(79, 70, 229, 0.08);
+            color: var(--primary) !important;
         }
 
         /* ===========================
@@ -213,92 +209,9 @@
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
 
-        /* ===========================
-                RESPONSIVE (MOBILE) - NEW TOP-DOWN
-        =========================== */
-        .topbar-mobile {
-            display: none;
-        }
-
-        @media(max-width: 991.98px) {
-            /* Sembunyikan Sidebar Asli di Mobile */
-            .sidebar {
-                display: none !important;
-            }
-
-            /* Main Wrapper jadi penuh */
-            .main-wrapper {
-                margin-left: 0 !important;
-            }
-
-            /* Tampilkan Topbar Mobile */
-            .topbar-mobile {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                background: rgba(255, 255, 255, 0.98);
-                padding: 12px 20px;
-                border-bottom: 1px solid var(--border);
-                position: sticky;
-                top: 0;
-                z-index: 1050;
-            }
-
+        @media(min-width: 992px) {
             .content-area {
-                padding: 20px 15px;
-            }
-
-            /* Container Menu Jatuh dari Atas */
-            .mobile-menu-dropdown {
-                position: fixed;
-                top: 65px; /* Menyesuaikan tinggi topbar-mobile */
-                left: 0;
-                width: 100%;
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(10px);
-                border-bottom: 1px solid var(--border);
-                box-shadow: 0 10px 15px rgba(0,0,0,0.05);
-                z-index: 1040;
-                
-                /* Animasi Sembunyi/Muncul */
-                opacity: 0;
-                visibility: hidden;
-                transform: translateY(-20px);
-                transition: all 0.3s ease;
-                
-                max-height: calc(100vh - 65px);
-                overflow-y: auto;
-            }
-
-            /* Saat Menu Aktif */
-            .mobile-menu-dropdown.show {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(0);
-            }
-
-            .mobile-menu-dropdown .nav-menu-wrapper {
-                padding: 15px 20px 25px;
-            }
-
-            .mobile-menu-dropdown .menu-section-title {
-                font-size: 11px;
-                text-transform: uppercase;
-                color: var(--muted);
-                font-weight: 700;
-                letter-spacing: 1px;
-                padding: 10px 16px 5px;
-                margin-top: 10px;
-                list-style: none;
-            }
-
-            /* Profil Ringkas di Mobile Dropdown */
-            .mobile-user-profile {
-                display: flex;
-                align-items: center;
-                padding: 10px 15px 20px;
-                border-bottom: 1px dashed var(--border);
-                margin-bottom: 10px;
+                padding: 40px 30px;
             }
         }
     </style>
@@ -306,101 +219,10 @@
 
 <body>
 
-    <!-- ==========================================
-         SIDEBAR DESKTOP (Sembunyi di Mobile) 
-    =========================================== -->
-    <aside class="sidebar" id="sidebar">
-        <a href="#" class="sidebar-brand">
-            <i class="bi bi-heart-pulse-fill"></i>
-            <div>Mental<span class="text-primary">Health</span></div>
-        </a>
-
-        <div class="sidebar-menu">
-            <ul class="p-0 m-0">
-                @auth
-                    @if(Auth::user()->role === 'admin')
-                        <li class="nav-item">
-                            <span class="text-xs fw-bold text-muted text-uppercase px-3 mb-2 d-block" style="font-size: 11px; letter-spacing: 0.5px;">Menu Admin</span>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
-                                <i class="bi bi-speedometer2 me-2"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('admin.questions.*') ? 'active' : '' }}" href="{{ route('admin.questions.index') }}">
-                                <i class="bi bi-patch-question me-2"></i> Kelola Pertanyaan
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
-                                <i class="bi bi-people me-2"></i> Kelola Pengguna
-                            </a>
-                        </li>
-                    @elseif(Auth::user()->role === 'mahasiswa')
-                        <li class="nav-item">
-                            <span class="text-xs fw-bold text-muted text-uppercase px-3 mb-2 d-block mt-2" style="font-size: 11px; letter-spacing: 0.5px;">Menu Mahasiswa</span>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('mahasiswa.dashboard') ? 'active' : '' }}" href="{{ route('mahasiswa.dashboard') }}">
-                                <i class="bi bi-house-door me-2"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('mahasiswa.screenings.create') ? 'active' : '' }}" href="{{ route('mahasiswa.screenings.create') }}">
-                                <i class="bi bi-clipboard2-pulse me-2"></i> Skrining Baru
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('mahasiswa.screenings.index') ? 'active' : '' }}" href="{{ route('mahasiswa.screenings.index') }}">
-                                <i class="bi bi-clock-history me-2"></i> Riwayat
-                            </a>
-                        </li>
-                    @endif
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">
-                            <i class="bi bi-box-arrow-in-right me-2"></i> Login
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">
-                            <i class="bi bi-person-plus me-2"></i> Register
-                        </a>
-                    </li>
-                @endauth
-            </ul>
-        </div>
-
-        @auth
-        <div class="sidebar-footer">
-            <div class="user-profile-box">
-                <div class="user-avatar">
-                    {{ strtoupper(substr(Auth::user()->username, 0, 1)) }}
-                </div>
-                <div class="ms-3 overflow-hidden">
-                    <div class="fw-bold text-dark text-truncate" style="font-size: 14px;">{{ Auth::user()->username }}</div>
-                    <div class="text-muted text-truncate text-capitalize" style="font-size: 12px;">{{ Auth::user()->role }}</div>
-                </div>
-            </div>
-            
-            <form action="{{ route('logout') }}" method="POST" class="m-0">
-                @csrf
-                <button type="submit" class="btn btn-light w-100 text-danger fw-bold d-flex align-items-center justify-content-center" style="border: 1px solid #FEE2E2; background: #FEF2F2;">
-                    <i class="bi bi-box-arrow-right me-2"></i> Keluar
-                </button>
-            </form>
-        </div>
-        @endauth
-    </aside>
-
-    <!-- ==========================================
-         MAIN WRAPPER & MOBILE MENU
-    =========================================== -->
     <div class="main-wrapper">
         
-        <!-- Topbar Khusus Mobile -->
-        <div class="topbar-mobile shadow-sm">
+        <!-- Topbar Utama -->
+        <div class="topbar shadow-sm">
             <div class="d-flex align-items-center fw-bold text-dark fs-5">
                 <i class="bi bi-heart-pulse-fill text-primary me-2"></i> MentalHealth
             </div>
@@ -409,23 +231,23 @@
             </button>
         </div>
 
-        <!-- Mobile Menu Dropdown (Top-Down) -->
+        <!-- Menu Dropdown (Top-Down) -->
         <div class="mobile-menu-dropdown" id="mobileMenuDropdown">
             <div class="nav-menu-wrapper">
                 @auth
-                    <!-- Profil Ringkas di Mobile Dropdown -->
+                    <!-- Profil Ringkas -->
                     <div class="mobile-user-profile">
-                        <div class="user-avatar" style="width: 35px; height: 35px; font-size: 14px;">
+                        <div class="user-avatar" style="width: 45px; height: 45px; font-size: 16px;">
                             {{ strtoupper(substr(Auth::user()->username, 0, 1)) }}
                         </div>
                         <div class="ms-3 overflow-hidden">
-                            <div class="fw-bold text-dark text-truncate" style="font-size: 14px;">{{ Auth::user()->username }}</div>
-                            <div class="text-muted text-truncate text-capitalize" style="font-size: 11px;">{{ Auth::user()->role }}</div>
+                            <div class="fw-bold text-dark text-truncate" style="font-size: 15px;">{{ Auth::user()->username }}</div>
+                            <div class="text-muted text-truncate text-capitalize" style="font-size: 12px;">{{ Auth::user()->role }}</div>
                         </div>
                     </div>
                 @endauth
 
-                <ul class="p-0 m-0" style="list-style: none;">
+                <ul class="p-0 m-0">
                     @auth
                         @if(Auth::user()->role === 'admin')
                             <li class="menu-section-title">Menu Admin</li>
@@ -463,7 +285,7 @@
                             </li>
                         @endif
                         
-                        <!-- Logout Button Mobile -->
+                        <!-- Logout Button -->
                         <li class="mt-4 px-2">
                             <form action="{{ route('logout') }}" method="POST" class="m-0">
                                 @csrf
@@ -530,7 +352,6 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Logika Dropdown Menu Mobile
             const topMenuToggle = document.getElementById('topMenuToggle');
             const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
 
@@ -540,7 +361,6 @@
                     mobileMenuDropdown.classList.toggle('show');
                 });
 
-                // Tutup menu jika user klik di luar area dropdown
                 document.addEventListener('click', function(e) {
                     if (!mobileMenuDropdown.contains(e.target) && !topMenuToggle.contains(e.target)) {
                         mobileMenuDropdown.classList.remove('show');
