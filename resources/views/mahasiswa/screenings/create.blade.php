@@ -43,7 +43,7 @@
     .question-block {
         padding: 24px 0;
         border-bottom: 1px dashed #E2E8F0;
-        transition: background 0.3s ease;
+        transition: all 0.3s ease;
     }
 
     .question-block:last-child {
@@ -63,6 +63,27 @@
         color: #0F172A;
         line-height: 1.6;
         margin-bottom: 16px;
+    }
+
+    /* Highlight Error jika belum diisi */
+    .question-block.has-error {
+        background-color: #FEF2F2 !important; /* Merah muda transparan */
+        border: 1px solid #FECACA !important;
+        border-radius: 12px;
+        padding: 24px 16px;
+        margin: 0 -16px;
+    }
+
+    .error-text {
+        display: none;
+        color: #EF4444;
+        font-size: 13px;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+
+    .question-block.has-error .error-text {
+        display: block; /* Tampilkan teks error jika ada class has-error */
     }
 
     /* Transformasi Radio Button Menjadi Kotak (Pills) */
@@ -122,6 +143,7 @@
         transform: translateY(-2px);
     }
 
+    /* Accessibility / Keyboard Focus */
     .custom-radio .form-check-input:focus-visible + .form-check-label {
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
         outline: none;
@@ -186,32 +208,41 @@
                     <p class="mb-0">Bacalah setiap pernyataan dan pilih jawaban yang paling menggambarkan keadaan Anda selama <strong>SATU MINGGU TERAKHIR</strong>. <em>Tidak ada jawaban yang benar atau salah, jawablah secara jujur.</em></p>
                 </div>
 
-                <form id="form-skrining" action="{{ route('mahasiswa.screenings.store') }}" method="POST">
+                <!-- 
+                  PENTING: Tambahkan 'novalidate' agar validasi bawaan HTML5 mati, 
+                  sehingga kita bisa mengontrolnya penuh lewat JS. 
+                -->
+                <form id="form-skrining" action="{{ route('mahasiswa.screenings.store') }}" method="POST" novalidate>
                     @csrf
                     
                     @foreach($questions as $index => $q)
-                    <div class="question-block">
+                    <div class="question-block" id="block_{{ $q->id }}">
                         <p class="question-text">
                             <span class="text-primary me-1">{{ $index + 1 }}.</span> {{ $q->question_text }}
                         </p>
                         
                         <div class="options-grid">
                             <div class="custom-radio">
-                                <input class="form-check-input" type="radio" name="answers[{{ $q->id }}]" id="q_{{ $q->id }}_0" value="0" required>
+                                <!-- Hapus atribut 'required' karena sudah divalidasi JS -->
+                                <input class="form-check-input" type="radio" name="answers[{{ $q->id }}]" id="q_{{ $q->id }}_0" value="0">
                                 <label class="form-check-label" for="q_{{ $q->id }}_0">Tidak Pernah</label>
                             </div>
                             <div class="custom-radio">
-                                <input class="form-check-input" type="radio" name="answers[{{ $q->id }}]" id="q_{{ $q->id }}_1" value="1" required>
+                                <input class="form-check-input" type="radio" name="answers[{{ $q->id }}]" id="q_{{ $q->id }}_1" value="1">
                                 <label class="form-check-label" for="q_{{ $q->id }}_1">Kadang-kadang</label>
                             </div>
                             <div class="custom-radio">
-                                <input class="form-check-input" type="radio" name="answers[{{ $q->id }}]" id="q_{{ $q->id }}_2" value="2" required>
+                                <input class="form-check-input" type="radio" name="answers[{{ $q->id }}]" id="q_{{ $q->id }}_2" value="2">
                                 <label class="form-check-label" for="q_{{ $q->id }}_2">Sering</label>
                             </div>
                             <div class="custom-radio">
-                                <input class="form-check-input" type="radio" name="answers[{{ $q->id }}]" id="q_{{ $q->id }}_3" value="3" required>
+                                <input class="form-check-input" type="radio" name="answers[{{ $q->id }}]" id="q_{{ $q->id }}_3" value="3">
                                 <label class="form-check-label" for="q_{{ $q->id }}_3">Hampir Selalu</label>
                             </div>
+                        </div>
+                        <!-- Pesan error yang akan muncul jika tidak diisi -->
+                        <div class="error-text">
+                            <i class="bi bi-exclamation-triangle-fill me-1"></i> Pertanyaan ini wajib diisi.
                         </div>
                     </div>
                     @endforeach
@@ -240,11 +271,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const formSkrining = document.getElementById('form-skrining');
     const btnSubmit = document.getElementById('btnSubmit');
 
-    // 1. Pantau jika user sudah mulai mengisi
+    // 1. Pantau interaksi pada form (Tandai dirty & hapus error saat user klik)
     const formInputs = document.querySelectorAll('#form-skrining input[type="radio"]');
     formInputs.forEach(input => {
-        input.addEventListener('change', () => {
+        input.addEventListener('change', function() {
             isFormDirty = true;
+            
+            // Hapus class 'has-error' dari block pertanyaan terdekat ketika user memilih jawaban
+            const questionBlock = this.closest('.question-block');
+            if(questionBlock) {
+                questionBlock.classList.remove('has-error');
+            }
         });
     });
 
@@ -256,24 +293,65 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // 3. Konfirmasi sebelum Submit Form menggunakan SweetAlert2
+    // 3. Validasi Kustom dan Konfirmasi Submit
     if (formSkrining) {
         formSkrining.addEventListener('submit', function(e) {
             e.preventDefault(); // Tahan pengiriman form
 
+            let isValid = true;
+            let firstErrorBlock = null;
+            let emptyCount = 0;
+
+            const questionBlocks = document.querySelectorAll('.question-block');
+            
+            // Cek setiap blok pertanyaan
+            questionBlocks.forEach(block => {
+                const isChecked = block.querySelector('input[type="radio"]:checked');
+                
+                if (!isChecked) {
+                    isValid = false;
+                    emptyCount++;
+                    block.classList.add('has-error'); // Tambahkan highlight merah
+                    
+                    // Simpan elemen pertama yang error untuk keperluan scroll
+                    if (!firstErrorBlock) {
+                        firstErrorBlock = block;
+                    }
+                } else {
+                    block.classList.remove('has-error'); // Bersihkan state jika sudah diisi
+                }
+            });
+
+            // Jika ada pertanyaan yang kosong
+            if (!isValid) {
+                // Tampilkan notifikasi peringatan
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Belum Selesai',
+                    text: `Terdapat ${emptyCount} pertanyaan yang belum Anda jawab. Silakan periksa kembali bagian yang ditandai merah.`,
+                    confirmButtonColor: '#4F46E5',
+                    confirmButtonText: 'Baik, Saya Periksa'
+                }).then(() => {
+                    // Gulir (scroll) halus ke pertanyaan pertama yang belum diisi
+                    if (firstErrorBlock) {
+                        firstErrorBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+                return; // Hentikan eksekusi submit
+            }
+
+            // Jika semua sudah diisi, tampilkan Konfirmasi Akhir
             Swal.fire({
                 title: 'Sudah Yakin?',
                 text: "Pastikan semua pertanyaan telah dijawab sesuai dengan apa yang Anda rasakan.",
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonColor: '#4F46E5', // Warna tombol utama (primary)
-                cancelButtonColor: '#EF4444', // Warna tombol batal (danger)
+                confirmButtonColor: '#4F46E5', 
+                cancelButtonColor: '#EF4444', 
                 confirmButtonText: '<i class="bi bi-send-check"></i> Ya, Kirim Sekarang',
                 cancelButtonText: 'Cek Kembali',
-                reverseButtons: true, // Membalik posisi tombol agar 'Kirim' ada di kanan
-                customClass: {
-                    popup: 'rounded-4' // Membuat sudut popup lebih halus
-                }
+                reverseButtons: true,
+                customClass: { popup: 'rounded-4' }
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Matikan peringatan beforeunload
