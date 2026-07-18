@@ -296,7 +296,7 @@
                             </h2>
                             <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body text-muted bg-white">
-                                    Aplikasi ini dikembangkan oleh [Nama Anda/Universitas/Tim] sebagai dedikasi untuk mempermudah akses skrining kesehatan mental berbasis bukti ilmiah (instrumen DASS-42).
+                                    Aplikasi ini dikembangkan oleh - sebagai dedikasi untuk mempermudah akses skrining kesehatan mental berbasis bukti ilmiah (instrumen DASS-42).
                                 </div>
                             </div>
                         </div>
