@@ -77,7 +77,7 @@
     /* Badge Dasar */
     .badge-status {
         font-size: 13px;
-        font-weight: 700; /* Dibuat sedikit lebih bold */
+        font-weight: 700;
         letter-spacing: 0.3px;
         padding: 8px 16px;
         border-radius: 20px;
@@ -85,7 +85,7 @@
         display: inline-block;
     }
 
-    /* CLASS WARNA SPESIFIK (Vaksin Anti-Blokir Inline Style) */
+    /* CLASS WARNA SPESIFIK */
     .badge-normal { background-color: #22C55E !important; color: #FFFFFF !important; border: none; }
     .badge-ringan { background-color: #EAB308 !important; color: #000000 !important; border: none; }
     .badge-sedang { background-color: #F97316 !important; color: #FFFFFF !important; border: none; }
@@ -136,6 +136,7 @@
                 </a>
             </div>
 
+            <!-- Panel Hasil Utama -->
             <div class="detail-card">
                 <div class="detail-header d-flex flex-column flex-sm-row justify-content-between align-items-sm-center">
                     <div class="d-flex align-items-center mb-2 mb-sm-0">
@@ -151,7 +152,6 @@
                 
                 <div class="card-body p-4 p-md-5">
                     @php
-                        // Logika Anti-Gagal Mapping Class CSS
                         $badgeMap = [
                             'normal' => 'badge-normal',
                             'ringan' => 'badge-ringan',
@@ -165,7 +165,7 @@
                         $classStres = $badgeMap[strtolower(trim($screening->status_stres ?? ''))] ?? 'badge-default';
                     @endphp
 
-                    <div class="row g-3 g-md-4">
+                    <div class="row g-3 g-md-4 mb-4">
                         <div class="col-md-4">
                             <div class="stat-box">
                                 <h6 class="text-muted fw-semibold text-uppercase mb-2" style="font-size: 12px; letter-spacing: 1px;">Depresi</h6>
@@ -199,6 +199,69 @@
                 </div>
             </div>
 
+            <!-- Panel Edukasi / Informasi DASS (BARU) -->
+            <div class="accordion mb-4 shadow-sm" id="accordionInformasiSkor" style="border-radius: 16px; overflow: hidden; border: 1px solid rgba(226, 232, 240, 0.8);">
+                <div class="accordion-item" style="border: none;">
+                    <h2 class="accordion-header" id="headingSkor">
+                        <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkor" aria-expanded="false" aria-controls="collapseSkor" style="background-color: #F8FAFC; box-shadow: none;">
+                            <i class="bi bi-info-circle text-primary me-2"></i> Mengapa skor saya termasuk kategori ini? (Panduan DASS-42)
+                        </button>
+                    </h2>
+                    <div id="collapseSkor" class="accordion-collapse collapse" aria-labelledby="headingSkor" data-bs-parent="#accordionInformasiSkor">
+                        <div class="accordion-body p-4 bg-white">
+                            <p class="text-muted small mb-3">
+                                DASS-42 adalah instrumen psikologis standar. Kategori <strong>"Sangat Parah"</strong> merupakan batas ambang tertinggi (<em>cutoff</em>). Artinya, berapapun skor yang melampaui batas tersebut (misalnya angka 29 dan 41 pada skala Depresi) akan dikelompokkan ke dalam kategori klinis yang sama. Berikut adalah rentang skornya:
+                            </p>
+                            <div class="table-responsive">
+                                <table class="table table-bordered mb-0" style="font-size: 13.5px;">
+                                    <thead style="background-color: #E2E8F0; color: #334155;">
+                                        <tr>
+                                            <th width="25%">Tingkat Keparahan</th>
+                                            <th width="25%" class="text-center">Skor Depresi</th>
+                                            <th width="25%" class="text-center">Skor Kecemasan</th>
+                                            <th width="25%" class="text-center">Skor Stres</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><span class="badge" style="background-color: #22C55E;">Normal</span></td>
+                                            <td class="text-center">0 - 9</td>
+                                            <td class="text-center">0 - 7</td>
+                                            <td class="text-center">0 - 14</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="badge text-dark" style="background-color: #EAB308;">Ringan</span></td>
+                                            <td class="text-center">10 - 13</td>
+                                            <td class="text-center">8 - 9</td>
+                                            <td class="text-center">15 - 18</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="badge" style="background-color: #F97316;">Sedang</span></td>
+                                            <td class="text-center">14 - 20</td>
+                                            <td class="text-center">10 - 14</td>
+                                            <td class="text-center">19 - 25</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="badge" style="background-color: #EF4444;">Parah</span></td>
+                                            <td class="text-center">21 - 27</td>
+                                            <td class="text-center">15 - 19</td>
+                                            <td class="text-center">26 - 33</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="badge" style="background-color: #7C3AED;">Sangat Parah</span></td>
+                                            <td class="text-center fw-bold">&ge; 28</td>
+                                            <td class="text-center fw-bold">&ge; 20</td>
+                                            <td class="text-center fw-bold">&ge; 34</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Tabel Jawaban -->
             <div class="detail-card">
                 <div class="detail-header d-flex align-items-center">
                     <div class="bg-primary bg-opacity-10 p-2 rounded-lg me-3">
@@ -220,7 +283,6 @@
                                 </thead>
                                 <tbody>
                                     @php 
-                                        // Kamus opsi jawaban DASS-42
                                         $opsiTeks = [
                                             0 => 'Tidak pernah (0)',
                                             1 => 'Kadang-kadang (1)',
@@ -231,7 +293,6 @@
 
                                     @foreach($questions as $index => $q)
                                         @php
-                                            // Mengambil skor jawaban yang dipilih berdasarkan ID pertanyaan
                                             $jawabanSkor = $screening->answers[$q->id] ?? null;
                                         @endphp
                                         <tr>
