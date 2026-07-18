@@ -3,7 +3,7 @@
 @section('content')
 
 <style>
-    /* Custom Styling Khusus Dashboard */
+    /* Custom Styling Khusus Dashboard (Calm & Steady Design) */
     .dashboard-header {
         background: transparent;
         border: none;
@@ -14,14 +14,9 @@
         border-radius: 20px;
         background: #FFFFFF;
         box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
-        transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
-    }
-    
-    .dashboard-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 25px rgba(15, 23, 42, 0.06);
+        /* Menghapus transition dan hover transform agar card diam (steady) */
     }
 
     .stat-icon-bg {
@@ -40,12 +35,7 @@
         border: 1px solid #E2E8F0;
         border-radius: 16px;
         padding: 16px 10px;
-        transition: all 0.2s ease;
-    }
-
-    .stat-box:hover {
-        background: #F1F5F9;
-        border-color: #CBD5E1;
+        /* Menghapus efek hover (perubahan warna) agar pengguna tidak terdistraksi */
     }
 
     .badge-modern {
@@ -53,6 +43,16 @@
         font-weight: 600;
         letter-spacing: 0.3px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    /* Animasi HANYA diberikan pada elemen yang bisa diklik (Actionable) */
+    .btn-actionable {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .btn-actionable:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(13, 110, 253, 0.15) !important;
     }
 </style>
 
@@ -81,13 +81,13 @@
                 <div class="mt-auto">
                     @if(($totalScreening ?? 0) == 0)
                         <p class="text-muted small mb-3">Anda belum pernah melakukan skrining.</p>
-                        <!-- Ubah route menjadi onboarding -->
-                        <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-primary px-4 py-2 w-100 rounded-pill shadow-sm">
+                        <!-- Ditambahkan class btn-actionable -->
+                        <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-primary btn-actionable px-4 py-2 w-100 rounded-pill shadow-sm">
                             <i class="bi bi-plus-circle me-2"></i> Mulai Skrining Pertama
                         </a>
                     @else
-                        <!-- Ubah route menjadi onboarding -->
-                        <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-outline-primary px-4 py-2 w-100 rounded-pill">
+                        <!-- Ditambahkan class btn-actionable -->
+                        <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-outline-primary btn-actionable px-4 py-2 w-100 rounded-pill">
                             <i class="bi bi-arrow-repeat me-2"></i> Lakukan Skrining Baru
                         </a>
                     @endif
@@ -109,7 +109,6 @@
 
             @if($latestScreening)
                 @php
-                    // Logika warna dipertahankan 100%
                     $badgeColors = [
                         'Normal' => 'background-color: #22C55E; color: white;',
                         'Ringan' => 'background-color: #EAB308; color: black;',
@@ -198,17 +197,13 @@
         if(!canvas) return;
         const ctx = canvas.getContext('2d');
         
-        // 1. Ubah format dari Object ke Array murni menggunakan Object.values()
-        // 2. Gunakan .map(Number) untuk memastikan nilainya dibaca sebagai angka
         const labels = Object.values({!! json_encode($labels ?? []) !!});
         const dataDepresi = Object.values({!! json_encode($dataDepresi ?? []) !!}).map(Number);
         const dataKecemasan = Object.values({!! json_encode($dataKecemasan ?? []) !!}).map(Number);
         const dataStres = Object.values({!! json_encode($dataStres ?? []) !!}).map(Number);
 
-        // Hentikan jika tidak ada data label
         if(labels.length === 0) return;
 
-        // --- Logika Pelebaran Grafik (Agar bisa di-scroll) ---
         const chartWrapper = document.getElementById('chartWrapper');
         const parentLayar = chartWrapper.parentElement;
         
@@ -228,7 +223,7 @@
                     {
                         label: 'Skor Depresi',
                         data: dataDepresi,
-                        borderColor: '#3B82F6', // Biru
+                        borderColor: '#3B82F6', 
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
@@ -241,7 +236,7 @@
                     {
                         label: 'Skor Kecemasan',
                         data: dataKecemasan,
-                        borderColor: '#EAB308', // Kuning
+                        borderColor: '#EAB308', 
                         backgroundColor: 'rgba(234, 179, 8, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
@@ -254,7 +249,7 @@
                     {
                         label: 'Skor Stres',
                         data: dataStres,
-                        borderColor: '#EF4444', // Merah
+                        borderColor: '#EF4444', 
                         backgroundColor: 'rgba(239, 68, 68, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
