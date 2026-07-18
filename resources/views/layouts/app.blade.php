@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +9,7 @@
     
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
 
+    <!-- Dependencies -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,9 +45,7 @@
             overflow-x: hidden;
         }
 
-        /* ===========================
-                MAIN LAYOUT
-        =========================== */
+        /* MAIN LAYOUT */
         .main-wrapper {
             min-height: 100vh;
             display: flex;
@@ -62,9 +60,7 @@
             width: 100%;
         }
 
-        /* ===========================
-                TOPBAR NAVIGATION
-        =========================== */
+        /* TOPBAR NAVIGATION */
         .topbar {
             display: flex;
             align-items: center;
@@ -77,12 +73,10 @@
             z-index: 1050;
         }
 
-        /* ===========================
-                TOP-DOWN MENU DROPDOWN
-        =========================== */
+        /* TOP-DOWN MENU DROPDOWN */
         .mobile-menu-dropdown {
             position: fixed;
-            top: 61px; /* Menyesuaikan tinggi topbar */
+            top: 61px;
             left: 0;
             width: 100%;
             background: rgba(255, 255, 255, 0.98);
@@ -90,13 +84,10 @@
             border-bottom: 1px solid var(--border);
             box-shadow: 0 10px 15px rgba(0,0,0,0.05);
             z-index: 1040;
-            
-            /* Animasi Sembunyi/Muncul */
             opacity: 0;
             visibility: hidden;
             transform: translateY(-20px);
             transition: all 0.3s ease;
-            
             max-height: calc(100vh - 65px);
             overflow-y: auto;
         }
@@ -177,9 +168,7 @@
             color: var(--primary) !important;
         }
 
-        /* ===========================
-                GLOBAL COMPONENTS
-        =========================== */
+        /* GLOBAL COMPONENTS */
         .card {
             border: 1px solid rgba(226, 232, 240, 0.8);
             border-radius: var(--radius-lg);
@@ -197,11 +186,13 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             border: none;
+            color: white;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+            color: white;
         }
 
         .alert { border-radius: var(--radius-md); border: none; }
@@ -216,7 +207,6 @@
         }
     </style>
 </head>
-
 <body>
 
     <div class="main-wrapper">
@@ -285,7 +275,6 @@
                             </li>
                         @endif
                         
-                        <!-- ================= MULAI TAMBAHAN MENU PROFIL ================= -->
                         <hr class="my-3 text-muted" style="opacity: 0.2;">
 
                         <li class="menu-section-title">Pengaturan</li>
@@ -294,7 +283,6 @@
                                 <i class="bi bi-person-gear"></i> Profil Saya
                             </a>
                         </li>
-                        <!-- ================= AKHIR TAMBAHAN MENU PROFIL ================= -->
                         
                         <!-- Logout Button -->
                         <li class="mt-4 px-2">
@@ -324,10 +312,8 @@
 
         <!-- Content Area -->
         <div class="content-area">
-            
             {{-- Konten Halaman --}}
             @yield('content')
-            
         </div>
 
         <footer class="mt-auto py-4 px-4">
@@ -393,7 +379,6 @@
             // Inisialisasi Toast Notifikasi
             const toastElList = document.querySelectorAll('.toast');
             const toastList = [...toastElList].map(toastEl => {
-                // delay: 3500 (3.5 detik) lalu notifikasi otomatis menghilang
                 return new bootstrap.Toast(toastEl, { delay: 1500 });
             });
             toastList.forEach(toast => toast.show());
