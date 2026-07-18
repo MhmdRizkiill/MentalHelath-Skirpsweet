@@ -28,12 +28,6 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Peran (Role)</label>
-                            <input type="text" class="form-control bg-light text-capitalize" value="{{ Auth::user()->role }}" readonly disabled>
-                            <div class="form-text text-muted" style="font-size: 12px;">Role tidak dapat diubah sendiri.</div>
-                        </div>
-
                         <button type="submit" class="btn btn-primary w-100 mt-2">
                             Simpan Perubahan
                         </button>
