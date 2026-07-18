@@ -285,6 +285,17 @@
                             </li>
                         @endif
                         
+                        <!-- ================= MULAI TAMBAHAN MENU PROFIL ================= -->
+                        <hr class="my-3 text-muted" style="opacity: 0.2;">
+
+                        <li class="menu-section-title">Pengaturan</li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profile.index') }}">
+                                <i class="bi bi-person-gear"></i> Profil Saya
+                            </a>
+                        </li>
+                        <!-- ================= AKHIR TAMBAHAN MENU PROFIL ================= -->
+                        
                         <!-- Logout Button -->
                         <li class="mt-4 px-2">
                             <form action="{{ route('logout') }}" method="POST" class="m-0">

@@ -72,12 +72,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/screenings/{screening}', [ScreeningController::class, 'show'])->name('screenings.show');
     });
 
-    Route::middleware('role:mahasiswa')->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
-        // ... (rute dashboard dan skrining)
-        
-        // Rute untuk Ubah Password
-        Route::get('/password', [PasswordController::class, 'edit'])->name('password.edit');
-        Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
-    });
+    Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+});
 
 });
