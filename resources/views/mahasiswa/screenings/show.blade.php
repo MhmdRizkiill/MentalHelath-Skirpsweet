@@ -199,7 +199,7 @@
                 </div>
             </div>
 
-            <!-- Panel Edukasi / Informasi DASS (BARU) -->
+            <!-- Panel Edukasi / Informasi DASS -->
             <div class="accordion mb-4 shadow-sm" id="accordionInformasiSkor" style="border-radius: 16px; overflow: hidden; border: 1px solid rgba(226, 232, 240, 0.8);">
                 <div class="accordion-item" style="border: none;">
                     <h2 class="accordion-header" id="headingSkor">
@@ -210,7 +210,7 @@
                     <div id="collapseSkor" class="accordion-collapse collapse" aria-labelledby="headingSkor" data-bs-parent="#accordionInformasiSkor">
                         <div class="accordion-body p-4 bg-white">
                             <p class="text-muted small mb-3">
-                                DASS-42 adalah instrumen psikologis standar. Kategori <strong>"Sangat Parah"</strong> merupakan batas ambang tertinggi (<em>cutoff</em>). Artinya, berapapun skor yang melampaui batas tersebut (misalnya angka 29 dan 41 pada skala Depresi) akan dikelompokkan ke dalam kategori klinis yang sama. Berikut adalah rentang skornya:
+                                DASS-42 adalah instrumen psikologis standar yang memiliki 14 pertanyaan untuk masing-masing kategori (Depresi, Kecemasan, Stres). Karena skor poin tertinggi setiap pertanyaan adalah 3, maka <strong>batas maksimal skor untuk setiap kategori adalah 42</strong>. Kategori <strong>"Sangat Parah"</strong> merupakan rentang batas atas tertinggi, sehingga skor berapapun yang masuk di dalam rentang tersebut akan diklasifikasikan ke tingkat keparahan yang sama.
                             </p>
                             <div class="table-responsive">
                                 <table class="table table-bordered mb-0" style="font-size: 13.5px;">
@@ -249,9 +249,9 @@
                                         </tr>
                                         <tr>
                                             <td><span class="badge" style="background-color: #7C3AED;">Sangat Parah</span></td>
-                                            <td class="text-center fw-bold">&ge; 28</td>
-                                            <td class="text-center fw-bold">&ge; 20</td>
-                                            <td class="text-center fw-bold">&ge; 34</td>
+                                            <td class="text-center fw-bold">28 - 42</td>
+                                            <td class="text-center fw-bold">20 - 42</td>
+                                            <td class="text-center fw-bold">34 - 42</td>
                                         </tr>
                                     </tbody>
                                 </table>
