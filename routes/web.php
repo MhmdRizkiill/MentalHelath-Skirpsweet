@@ -17,7 +17,7 @@ use App\Http\Controllers\ProfileController;
 // Halaman Landing Page (Akses Publik)
 Route::get('/', function () {
     return view('welcome'); // Memanggil file welcome.blade.php
-});
+})->name('home'); // <-- Tambahan name('home') di sini
 
 // ==========================================
 // GRUP ROUTE GUEST (Belum Login)
@@ -74,6 +74,7 @@ Route::middleware('auth')->group(function () {
         // Halaman Onboarding Sebelum Skrining
         Route::get('/screenings/onboarding', [ScreeningController::class, 'onboarding'])->name('screenings.onboarding');
         
+        // Form & Proses Skrining
         Route::get('/screenings/create', [ScreeningController::class, 'create'])->name('screenings.create');
         Route::post('/screenings', [ScreeningController::class, 'store'])->name('screenings.store');
         Route::get('/screenings/{id}', [ScreeningController::class, 'show'])->name('screenings.show');
