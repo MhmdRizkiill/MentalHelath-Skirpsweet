@@ -133,7 +133,7 @@
                     <li class="nav-item ms-lg-3">
                         @auth
                             @if(auth()->user()->role === 'admin')
-                                <a href="{{ route('admin.dashboard') }}" class="btn btn-primary rounded-pill px-4 fw-semibold">Dashboard</a>
+                                <a href="{{ route('admin.dashboard') }}" class="btn btn-primary rounded-pill px-4 fw-semibold">Dashboard Admin</a>
                             @else
                                 <a href="{{ route('mahasiswa.dashboard') }}" class="btn btn-primary rounded-pill px-4 fw-semibold">Dashboard</a>
                             @endif
@@ -162,20 +162,15 @@
                         Aplikasi skrining ini membantu Anda mengevaluasi tingkat depresi, kecemasan, dan stres secara mandiri dalam waktu kurang dari 10 menit. Kenali diri Anda lebih baik hari ini.
                     </p>
                     <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+                        <!-- Perbaikan: Tombol diubah agar langsung ke halaman Login / Skrining -->
                         @guest
                             <a href="{{ route('login') }}" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow">
                                 Mulai Skrining Sekarang <i class="bi bi-arrow-right ms-2"></i>
                             </a>
                         @else
-                            @if(auth()->user()->role === 'admin')
-                                <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow">
-                                    Ke Dashboard Admin <i class="bi bi-arrow-right ms-2"></i>
-                                </a>
-                            @else
-                                <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow">
-                                    Mulai Skrining Sekarang <i class="bi bi-arrow-right ms-2"></i>
-                                </a>
-                            @endif
+                            <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow">
+                                Mulai Skrining Sekarang <i class="bi bi-arrow-right ms-2"></i>
+                            </a>
                         @endguest
                         
                         <a href="#how" class="btn btn-outline-secondary btn-lg rounded-pill px-5 fw-bold bg-white">
@@ -184,7 +179,6 @@
                     </div>
                 </div>
                 <div class="col-lg-5 d-none d-lg-block">
-                    <!-- Placeholder Ilustrasi/Gambar -->
                     <img src="{{ asset('images/hero-image.png') }}" alt="MindScreen Illustration" class="img-fluid rounded-4 shadow-lg" style="animation: float 6s ease-in-out infinite;">
                 </div>
             </div>
@@ -360,20 +354,15 @@
                     <h2 class="fw-bold mb-3">Kenali Pikiranmu Sekarang.</h2>
                     <p class="mb-4 opacity-75 fs-5">Kesehatan mental sama pentingnya dengan kesehatan fisik.</p>
                     
+                    <!-- Perbaikan: Tombol diubah agar langsung ke halaman Login / Skrining -->
                     @guest
                         <a href="{{ route('login') }}" class="btn btn-light btn-lg rounded-pill px-5 fw-bold text-primary shadow">
                             Mulai Skrining Gratis
                         </a>
                     @else
-                        @if(auth()->user()->role === 'admin')
-                            <a href="{{ route('admin.dashboard') }}" class="btn btn-light btn-lg rounded-pill px-5 fw-bold text-primary shadow">
-                                Ke Dashboard Admin
-                            </a>
-                        @else
-                            <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-light btn-lg rounded-pill px-5 fw-bold text-primary shadow">
-                                Mulai Skrining Gratis
-                            </a>
-                        @endif
+                        <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-light btn-lg rounded-pill px-5 fw-bold text-primary shadow">
+                            Mulai Skrining Gratis
+                        </a>
                     @endguest
                 </div>
             </div>
