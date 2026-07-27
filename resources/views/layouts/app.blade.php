@@ -32,6 +32,7 @@
             --muted: #64748B;
             --radius-lg: 18px;
             --radius-md: 14px;
+            --sidebar-width: 280px;
         }
 
         * { box-sizing: border-box; }
@@ -39,50 +40,47 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #F8FAFC;
+            background: var(--bg);
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* MAIN LAYOUT */
-        .main-wrapper {
+        /* LAYOUT CONTAINER */
+        .app-layout {
+            display: flex;
             min-height: 100vh;
+        }
+
+        /* SIDEBAR (PERMANEN DI DESKTOP) */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: #FFFFFF;
+            border-right: 1px solid var(--border);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1020;
             display: flex;
             flex-direction: column;
+            padding: 24px 20px;
+            overflow-y: auto;
+            transition: all 0.3s ease;
         }
 
-        .content-area {
-            flex: 1;
-            padding: 20px 15px;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        /* TOPBAR NAVIGATION */
-        .topbar {
+        /* LOGO BRANDING */
+        .brand-logo {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            background: rgba(255, 255, 255, 0.98);
-            padding: 14px 24px;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 1030;
+            gap: 12px;
+            text-decoration: none;
+            margin-bottom: 28px;
         }
 
-        /* LOGO BRANDING STYLING (Diperbesar & Dibuat Modern) */
-        .brand-logo {
-            transition: transform 0.2s ease;
-        }
-        .brand-logo:hover {
-            transform: scale(1.02);
-        }
         .brand-icon-wrapper {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             background: rgba(79, 70, 229, 0.1);
             border-radius: 12px;
             display: flex;
@@ -90,36 +88,40 @@
             justify-content: center;
             color: var(--primary);
             font-size: 22px;
+            flex-shrink: 0;
         }
 
-        /* SIDEBAR (OFFCANVAS) CUSTOM STYLING */
-        .offcanvas-sidebar {
-            width: 300px !important;
-            border-right: 1px solid var(--border);
-        }
-
-        .mobile-user-profile {
+        /* PROFIL USER DI SIDEBAR */
+        .user-profile-card {
             display: flex;
             align-items: center;
-            padding: 14px;
+            padding: 12px;
             background: #F8FAFC;
             border: 1px solid var(--border);
             border-radius: var(--radius-md);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .user-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 16px;
+            font-weight: 700;
+            font-size: 15px;
             flex-shrink: 0;
+        }
+
+        /* MENU NAVIGASI SIDEBAR */
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
         }
 
         .menu-section-title {
@@ -128,12 +130,10 @@
             color: var(--muted);
             font-weight: 700;
             letter-spacing: 1px;
-            padding: 10px 12px 5px;
-            list-style: none;
+            padding: 12px 12px 6px;
         }
 
         .nav-item {
-            list-style: none;
             margin-bottom: 4px;
         }
 
@@ -163,6 +163,62 @@
             color: var(--primary) !important;
         }
 
+        /* MAIN CONTENT AREA */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: calc(100% - var(--sidebar-width));
+            transition: all 0.3s ease;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 30px 40px;
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* MOBILE HEADER BAR */
+        .mobile-header {
+            display: none;
+            background: #FFFFFF;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1010;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* RESPONSIVE LAYOUT (UNTUK TABLET & HP) */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+
+            .content-area {
+                padding: 20px 16px;
+            }
+        }
+
         /* GLOBAL COMPONENTS */
         .card {
             border: 1px solid rgba(226, 232, 240, 0.8);
@@ -188,17 +244,6 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
             color: white;
-        }
-
-        .alert { border-radius: var(--radius-md); border: none; }
-        
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
-
-        @media(min-width: 992px) {
-            .content-area {
-                padding: 40px 30px;
-            }
         }
 
         /* OPSI JAWABAN SKRINING */
@@ -228,9 +273,6 @@
 
         .option-icon { margin-right: 12px; font-size: 1.2rem; color: var(--muted); transition: all 0.2s; }
         .option-input:checked + .option-button .option-icon { color: #ffffff; }
-        
-        .option-input:checked + .option-button .check-idle { display: none !important; }
-        .option-input:checked + .option-button .check-active { display: inline-block !important; }
 
         /* CUSTOM BADGE OUTLINE */
         .badge-status {
@@ -244,8 +286,6 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            cursor: default;
-            pointer-events: none;
         }
         .status-normal { border-color: #22C55E; color: #16A34A; }
         .status-ringan { border-color: #3B82F6; color: #2563EB; }
@@ -253,16 +293,21 @@
         .status-parah { border-color: #EF4444; color: #DC2626; }
         .status-sangat-parah { border-color: #9F1239; color: #881337; }
 
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="main-wrapper">
-        
-        <!-- Topbar Utama -->
-        <div class="topbar shadow-sm">
-            <!-- LOGO TERBARU (DIPERBESAR & MODERN) -->
-            <a href="#" class="d-flex align-items-center text-decoration-none brand-logo gap-3">
+    <div class="app-layout">
+
+        <!-- ==========================================
+             SIDEBAR NAVIGASI (TAMPIL PERMANEN)
+        =========================================== -->
+        <aside class="sidebar shadow-sm" id="mainSidebar">
+            
+            <!-- BRAND LOGO -->
+            <a href="#" class="brand-logo">
                 <div class="brand-icon-wrapper shadow-sm">
                     <i class="bi bi-heart-pulse-fill"></i>
                 </div>
@@ -271,134 +316,125 @@
                 </span>
             </a>
 
-            <!-- Tombol Trigger Sidebar (Offcanvas) -->
-            <button class="btn btn-light border shadow-sm p-2 px-3 d-flex align-items-center gap-2" 
-                    type="button" 
-                    data-bs-toggle="offcanvas" 
-                    data-bs-target="#sidebarMenu" 
-                    aria-controls="sidebarMenu">
-                <i class="bi bi-list fs-3 text-dark"></i>
-            </button>
-        </div>
+            @auth
+                <!-- PROFIL USER -->
+                <div class="user-profile-card">
+                    <div class="user-avatar">
+                        {{ strtoupper(substr(Auth::user()->username, 0, 1)) }}
+                    </div>
+                    <div class="ms-3 overflow-hidden">
+                        <div class="fw-bold text-dark text-truncate" style="font-size: 14px;">{{ Auth::user()->username }}</div>
+                        <div class="text-muted text-truncate text-capitalize" style="font-size: 12px;">{{ Auth::user()->role }}</div>
+                    </div>
+                </div>
+            @endauth
+
+            <!-- MENU NAVIGASI -->
+            <ul class="sidebar-menu">
+                @auth
+                    @if(Auth::user()->role === 'admin')
+                        <li class="menu-section-title">Menu Admin</li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.questions.*') ? 'active' : '' }}" href="{{ route('admin.questions.index') }}">
+                                <i class="bi bi-patch-question"></i> Kelola Pertanyaan
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
+                                <i class="bi bi-people"></i> Kelola Pengguna
+                            </a>
+                        </li>
+                    @elseif(Auth::user()->role === 'mahasiswa')
+                        <li class="menu-section-title">Menu Mahasiswa</li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('mahasiswa.dashboard') ? 'active' : '' }}" href="{{ route('mahasiswa.dashboard') }}">
+                                <i class="bi bi-house-door"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('mahasiswa.screenings.create') ? 'active' : '' }}" href="{{ route('mahasiswa.screenings.create') }}">
+                                <i class="bi bi-clipboard2-pulse"></i> Skrining Baru
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('mahasiswa.screenings.index') ? 'active' : '' }}" href="{{ route('mahasiswa.screenings.index') }}">
+                                <i class="bi bi-clock-history"></i> Riwayat
+                            </a>
+                        </li>
+                    @endif
+
+                    <li class="menu-section-title mt-3">Pengaturan</li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profile.index') }}">
+                            <i class="bi bi-person-gear"></i> Profil Saya
+                        </a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">
+                            <i class="bi bi-box-arrow-in-right"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">
+                            <i class="bi bi-person-plus"></i> Register
+                        </a>
+                    </li>
+                @endauth
+            </ul>
+
+            @auth
+                <!-- TOMBOL KELUAR DI BAWAH SIDEBAR -->
+                <div class="pt-3 border-top mt-auto">
+                    <button type="button" class="btn w-100 text-danger fw-bold d-flex align-items-center justify-content-center" 
+                            style="border: 1px solid #FEE2E2; background: #FEF2F2; border-radius: 12px; padding: 11px;"
+                            data-bs-toggle="modal" data-bs-target="#logoutModal">
+                        <i class="bi bi-box-arrow-right me-2"></i> Keluar Aplikasi
+                    </button>
+                </div>
+            @endauth
+
+        </aside>
 
         <!-- ==========================================
-             SIDEBAR MENU (OFFCANVAS SLIDE-IN KIRI)
+             MAIN CONTENT AREA
         =========================================== -->
-        <div class="offcanvas offcanvas-start offcanvas-sidebar" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
-            <div class="offcanvas-header border-bottom py-3 px-4">
-                <div class="d-flex align-items-center gap-2" id="sidebarMenuLabel">
+        <main class="main-content">
+            
+            <!-- HEADER KHUSUS MOBLE (Layar Kecil) -->
+            <header class="mobile-header">
+                <a href="#" class="d-flex align-items-center gap-2 text-decoration-none">
                     <div class="brand-icon-wrapper" style="width: 36px; height: 36px; font-size: 18px;">
                         <i class="bi bi-heart-pulse-fill"></i>
                     </div>
-                    <span class="fw-bold text-dark fs-4" style="letter-spacing: -0.5px;">
-                        Mind<span class="text-primary">Screen</span>
-                    </span>
-                </div>
-                <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    <span class="fw-bold text-dark fs-4">Mind<span class="text-primary">Screen</span></span>
+                </a>
+                <button class="btn btn-light border p-2" type="button" id="sidebarToggle">
+                    <i class="bi bi-list fs-4"></i>
+                </button>
+            </header>
+
+            <!-- KONTEN UTAMA HALAMAN -->
+            <div class="content-area">
+                @yield('content')
             </div>
 
-            <div class="offcanvas-body p-4">
-                @auth
-                    <!-- Profil Ringkas User -->
-                    <div class="mobile-user-profile">
-                        <div class="user-avatar">
-                            {{ strtoupper(substr(Auth::user()->username, 0, 1)) }}
-                        </div>
-                        <div class="ms-3 overflow-hidden">
-                            <div class="fw-bold text-dark text-truncate" style="font-size: 15px;">{{ Auth::user()->username }}</div>
-                            <div class="text-muted text-truncate text-capitalize" style="font-size: 12px;">{{ Auth::user()->role }}</div>
-                        </div>
-                    </div>
-                @endauth
-
-                <ul class="p-0 m-0">
-                    @auth
-                        @if(Auth::user()->role === 'admin')
-                            <li class="menu-section-title">Menu Admin</li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
-                                    <i class="bi bi-speedometer2"></i> Dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('admin.questions.*') ? 'active' : '' }}" href="{{ route('admin.questions.index') }}">
-                                    <i class="bi bi-patch-question"></i> Kelola Pertanyaan
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
-                                    <i class="bi bi-people"></i> Kelola Pengguna
-                                </a>
-                            </li>
-                        @elseif(Auth::user()->role === 'mahasiswa')
-                            <li class="menu-section-title">Menu Mahasiswa</li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('mahasiswa.dashboard') ? 'active' : '' }}" href="{{ route('mahasiswa.dashboard') }}">
-                                    <i class="bi bi-house-door"></i> Dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('mahasiswa.screenings.create') ? 'active' : '' }}" href="{{ route('mahasiswa.screenings.create') }}">
-                                    <i class="bi bi-clipboard2-pulse"></i> Skrining Baru
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('mahasiswa.screenings.index') ? 'active' : '' }}" href="{{ route('mahasiswa.screenings.index') }}">
-                                    <i class="bi bi-clock-history"></i> Riwayat
-                                </a>
-                            </li>
-                        @endif
-                        
-                        <hr class="my-3 text-muted" style="opacity: 0.2;">
-
-                        <li class="menu-section-title">Pengaturan</li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profile.index') }}">
-                                <i class="bi bi-person-gear"></i> Profil Saya
-                            </a>
-                        </li>
-                        
-                        <!-- Tombol Keluar (Trigger Modal) -->
-                        <li class="mt-4 px-1">
-                            <button type="button" class="btn w-100 text-danger fw-bold d-flex align-items-center justify-content-center" 
-                                    style="border: 1px solid #FEE2E2; background: #FEF2F2; border-radius: 12px; padding: 12px;"
-                                    data-bs-toggle="modal" data-bs-target="#logoutModal">
-                                <i class="bi bi-box-arrow-right me-2"></i> Keluar Aplikasi
-                            </button>
-                        </li>
-
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">
-                                <i class="bi bi-box-arrow-in-right"></i> Login
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">
-                                <i class="bi bi-person-plus"></i> Register
-                            </a>
-                        </li>
-                    @endauth
-                </ul>
-            </div>
-        </div>
-
-        <!-- Content Area -->
-        <div class="content-area">
-            {{-- Konten Halaman --}}
-            @yield('content')
-        </div>
-
-        <footer class="mt-auto py-4 px-4">
-            <div class="text-center text-muted" style="font-size: 13px; font-weight: 500;">
+            <!-- FOOTER -->
+            <footer class="mt-auto py-4 px-4 border-top text-center text-muted" style="font-size: 13px;">
                 &copy; {{ date('Y') }} MentalHealthApp &bull; Sistem Skrining DASS-42
-            </div>
-        </footer>
+            </footer>
+
+        </main>
 
     </div>
 
-    <!-- Global Toast Notification Container -->
-    <div class="toast-container position-fixed top-0 end-0 p-3 mt-5" style="z-index: 1060;">
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container position-fixed top-0 end-0 p-3 mt-3" style="z-index: 1060;">
         @if (session('success') || session('status'))
             <div class="toast align-items-center text-bg-success border-0 shadow rounded-4 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
@@ -463,12 +499,20 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Inisialisasi Toast Notifikasi
+            // Toast Notification
             const toastElList = document.querySelectorAll('.toast');
-            const toastList = [...toastElList].map(toastEl => {
-                return new bootstrap.Toast(toastEl, { delay: 1500 });
-            });
+            const toastList = [...toastElList].map(toastEl => new bootstrap.Toast(toastEl, { delay: 3000 }));
             toastList.forEach(toast => toast.show());
+
+            // Toggle Sidebar khusus tampilan Mobile
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const mainSidebar = document.getElementById('mainSidebar');
+
+            if (sidebarToggle && mainSidebar) {
+                sidebarToggle.addEventListener('click', function() {
+                    mainSidebar.classList.toggle('show');
+                });
+            }
         });
     </script>
 
