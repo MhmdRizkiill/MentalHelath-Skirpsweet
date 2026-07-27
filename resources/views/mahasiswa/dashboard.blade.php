@@ -3,20 +3,28 @@
 @section('content')
 
 <style>
-    /* Custom Styling Khusus Dashboard (Calm & Steady Design) */
+    :root {
+        --sage-primary: #4A7A6D;
+        --sage-hover: #3B6358;
+        --sage-light: #E8F0EC;
+        --text-main: #2D3748;
+        --text-muted: #64748B;
+        --border-soft: rgba(203, 213, 208, 0.6);
+    }
+
+    /* Custom Styling Khusus Dashboard (Calming Sage Design) */
     .dashboard-header {
         background: transparent;
         border: none;
     }
     
     .dashboard-card {
-        border: 1px solid rgba(226, 232, 240, 0.8);
+        border: 1px solid var(--border-soft);
         border-radius: 20px;
-        background: #FFFFFF;
-        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 4px 15px rgba(74, 122, 109, 0.04);
         position: relative;
         overflow: hidden;
-        /* Menghapus transition dan hover transform agar card diam (steady) */
     }
 
     .stat-icon-bg {
@@ -24,18 +32,17 @@
         right: -20px;
         bottom: -20px;
         font-size: 140px;
-        color: rgba(79, 70, 229, 0.04);
+        color: rgba(74, 122, 109, 0.04);
         z-index: 0;
         transform: rotate(-15deg);
         pointer-events: none;
     }
 
     .stat-box {
-        background: #F8FAFC;
-        border: 1px solid #E2E8F0;
+        background: var(--sage-light);
+        border: 1px solid var(--border-soft);
         border-radius: 16px;
         padding: 16px 10px;
-        /* Menghapus efek hover (perubahan warna) agar pengguna tidak terdistraksi */
     }
 
     .badge-modern {
@@ -43,17 +50,46 @@
         font-weight: 600;
         letter-spacing: 0.3px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        white-space: normal; /* Biar teks panjang seperti "Sangat Parah" aman di HP */
+        white-space: normal;
     }
 
-    /* Animasi HANYA diberikan pada elemen yang bisa diklik (Actionable) */
-    .btn-actionable {
+    /* Teks Sage */
+    .text-sage {
+        color: var(--sage-primary) !important;
+    }
+    
+    /* Ikon dan Background Sage */
+    .bg-sage-light {
+        background-color: var(--sage-light) !important;
+    }
+
+    /* Tombol Sage */
+    .btn-sage {
+        background: linear-gradient(135deg, #4A7A6D 0%, #6B9080 100%);
+        border: none;
+        color: white;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     
-    .btn-actionable:hover {
+    .btn-sage:hover {
+        background: linear-gradient(135deg, #3B6358 0%, #4A7A6D 100%);
+        color: white;
         transform: translateY(-2px);
-        box-shadow: 0 8px 15px rgba(13, 110, 253, 0.15) !important;
+        box-shadow: 0 8px 15px rgba(74, 122, 109, 0.2) !important;
+    }
+
+    .btn-outline-sage {
+        border: 2px solid var(--sage-primary);
+        color: var(--sage-primary);
+        background: transparent;
+        transition: all 0.2s ease;
+    }
+
+    .btn-outline-sage:hover {
+        background: var(--sage-primary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(74, 122, 109, 0.15) !important;
     }
 </style>
 
@@ -62,7 +98,7 @@
         <div>
             <h3 class="fw-bold text-dark mb-1" style="letter-spacing: -0.5px;">Dashboard Mahasiswa</h3>
             <p class="text-muted mb-0">
-                Halo, <span class="fw-semibold text-primary">{{ Auth::user()->username }}</span>. Pantau terus kesehatan mental Anda.
+                Halo, <span class="fw-bold text-sage">{{ Auth::user()->username }}</span>. Pantau terus kesehatan mental Anda.
             </p>
         </div>
     </div>
@@ -73,7 +109,7 @@
         <div class="dashboard-card h-100 p-4 d-flex flex-column justify-content-center text-center">
             <i class="bi bi-journal-medical stat-icon-bg"></i>
             <div class="position-relative z-1">
-                <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle mb-3" style="width: 60px; height: 60px;">
+                <div class="d-inline-flex align-items-center justify-content-center bg-sage-light text-sage rounded-circle mb-3" style="width: 60px; height: 60px;">
                     <i class="bi bi-activity fs-3"></i>
                 </div>
                 <h6 class="text-muted fw-semibold mb-2 text-uppercase" style="letter-spacing: 1px; font-size: 13px;">Total Skrining</h6>
@@ -82,11 +118,11 @@
                 <div class="mt-auto">
                     @if(($totalScreening ?? 0) == 0)
                         <p class="text-muted small mb-3">Anda belum pernah melakukan skrining.</p>
-                        <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-primary btn-actionable px-4 py-2 w-100 rounded-pill shadow-sm">
+                        <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-sage px-4 py-2 w-100 rounded-pill shadow-sm">
                             <i class="bi bi-plus-circle me-2"></i> Mulai Skrining Pertama
                         </a>
                     @else
-                        <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-outline-primary btn-actionable px-4 py-2 w-100 rounded-pill">
+                        <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-outline-sage px-4 py-2 w-100 rounded-pill">
                             <i class="bi bi-arrow-repeat me-2"></i> Lakukan Skrining Baru
                         </a>
                     @endif
@@ -108,16 +144,16 @@
 
             @if($latestScreening)
                 @php
+                    // Penyesuaian warna badge agar lebih estetik dan earth-tone
                     $badgeColors = [
-                        'Normal' => 'background-color: #22C55E; color: white;',
-                        'Ringan' => 'background-color: #EAB308; color: black;',
-                        'Sedang' => 'background-color: #F97316; color: white;',
-                        'Parah' => 'background-color: #EF4444; color: white;',
-                        'Sangat Parah' => 'background-color: #7C3AED; color: white;'
+                        'Normal' => 'background-color: #4A7A6D; color: white;', // Sage Green
+                        'Ringan' => 'background-color: #E9C46A; color: #2D3748;', // Soft Gold
+                        'Sedang' => 'background-color: #F4A261; color: white;', // Soft Orange
+                        'Parah' => 'background-color: #E76F51; color: white;', // Terracotta
+                        'Sangat Parah' => 'background-color: #9D8189; color: white;' // Dusty Mauve/Purple
                     ];
                 @endphp
                 
-                <!-- PERBAIKAN GRID MOBILE: col-12 col-md-4 -->
                 <div class="row g-3 text-center">
                     <div class="col-12 col-md-4">
                         <div class="stat-box h-100 d-flex flex-column justify-content-between">
@@ -168,8 +204,8 @@
 @if(($totalScreening ?? 0) > 0)
 <div class="dashboard-card mb-4 p-1">
     <div class="card-header bg-transparent border-bottom-0 pt-4 pb-2 px-4 d-flex align-items-center">
-        <div class="bg-primary bg-opacity-10 p-2 rounded-lg me-3">
-            <i class="bi bi-graph-up text-primary fs-5"></i>
+        <div class="bg-sage-light p-2 rounded-lg me-3">
+            <i class="bi bi-graph-up text-sage fs-5"></i>
         </div>
         <div>
             <h6 class="mb-0 fw-bold text-dark">Grafik Pemantauan DASS-42</h6>
@@ -207,20 +243,15 @@
         const chartWrapper = document.getElementById('chartWrapper');
         const parentLayar = chartWrapper.parentElement;
         
-        // --- PERBAIKAN LOGIKA LEBAR GRAFIK ---
-        // Memberikan ruang minimal (contoh: 120px) untuk setiap titik tanggal
         const minWidthPerPoint = 120; 
         let calculatedWidth = labels.length * minWidthPerPoint;
         let parentWidth = parentLayar.clientWidth || window.innerWidth;
 
-        // Jika perhitungan lebar lebih besar dari layar HP, perlebar supaya bisa di-scroll ke samping
         if (calculatedWidth > parentWidth) {
             chartWrapper.style.width = calculatedWidth + 'px';
         } else {
-            // Kalau di laptop/layar lebar, biarkan full 100% biar rapi
             chartWrapper.style.width = '100%';
         }
-        // -------------------------------------
 
         new Chart(ctx, {
             type: 'line',
@@ -230,39 +261,39 @@
                     {
                         label: 'Skor Depresi',
                         data: dataDepresi,
-                        borderColor: '#3B82F6', 
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderColor: '#4A7A6D', // Sage
+                        backgroundColor: 'rgba(74, 122, 109, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
                         fill: true,
                         pointBackgroundColor: '#FFFFFF',
-                        pointBorderColor: '#3B82F6',
+                        pointBorderColor: '#4A7A6D',
                         pointRadius: 4,
                         pointHoverRadius: 6
                     },
                     {
                         label: 'Skor Kecemasan',
                         data: dataKecemasan,
-                        borderColor: '#EAB308', 
-                        backgroundColor: 'rgba(234, 179, 8, 0.1)',
+                        borderColor: '#E9C46A', // Soft Gold
+                        backgroundColor: 'rgba(233, 196, 106, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
                         fill: true,
                         pointBackgroundColor: '#FFFFFF',
-                        pointBorderColor: '#EAB308',
+                        pointBorderColor: '#E9C46A',
                         pointRadius: 4,
                         pointHoverRadius: 6
                     },
                     {
                         label: 'Skor Stres',
                         data: dataStres,
-                        borderColor: '#EF4444', 
-                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        borderColor: '#E76F51', // Terracotta
+                        backgroundColor: 'rgba(231, 111, 81, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
                         fill: true,
                         pointBackgroundColor: '#FFFFFF',
-                        pointBorderColor: '#EF4444',
+                        pointBorderColor: '#E76F51',
                         pointRadius: 4,
                         pointHoverRadius: 6
                     }
@@ -304,7 +335,7 @@
                         }
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        backgroundColor: 'rgba(45, 55, 72, 0.95)', // Dark Sage/Slate
                         titleFont: { family: "'Plus Jakarta Sans', sans-serif", size: 13 },
                         bodyFont: { family: "'Plus Jakarta Sans', sans-serif", size: 13 },
                         padding: 12,
