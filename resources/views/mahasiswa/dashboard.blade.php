@@ -207,13 +207,20 @@
         const chartWrapper = document.getElementById('chartWrapper');
         const parentLayar = chartWrapper.parentElement;
         
-        if (labels.length > 10) {
-            let lebarLayar = parentLayar.clientWidth || 800; 
-            const ekstraLebar = (labels.length - 10) * 100;
-            chartWrapper.style.width = (lebarLayar + ekstraLebar) + 'px';
+        // --- PERBAIKAN LOGIKA LEBAR GRAFIK ---
+        // Memberikan ruang minimal (contoh: 120px) untuk setiap titik tanggal
+        const minWidthPerPoint = 120; 
+        let calculatedWidth = labels.length * minWidthPerPoint;
+        let parentWidth = parentLayar.clientWidth || window.innerWidth;
+
+        // Jika perhitungan lebar lebih besar dari layar HP, perlebar supaya bisa di-scroll ke samping
+        if (calculatedWidth > parentWidth) {
+            chartWrapper.style.width = calculatedWidth + 'px';
         } else {
+            // Kalau di laptop/layar lebar, biarkan full 100% biar rapi
             chartWrapper.style.width = '100%';
         }
+        // -------------------------------------
 
         new Chart(ctx, {
             type: 'line',
