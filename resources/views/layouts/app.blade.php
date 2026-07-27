@@ -18,18 +18,20 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
+        /* PALETTE WARNA "CALMING SAGE & SOFT EARTH" */
         :root {
-            --primary: #6366F1;
-            --primary-hover: #4F46E5;
-            --secondary: #0EA5E9;
-            --success: #10B981;
-            --danger: #F43F5E;
-            --warning: #F59E0B;
-            --card-bg: rgba(255, 255, 255, 0.82);
-            --border: rgba(226, 232, 240, 0.8);
-            --text: #0F172A;
+            --primary: #4A7A6D;          /* Sage Green: Menenangkan, terapeutik, ramah */
+            --primary-hover: #3B6358;
+            --secondary: #6B9080;        /* Soft Teal Mint */
+            --accent: #A3C1AD;           /* Soft Leaf */
+            --success: #38A169;          /* Emerald Muted */
+            --danger: #E53E3E;           /* Soft Coral Red (tidak intimidatif) */
+            --warning: #DD6B20;          /* Warm Terracotta */
+            --card-bg: rgba(255, 255, 255, 0.88);
+            --border: rgba(203, 213, 208, 0.6);
+            --text: #2D3748;             /* Slate Gray (Pengganti Hitam Pekat) */
             --muted: #64748B;
-            --radius-lg: 20px;
+            --radius-lg: 22px;
             --radius-md: 14px;
             --sidebar-width: 280px;
         }
@@ -37,10 +39,10 @@
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
 
-        /* GRADASI BACKGROUND MENTENANGKAN (CALMING AMBIENT GRADIENT) */
+        /* LATAR BELAKANG GRADASI MENENANGKAN */
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 35%, #F0Fdf4 70%, #F5F3FF 100%);
+            background: linear-gradient(135deg, #F4F7F6 0%, #E8F0EC 40%, #F0F4F1 70%, #EBF2EE 100%);
             background-attachment: fixed;
             color: var(--text);
             min-height: 100vh;
@@ -48,15 +50,15 @@
             position: relative;
         }
 
-        /* EFEK PENDARAN AMBIENT BLOB DI BACKGROUND */
+        /* AMBIENT GLOW SOFT SAGE IN BACKGROUND */
         body::before {
             content: '';
             position: fixed;
-            top: -10%;
-            right: -5%;
-            width: 550px;
-            height: 550px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
+            top: -12%;
+            right: -8%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(107, 144, 128, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
             border-radius: 50%;
             z-index: -1;
             pointer-events: none;
@@ -66,10 +68,10 @@
             content: '';
             position: fixed;
             bottom: -10%;
-            left: 15%;
+            left: 10%;
             width: 650px;
             height: 650px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
+            background: radial-gradient(circle, rgba(163, 193, 173, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
             border-radius: 50%;
             z-index: -1;
             pointer-events: none;
@@ -81,14 +83,14 @@
             min-height: 100vh;
         }
 
-        /* SIDEBAR (GLASSMORPHISM STYLE) */
+        /* SIDEBAR (SOFT GLASSMORPHISM) */
         .sidebar {
             width: var(--sidebar-width);
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.82);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-right: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 4px 0 24px rgba(99, 102, 241, 0.05);
+            border-right: 1px solid rgba(203, 213, 208, 0.5);
+            box-shadow: 4px 0 24px rgba(74, 122, 109, 0.04);
             height: 100vh;
             position: fixed;
             top: 0;
@@ -96,7 +98,7 @@
             z-index: 1020;
             display: flex;
             flex-direction: column;
-            padding: 24px 20px;
+            padding: 26px 22px;
             overflow-y: auto;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -107,14 +109,14 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            margin-bottom: 28px;
+            margin-bottom: 30px;
         }
 
         .brand-icon-wrapper {
             width: 44px;
             height: 44px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(14, 165, 233, 0.15) 100%);
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            background: linear-gradient(135deg, rgba(74, 122, 109, 0.15) 0%, rgba(107, 144, 128, 0.2) 100%);
+            border: 1px solid rgba(74, 122, 109, 0.2);
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -122,7 +124,7 @@
             color: var(--primary);
             font-size: 22px;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+            box-shadow: 0 4px 12px rgba(74, 122, 109, 0.1);
         }
 
         /* PROFIL USER DI SIDEBAR */
@@ -130,8 +132,8 @@
             display: flex;
             align-items: center;
             padding: 12px 14px;
-            background: rgba(248, 250, 252, 0.8);
-            border: 1px solid rgba(226, 232, 240, 0.8);
+            background: rgba(244, 247, 246, 0.85);
+            border: 1px solid rgba(203, 213, 208, 0.6);
             border-radius: var(--radius-md);
             margin-bottom: 24px;
         }
@@ -148,7 +150,7 @@
             font-weight: 700;
             font-size: 15px;
             flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.25);
+            box-shadow: 0 4px 10px rgba(74, 122, 109, 0.2);
         }
 
         /* MENU NAVIGASI SIDEBAR */
@@ -194,15 +196,15 @@
         }
 
         .nav-link:hover {
-            background: rgba(99, 102, 241, 0.08);
+            background: rgba(74, 122, 109, 0.08);
             color: var(--primary) !important;
             transform: translateX(3px);
         }
 
         .nav-link.active {
-            background: linear-gradient(135deg, var(--primary) 0%, #4F46E5 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
             color: #FFFFFF !important;
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.28);
+            box-shadow: 0 8px 18px rgba(74, 122, 109, 0.25);
         }
 
         .nav-link.active i {
@@ -246,7 +248,7 @@
         @media (max-width: 991.98px) {
             .sidebar {
                 transform: translateX(-100%);
-                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.08);
             }
 
             .sidebar.show {
@@ -267,21 +269,22 @@
             }
         }
 
-        /* GLOBAL CARDS (EFEK GLASSMORPHISM) */
+        /* CARDS DENGAN SOFT GLASSMORPHISM */
         .card {
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.9);
             border-radius: var(--radius-lg);
             background: var(--card-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.05), 0 4px 12px rgba(15, 23, 42, 0.03);
+            box-shadow: 0 10px 30px -5px rgba(74, 122, 109, 0.05), 0 4px 12px rgba(15, 23, 42, 0.02);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .card:hover {
-            box-shadow: 0 15px 35px -5px rgba(99, 102, 241, 0.1), 0 6px 15px rgba(15, 23, 42, 0.04);
+            box-shadow: 0 14px 35px -5px rgba(74, 122, 109, 0.08), 0 6px 15px rgba(15, 23, 42, 0.03);
         }
 
+        /* TOMBOL SOFT & RAMAH */
         .btn {
             border-radius: var(--radius-md);
             font-weight: 600;
@@ -293,13 +296,14 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             border: none;
             color: white;
-            box-shadow: 0 6px 18px rgba(99, 102, 241, 0.25);
+            box-shadow: 0 6px 18px rgba(74, 122, 109, 0.22);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
+            box-shadow: 0 10px 22px rgba(74, 122, 109, 0.32);
             color: white;
+            background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%);
         }
 
         /* OPSI JAWABAN SKRINING */
@@ -314,23 +318,23 @@
         }
 
         .option-label:hover .option-button {
-            border-color: var(--primary); background-color: rgba(99, 102, 241, 0.05);
+            border-color: var(--primary); background-color: rgba(74, 122, 109, 0.05);
         }
 
         .option-input:checked + .option-button {
             background-color: var(--primary); border-color: var(--primary);
-            color: #ffffff; box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+            color: #ffffff; box-shadow: 0 8px 20px rgba(74, 122, 109, 0.25);
         }
 
         .option-input:checked + .option-button .text-muted,
         .option-input:checked + .option-button .option-point {
-            color: rgba(255, 255, 255, 0.8) !important;
+            color: rgba(255, 255, 255, 0.85) !important;
         }
 
         .option-icon { margin-right: 12px; font-size: 1.2rem; color: var(--muted); transition: all 0.2s; }
         .option-input:checked + .option-button .option-icon { color: #ffffff; }
 
-        /* CUSTOM BADGE OUTLINE */
+        /* BADGE STATUS YANG TIDAK INTIMIDATIF */
         .badge-status {
             background-color: transparent !important;
             border: 1.5px solid;
@@ -343,11 +347,11 @@
             align-items: center;
             gap: 6px;
         }
-        .status-normal { border-color: #22C55E; color: #16A34A; }
-        .status-ringan { border-color: #3B82F6; color: #2563EB; }
-        .status-sedang { border-color: #F59E0B; color: #D97706; }
-        .status-parah { border-color: #EF4444; color: #DC2626; }
-        .status-sangat-parah { border-color: #9F1239; color: #881337; }
+        .status-normal { border-color: #38A169; color: #2F855A; }
+        .status-ringan { border-color: #3182CE; color: #2B6CB0; }
+        .status-sedang { border-color: #DD6B20; color: #C05621; }
+        .status-parah { border-color: #E53E3E; color: #C53030; }
+        .status-sangat-parah { border-color: #9B2C2C; color: #742A2A; }
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
@@ -358,7 +362,7 @@
     <div class="app-layout">
 
         <!-- ==========================================
-             SIDEBAR NAVIGASI (GLASSMORPHISM PERMANEN)
+             SIDEBAR NAVIGASI
         =========================================== -->
         <aside class="sidebar" id="mainSidebar">
             
@@ -367,8 +371,8 @@
                 <div class="brand-icon-wrapper">
                     <i class="bi bi-heart-pulse-fill"></i>
                 </div>
-                <span class="fw-bold text-dark fs-3" style="letter-spacing: -0.5px;">
-                    Mind<span class="text-primary">Screen</span>
+                <span class="fw-bold fs-3" style="letter-spacing: -0.5px; color: var(--text);">
+                    Mind<span style="color: var(--primary);">Screen</span>
                 </span>
             </a>
 
@@ -379,7 +383,7 @@
                         {{ strtoupper(substr(Auth::user()->username, 0, 1)) }}
                     </div>
                     <div class="ms-3 overflow-hidden">
-                        <div class="fw-bold text-dark text-truncate" style="font-size: 14px;">{{ Auth::user()->username }}</div>
+                        <div class="fw-bold text-truncate" style="font-size: 14px; color: var(--text);">{{ Auth::user()->username }}</div>
                         <div class="text-muted text-truncate text-capitalize" style="font-size: 12px;">{{ Auth::user()->role }}</div>
                     </div>
                 </div>
@@ -446,9 +450,9 @@
 
             @auth
                 <!-- TOMBOL KELUAR DI BAWAH SIDEBAR -->
-                <div class="pt-3 border-top mt-auto">
-                    <button type="button" class="btn w-100 text-danger fw-bold d-flex align-items-center justify-content-center" 
-                            style="border: 1px solid rgba(244, 63, 94, 0.2); background: rgba(254, 242, 242, 0.9); border-radius: var(--radius-md); padding: 11px;"
+                <div class="pt-3 border-top mt-auto" style="border-color: rgba(203, 213, 208, 0.6) !important;">
+                    <button type="button" class="btn w-100 fw-bold d-flex align-items-center justify-content-center" 
+                            style="border: 1px solid rgba(229, 62, 62, 0.2); background: rgba(254, 242, 242, 0.9); color: #C53030; border-radius: var(--radius-md); padding: 11px;"
                             data-bs-toggle="modal" data-bs-target="#logoutModal">
                         <i class="bi bi-box-arrow-right me-2"></i> Keluar Aplikasi
                     </button>
@@ -468,7 +472,7 @@
                     <div class="brand-icon-wrapper" style="width: 36px; height: 36px; font-size: 18px;">
                         <i class="bi bi-heart-pulse-fill"></i>
                     </div>
-                    <span class="fw-bold text-dark fs-4">Mind<span class="text-primary">Screen</span></span>
+                    <span class="fw-bold fs-4" style="color: var(--text);">Mind<span style="color: var(--primary);">Screen</span></span>
                 </a>
                 <button class="btn btn-light border p-2" type="button" id="sidebarToggle">
                     <i class="bi bi-list fs-4"></i>
@@ -529,7 +533,7 @@
                         <i class="bi bi-box-arrow-right text-warning" style="font-size: 2.5rem;"></i>
                     </div>
                     
-                    <h5 class="fw-bold text-dark mb-2">Yakin Ingin Keluar?</h5>
+                    <h5 class="fw-bold mb-2" style="color: var(--text);">Yakin Ingin Keluar?</h5>
                     <p class="text-muted mb-0" style="font-size: 15px;">
                         Sesi Anda akan diakhiri. Pastikan semua pekerjaan Anda sudah tersimpan.
                     </p>
@@ -542,7 +546,7 @@
                     
                     <form action="{{ route('logout') }}" method="POST" class="m-0">
                         @csrf
-                        <button type="submit" class="btn btn-danger px-4 py-2 fw-semibold rounded-pill shadow-sm">
+                        <button type="submit" class="btn btn-danger px-4 py-2 fw-semibold rounded-pill shadow-sm" style="background-color: var(--danger); border: none;">
                             Ya, Keluar
                         </button>
                     </form>
