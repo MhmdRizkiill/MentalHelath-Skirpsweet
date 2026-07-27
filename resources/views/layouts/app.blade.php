@@ -19,18 +19,17 @@
 
     <style>
         :root {
-            --primary: #4F46E5;
-            --primary-hover: #4338CA;
-            --secondary: #3B82F6;
+            --primary: #6366F1;
+            --primary-hover: #4F46E5;
+            --secondary: #0EA5E9;
             --success: #10B981;
-            --danger: #EF4444;
+            --danger: #F43F5E;
             --warning: #F59E0B;
-            --bg: #F8FAFC;
-            --card: #FFFFFF;
-            --border: #E2E8F0;
+            --card-bg: rgba(255, 255, 255, 0.82);
+            --border: rgba(226, 232, 240, 0.8);
             --text: #0F172A;
             --muted: #64748B;
-            --radius-lg: 18px;
+            --radius-lg: 20px;
             --radius-md: 14px;
             --sidebar-width: 280px;
         }
@@ -38,12 +37,42 @@
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
 
+        /* GRADASI BACKGROUND MENTENANGKAN (CALMING AMBIENT GRADIENT) */
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg);
+            background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 35%, #F0Fdf4 70%, #F5F3FF 100%);
+            background-attachment: fixed;
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* EFEK PENDARAN AMBIENT BLOB DI BACKGROUND */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -10%;
+            right: -5%;
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -10%;
+            left: 15%;
+            width: 650px;
+            height: 650px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
         }
 
         /* LAYOUT CONTAINER */
@@ -52,11 +81,14 @@
             min-height: 100vh;
         }
 
-        /* SIDEBAR (PERMANEN DI DESKTOP) */
+        /* SIDEBAR (GLASSMORPHISM STYLE) */
         .sidebar {
             width: var(--sidebar-width);
-            background: #FFFFFF;
-            border-right: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 4px 0 24px rgba(99, 102, 241, 0.05);
             height: 100vh;
             position: fixed;
             top: 0;
@@ -66,7 +98,7 @@
             flex-direction: column;
             padding: 24px 20px;
             overflow-y: auto;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* LOGO BRANDING */
@@ -81,23 +113,25 @@
         .brand-icon-wrapper {
             width: 44px;
             height: 44px;
-            background: rgba(79, 70, 229, 0.1);
-            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(14, 165, 233, 0.15) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--primary);
             font-size: 22px;
             flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
         }
 
         /* PROFIL USER DI SIDEBAR */
         .user-profile-card {
             display: flex;
             align-items: center;
-            padding: 12px;
-            background: #F8FAFC;
-            border: 1px solid var(--border);
+            padding: 12px 14px;
+            background: rgba(248, 250, 252, 0.8);
+            border: 1px solid rgba(226, 232, 240, 0.8);
             border-radius: var(--radius-md);
             margin-bottom: 24px;
         }
@@ -105,7 +139,7 @@
         .user-avatar {
             width: 40px;
             height: 40px;
-            border-radius: 10px;
+            border-radius: 12px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             display: flex;
@@ -114,6 +148,7 @@
             font-weight: 700;
             font-size: 15px;
             flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.25);
         }
 
         /* MENU NAVIGASI SIDEBAR */
@@ -134,7 +169,7 @@
         }
 
         .nav-item {
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .nav-link {
@@ -142,25 +177,36 @@
             font-size: 14.5px;
             color: var(--text) !important;
             padding: 12px 16px !important;
-            border-radius: 12px;
-            transition: all 0.2s ease;
+            border-radius: var(--radius-md);
+            transition: all 0.25s ease;
             display: flex;
             align-items: center;
             text-decoration: none;
         }
 
         .nav-link i {
-            font-size: 18px;
+            font-size: 19px;
             width: 24px;
             text-align: center;
             margin-right: 12px;
             color: var(--primary);
+            transition: transform 0.2s ease;
         }
 
-        .nav-link:hover,
-        .nav-link.active {
-            background: rgba(79, 70, 229, 0.08);
+        .nav-link:hover {
+            background: rgba(99, 102, 241, 0.08);
             color: var(--primary) !important;
+            transform: translateX(3px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, var(--primary) 0%, #4F46E5 100%);
+            color: #FFFFFF !important;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.28);
+        }
+
+        .nav-link.active i {
+            color: #FFFFFF;
         }
 
         /* MAIN CONTENT AREA */
@@ -176,7 +222,7 @@
 
         .content-area {
             flex: 1;
-            padding: 30px 40px;
+            padding: 35px 40px;
             max-width: 1300px;
             width: 100%;
             margin: 0 auto;
@@ -185,7 +231,8 @@
         /* MOBILE HEADER BAR */
         .mobile-header {
             display: none;
-            background: #FFFFFF;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
             padding: 14px 20px;
             border-bottom: 1px solid var(--border);
             position: sticky;
@@ -199,6 +246,7 @@
         @media (max-width: 991.98px) {
             .sidebar {
                 transform: translateX(-100%);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
             }
 
             .sidebar.show {
@@ -215,34 +263,42 @@
             }
 
             .content-area {
-                padding: 20px 16px;
+                padding: 24px 16px;
             }
         }
 
-        /* GLOBAL COMPONENTS */
+        /* GLOBAL CARDS (EFEK GLASSMORPHISM) */
         .card {
-            border: 1px solid rgba(226, 232, 240, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             border-radius: var(--radius-lg);
-            background: var(--card);
-            box-shadow: 0 4px 15px -3px rgba(15, 23, 42, 0.03);
-            transition: all 0.3s ease;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.05), 0 4px 12px rgba(15, 23, 42, 0.03);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:hover {
+            box-shadow: 0 15px 35px -5px rgba(99, 102, 241, 0.1), 0 6px 15px rgba(15, 23, 42, 0.04);
         }
 
         .btn {
             border-radius: var(--radius-md);
             font-weight: 600;
             padding: 10px 20px;
+            transition: all 0.25s ease;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             border: none;
             color: white;
+            box-shadow: 0 6px 18px rgba(99, 102, 241, 0.25);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
             color: white;
         }
 
@@ -253,17 +309,17 @@
         .option-button {
             display: flex; align-items: center; width: 100%;
             padding: 16px 20px; border: 2px solid var(--border);
-            border-radius: var(--radius-md); background-color: var(--card);
+            border-radius: var(--radius-md); background-color: rgba(255, 255, 255, 0.9);
             color: var(--text); font-weight: 600; transition: all 0.2s ease-in-out;
         }
 
         .option-label:hover .option-button {
-            border-color: var(--primary); background-color: rgba(79, 70, 229, 0.05);
+            border-color: var(--primary); background-color: rgba(99, 102, 241, 0.05);
         }
 
         .option-input:checked + .option-button {
             background-color: var(--primary); border-color: var(--primary);
-            color: #ffffff; box-shadow: 0 6px 15px rgba(79, 70, 229, 0.3);
+            color: #ffffff; box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
         }
 
         .option-input:checked + .option-button .text-muted,
@@ -302,13 +358,13 @@
     <div class="app-layout">
 
         <!-- ==========================================
-             SIDEBAR NAVIGASI (TAMPIL PERMANEN)
+             SIDEBAR NAVIGASI (GLASSMORPHISM PERMANEN)
         =========================================== -->
-        <aside class="sidebar shadow-sm" id="mainSidebar">
+        <aside class="sidebar" id="mainSidebar">
             
             <!-- BRAND LOGO -->
             <a href="#" class="brand-logo">
-                <div class="brand-icon-wrapper shadow-sm">
+                <div class="brand-icon-wrapper">
                     <i class="bi bi-heart-pulse-fill"></i>
                 </div>
                 <span class="fw-bold text-dark fs-3" style="letter-spacing: -0.5px;">
@@ -392,7 +448,7 @@
                 <!-- TOMBOL KELUAR DI BAWAH SIDEBAR -->
                 <div class="pt-3 border-top mt-auto">
                     <button type="button" class="btn w-100 text-danger fw-bold d-flex align-items-center justify-content-center" 
-                            style="border: 1px solid #FEE2E2; background: #FEF2F2; border-radius: 12px; padding: 11px;"
+                            style="border: 1px solid rgba(244, 63, 94, 0.2); background: rgba(254, 242, 242, 0.9); border-radius: var(--radius-md); padding: 11px;"
                             data-bs-toggle="modal" data-bs-target="#logoutModal">
                         <i class="bi bi-box-arrow-right me-2"></i> Keluar Aplikasi
                     </button>
@@ -406,7 +462,7 @@
         =========================================== -->
         <main class="main-content">
             
-            <!-- HEADER KHUSUS MOBLE (Layar Kecil) -->
+            <!-- HEADER KHUSUS MOBILE -->
             <header class="mobile-header">
                 <a href="#" class="d-flex align-items-center gap-2 text-decoration-none">
                     <div class="brand-icon-wrapper" style="width: 36px; height: 36px; font-size: 18px;">
@@ -425,7 +481,7 @@
             </div>
 
             <!-- FOOTER -->
-            <footer class="mt-auto py-4 px-4 border-top text-center text-muted" style="font-size: 13px;">
+            <footer class="mt-auto py-4 px-4 text-center text-muted" style="font-size: 13px; background: rgba(255,255,255,0.4); backdrop-filter: blur(8px);">
                 &copy; {{ date('Y') }} MentalHealthApp &bull; Sistem Skrining DASS-42
             </footer>
 
@@ -436,7 +492,7 @@
     <!-- TOAST NOTIFICATION CONTAINER -->
     <div class="toast-container position-fixed top-0 end-0 p-3 mt-3" style="z-index: 1060;">
         @if (session('success') || session('status'))
-            <div class="toast align-items-center text-bg-success border-0 shadow rounded-4 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast align-items-center text-bg-success border-0 shadow-lg rounded-4 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body fw-semibold py-3 px-4 d-flex align-items-center" style="font-size: 14px;">
                         <i class="bi bi-check-circle-fill me-3 fs-5"></i> 
@@ -448,7 +504,7 @@
         @endif
 
         @if (session('error'))
-            <div class="toast align-items-center text-bg-danger border-0 shadow rounded-4 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast align-items-center text-bg-danger border-0 shadow-lg rounded-4 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body fw-semibold py-3 px-4 d-flex align-items-center" style="font-size: 14px;">
                         <i class="bi bi-exclamation-triangle-fill me-3 fs-5"></i> 
@@ -463,7 +519,7 @@
     <!-- MODAL KONFIRMASI LOGOUT -->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px);">
                 <div class="modal-header border-bottom-0 pb-0">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -504,7 +560,7 @@
             const toastList = [...toastElList].map(toastEl => new bootstrap.Toast(toastEl, { delay: 3000 }));
             toastList.forEach(toast => toast.show());
 
-            // Toggle Sidebar khusus tampilan Mobile
+            // Toggle Sidebar khusus layar Mobile
             const sidebarToggle = document.getElementById('sidebarToggle');
             const mainSidebar = document.getElementById('mainSidebar');
 
