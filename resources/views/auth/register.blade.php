@@ -1,186 +1,198 @@
-@extends('layouts.app')
-
-@section('content')
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-    body {
-        background: radial-gradient(circle at 10% 20%, rgba(238, 246, 255, 1) 0%, rgba(248, 250, 252, 1) 90%);
-        min-height: 100vh;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    .register-wrapper {
-        min-height: 90vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 40px 0;
-    }
-
-    .register-card {
-        border: 1px solid rgba(255, 255, 255, 0.7);
-        border-radius: 20px;
-        overflow: hidden;
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        box-shadow:
-            0 4px 6px -1px rgba(0, 0, 0, 0.02),
-            0 20px 25px -5px rgba(15, 23, 42, 0.06),
-            0 10px 10px -5px rgba(15, 23, 42, 0.02);
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .register-card:hover {
-        transform: translateY(-4px);
-        box-shadow:
-            0 4px 6px -1px rgba(0, 0, 0, 0.02),
-            0 25px 35px -5px rgba(15, 23, 42, 0.09),
-            0 10px 15px -5px rgba(15, 23, 42, 0.03);
-    }
-
-    .register-header {
-        padding: 40px 40px 15px;
-        border-bottom: none;
-        background: transparent;
-    }
-
-    .register-icon {
-        width: 64px;
-        height: 64px;
-        margin: 0 auto 20px;
-        border-radius: 16px;
-        background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%);
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 26px;
-        box-shadow: 0 8px 20px rgba(79, 70, 229, 0.2);
-        transition: transform 0.3s ease;
-    }
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindScreen - Daftar Akun Baru</title>
     
-    .register-card:hover .register-icon {
-        transform: scale(1.05) rotate(-5deg);
-    }
-
-    .register-title {
-        font-weight: 700;
-        color: #0F172A;
-        letter-spacing: -0.5px;
-    }
-
-    .register-subtitle {
-        color: #64748B;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 1.6;
-    }
-
-    .form-label {
-        font-weight: 600;
-        color: #334155;
-        font-size: 14px;
-        margin-bottom: 8px;
-    }
-
-    .input-group {
-        border: 1px solid #CBD5E1;
-        border-radius: 14px;
-        background: #FFFFFF;
-        transition: all 0.3s ease;
-        overflow: hidden;
-    }
-
-    .input-group:focus-within {
-        border-color: #4F46E5;
-        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-    }
-
-    .input-group-text {
-        background: transparent;
-        border: none;
-        color: #94A3B8;
-        padding-left: 16px;
-        padding-right: 10px;
-    }
-
-    .form-control {
-        border: none;
-        border-radius: 0 14px 14px 0;
-        height: 50px;
-        padding-left: 6px;
-        font-size: 15px;
-        color: #1E293B;
-        background: transparent;
-    }
-
-    .form-control:focus {
-        background: transparent;
-        box-shadow: none;
-        border: none;
-    }
+    <!-- Bootstrap 5 CSS & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
-    .form-control::placeholder {
-        color: #94A3B8;
-        font-size: 14px;
-    }
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    /* Penyesuaian khusus error validasi */
-    .input-group.is-invalid-group {
-        border-color: #EF4444;
-    }
-    .input-group.is-invalid-group:focus-within {
-        box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
-    }
+    <style>
+        body {
+            background: radial-gradient(circle at 10% 20%, rgba(238, 246, 255, 1) 0%, rgba(248, 250, 252, 1) 90%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
-    .btn-register {
-        height: 50px;
-        border-radius: 14px;
-        font-weight: 600;
-        font-size: 15px;
-        letter-spacing: 0.2px;
-        background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%);
-        border: none;
-        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+        .register-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+        }
 
-    .btn-register:hover {
-        background: linear-gradient(135deg, #4338CA 0%, #2563EB 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
-    }
-    
-    .btn-register:active {
-        transform: translateY(0);
-    }
+        .register-card {
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow:
+                0 4px 6px -1px rgba(0, 0, 0, 0.02),
+                0 20px 25px -5px rgba(15, 23, 42, 0.06),
+                0 10px 10px -5px rgba(15, 23, 42, 0.02);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-    .register-footer a {
-        text-decoration: none;
-        font-weight: 600;
-        color: #4F46E5;
-        transition: color 0.2s ease;
-    }
+        .register-card:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 4px 6px -1px rgba(0, 0, 0, 0.02),
+                0 25px 35px -5px rgba(15, 23, 42, 0.09),
+                0 10px 15px -5px rgba(15, 23, 42, 0.03);
+        }
 
-    .register-footer a:hover {
-        color: #3730A3;
-        text-decoration: none;
-    }
-
-    @media(max-width: 576px) {
         .register-header {
-            padding: 35px 25px 10px;
+            padding: 40px 40px 15px;
+            border-bottom: none;
+            background: transparent;
         }
-        .card-body {
-            padding: 25px !important;
+
+        .register-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.2);
+            transition: transform 0.3s ease;
         }
-    }
-</style>
+        
+        .register-card:hover .register-icon {
+            transform: scale(1.05) rotate(-5deg);
+        }
+
+        .register-title {
+            font-weight: 700;
+            color: #0F172A;
+            letter-spacing: -0.5px;
+        }
+
+        .register-subtitle {
+            color: #64748B;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #334155;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .input-group {
+            border: 1px solid #CBD5E1;
+            border-radius: 14px;
+            background: #FFFFFF;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .input-group:focus-within {
+            border-color: #4F46E5;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        .input-group-text {
+            background: transparent;
+            border: none;
+            color: #94A3B8;
+            padding-left: 16px;
+            padding-right: 10px;
+        }
+
+        .form-control {
+            border: none;
+            border-radius: 0 14px 14px 0;
+            height: 50px;
+            padding-left: 6px;
+            font-size: 15px;
+            color: #1E293B;
+            background: transparent;
+        }
+
+        .form-control:focus {
+            background: transparent;
+            box-shadow: none;
+            border: none;
+        }
+        
+        .form-control::placeholder {
+            color: #94A3B8;
+            font-size: 14px;
+        }
+
+        /* Penyesuaian khusus error validasi */
+        .input-group.is-invalid-group {
+            border-color: #EF4444;
+        }
+        .input-group.is-invalid-group:focus-within {
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+        }
+
+        .btn-register {
+            height: 50px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.2px;
+            background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%);
+            border: none;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-register:hover {
+            background: linear-gradient(135deg, #4338CA 0%, #2563EB 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+            color: white;
+        }
+        
+        .btn-register:active {
+            transform: translateY(0);
+        }
+
+        .register-footer a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #4F46E5;
+            transition: color 0.2s ease;
+        }
+
+        .register-footer a:hover {
+            color: #3730A3;
+            text-decoration: underline;
+        }
+
+        @media(max-width: 576px) {
+            .register-header {
+                padding: 35px 25px 10px;
+            }
+            .card-body {
+                padding: 25px !important;
+            }
+        }
+    </style>
+</head>
+<body>
 
 <div class="container register-wrapper">
     <div class="row justify-content-center w-100">
@@ -282,4 +294,8 @@
     </div>
 </div>
 
-@endsection
+<!-- Bootstrap 5 JS (opsional, jika Anda memerlukan fitur interaktif JS dari bootstrap) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
