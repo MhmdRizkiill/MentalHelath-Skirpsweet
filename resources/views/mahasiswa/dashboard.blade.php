@@ -43,6 +43,7 @@
         font-weight: 600;
         letter-spacing: 0.3px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        white-space: normal; /* Biar teks panjang seperti "Sangat Parah" aman di HP */
     }
 
     /* Animasi HANYA diberikan pada elemen yang bisa diklik (Actionable) */
@@ -96,7 +97,7 @@
     
     <div class="col-lg-7 col-md-12">
         <div class="dashboard-card h-100 p-4">
-            <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4 flex-wrap gap-2">
                 <h6 class="fw-bold text-dark mb-0">Status Skrining Terakhir</h6>
                 @if($latestScreening)
                     <span class="badge bg-light text-muted border px-3 py-2 rounded-pill">
@@ -116,8 +117,9 @@
                     ];
                 @endphp
                 
+                <!-- PERBAIKAN GRID MOBILE: col-12 col-md-4 -->
                 <div class="row g-3 text-center">
-                    <div class="col-4">
+                    <div class="col-12 col-md-4">
                         <div class="stat-box h-100 d-flex flex-column justify-content-between">
                             <p class="mb-2 fw-semibold text-muted text-uppercase" style="font-size: 11px; letter-spacing: 0.5px;">Depresi</p>
                             <h2 class="text-dark fw-bold mb-3">{{ $latestScreening->score_depresi ?? 0 }}</h2>
@@ -129,7 +131,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-4">
+                    <div class="col-12 col-md-4">
                         <div class="stat-box h-100 d-flex flex-column justify-content-between">
                             <p class="mb-2 fw-semibold text-muted text-uppercase" style="font-size: 11px; letter-spacing: 0.5px;">Kecemasan</p>
                             <h2 class="text-dark fw-bold mb-3">{{ $latestScreening->score_kecemasan ?? 0 }}</h2>
@@ -141,7 +143,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-4">
+                    <div class="col-12 col-md-4">
                         <div class="stat-box h-100 d-flex flex-column justify-content-between">
                             <p class="mb-2 fw-semibold text-muted text-uppercase" style="font-size: 11px; letter-spacing: 0.5px;">Stres</p>
                             <h2 class="text-dark fw-bold mb-3">{{ $latestScreening->score_stres ?? 0 }}</h2>
