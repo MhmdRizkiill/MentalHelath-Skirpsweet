@@ -66,55 +66,51 @@
             align-items: center;
             justify-content: space-between;
             background: rgba(255, 255, 255, 0.98);
-            padding: 12px 20px;
+            padding: 14px 24px;
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
-            z-index: 1050;
+            z-index: 1030;
         }
 
-        /* TOP-DOWN MENU DROPDOWN */
-        .mobile-menu-dropdown {
-            position: fixed;
-            top: 61px;
-            left: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.05);
-            z-index: 1040;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-20px);
-            transition: all 0.3s ease;
-            max-height: calc(100vh - 65px);
-            overflow-y: auto;
+        /* LOGO BRANDING STYLING (Diperbesar & Dibuat Modern) */
+        .brand-logo {
+            transition: transform 0.2s ease;
+        }
+        .brand-logo:hover {
+            transform: scale(1.02);
+        }
+        .brand-icon-wrapper {
+            width: 42px;
+            height: 42px;
+            background: rgba(79, 70, 229, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 22px;
         }
 
-        .mobile-menu-dropdown.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .nav-menu-wrapper {
-            padding: 15px 20px 25px;
-            max-width: 1200px;
-            margin: 0 auto;
+        /* SIDEBAR (OFFCANVAS) CUSTOM STYLING */
+        .offcanvas-sidebar {
+            width: 300px !important;
+            border-right: 1px solid var(--border);
         }
 
         .mobile-user-profile {
             display: flex;
             align-items: center;
-            padding: 10px 15px 20px;
-            border-bottom: 1px dashed var(--border);
-            margin-bottom: 10px;
+            padding: 14px;
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
@@ -132,8 +128,7 @@
             color: var(--muted);
             font-weight: 700;
             letter-spacing: 1px;
-            padding: 10px 16px 5px;
-            margin-top: 10px;
+            padding: 10px 12px 5px;
             list-style: none;
         }
 
@@ -206,9 +201,7 @@
             }
         }
 
-        /* ==================================================
-            STYLING UNTUK OPSI JAWABAN SKRINING
-            ================================================== */
+        /* OPSI JAWABAN SKRINING */
         .option-label { display: block; margin-bottom: 12px; cursor: pointer; }
         .option-input { display: none; }
         
@@ -223,7 +216,6 @@
             border-color: var(--primary); background-color: rgba(79, 70, 229, 0.05);
         }
 
-        /* STATE SELECTED (Saat Sudah Dipilih) - Kontras Tinggi */
         .option-input:checked + .option-button {
             background-color: var(--primary); border-color: var(--primary);
             color: #ffffff; box-shadow: 0 6px 15px rgba(79, 70, 229, 0.3);
@@ -237,13 +229,10 @@
         .option-icon { margin-right: 12px; font-size: 1.2rem; color: var(--muted); transition: all 0.2s; }
         .option-input:checked + .option-button .option-icon { color: #ffffff; }
         
-        /* Ganti Ikon Saat Terpilih */
         .option-input:checked + .option-button .check-idle { display: none !important; }
         .option-input:checked + .option-button .check-active { display: inline-block !important; }
 
-        /* ===========================
-           CUSTOM BADGE OUTLINE (UX FIX)
-        =========================== */
+        /* CUSTOM BADGE OUTLINE */
         .badge-status {
             background-color: transparent !important;
             border: 1.5px solid;
@@ -270,25 +259,49 @@
 
     <div class="main-wrapper">
         
-     <!-- Topbar Utama yang Sudah Disinkronkan -->
+        <!-- Topbar Utama -->
         <div class="topbar shadow-sm">
-            <div class="d-flex align-items-center fw-bold text-dark fs-5">
-                <!-- Ganti icon dan sesuaikan nama brand -->
-                <i class="bi bi-heart-pulse-fill text-primary me-2"></i> MindScreen
-            </div>
-            <!-- Jika ingin tetap pakai teks menu di desktop, pastikan responsive breakpoint-nya pas -->
-            <button class="btn btn-light border-0" id="topMenuToggle" style="padding: 6px 10px;">
+            <!-- LOGO TERBARU (DIPERBESAR & MODERN) -->
+            <a href="#" class="d-flex align-items-center text-decoration-none brand-logo gap-3">
+                <div class="brand-icon-wrapper shadow-sm">
+                    <i class="bi bi-heart-pulse-fill"></i>
+                </div>
+                <span class="fw-bold text-dark fs-3" style="letter-spacing: -0.5px;">
+                    Mind<span class="text-primary">Screen</span>
+                </span>
+            </a>
+
+            <!-- Tombol Trigger Sidebar (Offcanvas) -->
+            <button class="btn btn-light border shadow-sm p-2 px-3 d-flex align-items-center gap-2" 
+                    type="button" 
+                    data-bs-toggle="offcanvas" 
+                    data-bs-target="#sidebarMenu" 
+                    aria-controls="sidebarMenu">
                 <i class="bi bi-list fs-3 text-dark"></i>
             </button>
         </div>
 
-        <!-- Menu Dropdown (Top-Down) -->
-        <div class="mobile-menu-dropdown" id="mobileMenuDropdown">
-            <div class="nav-menu-wrapper">
+        <!-- ==========================================
+             SIDEBAR MENU (OFFCANVAS SLIDE-IN KIRI)
+        =========================================== -->
+        <div class="offcanvas offcanvas-start offcanvas-sidebar" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+            <div class="offcanvas-header border-bottom py-3 px-4">
+                <div class="d-flex align-items-center gap-2" id="sidebarMenuLabel">
+                    <div class="brand-icon-wrapper" style="width: 36px; height: 36px; font-size: 18px;">
+                        <i class="bi bi-heart-pulse-fill"></i>
+                    </div>
+                    <span class="fw-bold text-dark fs-4" style="letter-spacing: -0.5px;">
+                        Mind<span class="text-primary">Screen</span>
+                    </span>
+                </div>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+
+            <div class="offcanvas-body p-4">
                 @auth
-                    <!-- Profil Ringkas -->
+                    <!-- Profil Ringkas User -->
                     <div class="mobile-user-profile">
-                        <div class="user-avatar" style="width: 45px; height: 45px; font-size: 16px;">
+                        <div class="user-avatar">
                             {{ strtoupper(substr(Auth::user()->username, 0, 1)) }}
                         </div>
                         <div class="ms-3 overflow-hidden">
@@ -345,10 +358,8 @@
                             </a>
                         </li>
                         
-                        <!-- ==========================================
-                             Tombol Logout (Sudah Diubah Jadi Trigger Modal)
-                        =========================================== -->
-                        <li class="mt-4 px-2">
+                        <!-- Tombol Keluar (Trigger Modal) -->
+                        <li class="mt-4 px-1">
                             <button type="button" class="btn w-100 text-danger fw-bold d-flex align-items-center justify-content-center" 
                                     style="border: 1px solid #FEE2E2; background: #FEF2F2; border-radius: 12px; padding: 12px;"
                                     data-bs-toggle="modal" data-bs-target="#logoutModal">
@@ -388,8 +399,6 @@
 
     <!-- Global Toast Notification Container -->
     <div class="toast-container position-fixed top-0 end-0 p-3 mt-5" style="z-index: 1060;">
-        
-        {{-- Notifikasi Sukses --}}
         @if (session('success') || session('status'))
             <div class="toast align-items-center text-bg-success border-0 shadow rounded-4 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
@@ -402,7 +411,6 @@
             </div>
         @endif
 
-        {{-- Notifikasi Error --}}
         @if (session('error'))
             <div class="toast align-items-center text-bg-danger border-0 shadow rounded-4 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
@@ -414,22 +422,17 @@
                 </div>
             </div>
         @endif
-        
     </div>
 
-    <!-- ==========================================
-         MODAL KONFIRMASI LOGOUT
-    =========================================== -->
+    <!-- MODAL KONFIRMASI LOGOUT -->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
-                
                 <div class="modal-header border-bottom-0 pb-0">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 
                 <div class="modal-body text-center py-4">
-                    <!-- Icon Peringatan -->
                     <div class="d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 rounded-circle mb-4" style="width: 80px; height: 80px;">
                         <i class="bi bi-box-arrow-right text-warning" style="font-size: 2.5rem;"></i>
                     </div>
@@ -441,12 +444,10 @@
                 </div>
                 
                 <div class="modal-footer border-top-0 justify-content-center pt-0 pb-4 gap-2">
-                    <!-- Tombol Batal -->
                     <button type="button" class="btn btn-light px-4 py-2 fw-semibold rounded-pill" data-bs-dismiss="modal">
                         Batal
                     </button>
                     
-                    <!-- Form Logout yang Sebenarnya -->
                     <form action="{{ route('logout') }}" method="POST" class="m-0">
                         @csrf
                         <button type="submit" class="btn btn-danger px-4 py-2 fw-semibold rounded-pill shadow-sm">
@@ -454,7 +455,6 @@
                         </button>
                     </form>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -463,23 +463,6 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Logika Mobile Menu Dropdown
-            const topMenuToggle = document.getElementById('topMenuToggle');
-            const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
-
-            if (topMenuToggle && mobileMenuDropdown) {
-                topMenuToggle.addEventListener('click', function(e) {
-                    e.stopPropagation(); 
-                    mobileMenuDropdown.classList.toggle('show');
-                });
-
-                document.addEventListener('click', function(e) {
-                    if (!mobileMenuDropdown.contains(e.target) && !topMenuToggle.contains(e.target)) {
-                        mobileMenuDropdown.classList.remove('show');
-                    }
-                });
-            }
-
             // Inisialisasi Toast Notifikasi
             const toastElList = document.querySelectorAll('.toast');
             const toastList = [...toastElList].map(toastEl => {
