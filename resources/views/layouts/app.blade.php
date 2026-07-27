@@ -24,6 +24,12 @@
             --primary-hover: #3B6358;
             --secondary: #6B9080;        /* Soft Teal Mint */
             --accent: #A3C1AD;           /* Soft Leaf */
+            
+            /* Warna turunan palet khusus untuk gradasi background */
+            --bg-light: #F4F7F6;
+            --bg-mid: #E8F0EC;
+            --bg-soft: #F0F4F1;
+            
             --success: #38A169;          /* Emerald Muted */
             --danger: #E53E3E;           /* Soft Coral Red (tidak intimidatif) */
             --warning: #DD6B20;          /* Warm Terracotta */
@@ -39,10 +45,10 @@
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
 
-        /* LATAR BELAKANG GRADASI MENENANGKAN */
+        /* LATAR BELAKANG GRADASI MENENANGKAN (Berbasis Palet) */
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #F4F7F6 0%, #E8F0EC 40%, #F0F4F1 70%, #EBF2EE 100%);
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-mid) 40%, var(--bg-soft) 70%, var(--bg-mid) 100%);
             background-attachment: fixed;
             color: var(--text);
             min-height: 100vh;
@@ -58,7 +64,8 @@
             right: -8%;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(107, 144, 128, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
+            /* Menggunakan var(--secondary) dengan 15% Opacity (#6B908026) */
+            background: radial-gradient(circle, #6B908026 0%, transparent 70%);
             border-radius: 50%;
             z-index: -1;
             pointer-events: none;
@@ -71,7 +78,8 @@
             left: 10%;
             width: 650px;
             height: 650px;
-            background: radial-gradient(circle, rgba(163, 193, 173, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+            /* Menggunakan var(--accent) dengan 20% Opacity (#A3C1AD33) */
+            background: radial-gradient(circle, #A3C1AD33 0%, transparent 70%);
             border-radius: 50%;
             z-index: -1;
             pointer-events: none;
@@ -89,7 +97,8 @@
             background: rgba(255, 255, 255, 0.82);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-right: 1px solid rgba(203, 213, 208, 0.5);
+            /* Border disesuaikan agar nyambung dengan gradasi */
+            border-right: 1px solid rgba(163, 193, 173, 0.4);
             box-shadow: 4px 0 24px rgba(74, 122, 109, 0.04);
             height: 100vh;
             position: fixed;
@@ -115,8 +124,9 @@
         .brand-icon-wrapper {
             width: 44px;
             height: 44px;
-            background: linear-gradient(135deg, rgba(74, 122, 109, 0.15) 0%, rgba(107, 144, 128, 0.2) 100%);
-            border: 1px solid rgba(74, 122, 109, 0.2);
+            /* Dipadukan langsung dari --primary dan --secondary palette dengan opacity */
+            background: linear-gradient(135deg, #4A7A6D26 0%, #6B908033 100%);
+            border: 1px solid #4A7A6D33;
             border-radius: 14px;
             display: flex;
             align-items: center;
