@@ -3,66 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skrining Kesehatan Mental DASS-42</title>
+    <title>Skrining Kesehatan Mental DASS-42 | MindScreen</title>
+    
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
+        /* PALET WARNA CALMING SAGE & SOFT EARTH */
+        :root {
+            --primary: #4A7A6D;          /* Sage Green */
+            --primary-hover: #3B6358;
+            --secondary: #6B9080;        /* Soft Teal Mint */
+            --text-main: #2D3748;        /* Slate Gray */
+            --text-muted: #64748B;
+            --bg-soft: #F4F7F6;          /* Kabut Pagi / Off-white */
+            --warning-soft: #DD6B20;     /* Warm Amber untuk disclaimer */
+            --footer-bg: #2C3E38;        /* Deep Forest Muted */
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            color: #334155;
-            background-color: #F8FAFC;
+            color: var(--text-main);
+            background-color: var(--bg-soft);
+            overflow-x: hidden;
+        }
+
+        /* Meng-override class Bootstrap default untuk tema ini */
+        .text-primary { color: var(--primary) !important; }
+        .bg-primary { background-color: var(--primary) !important; }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 15px rgba(74, 122, 109, 0.2);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(74, 122, 109, 0.3);
+            color: white;
         }
         
         /* Navbar */
         .navbar {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #F1F5F9;
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(203, 213, 208, 0.4);
+            padding: 15px 0;
+            transition: all 0.3s ease;
         }
+
+        .nav-link {
+            color: var(--text-main) !important;
+            transition: color 0.2s ease;
+        }
+        .nav-link:hover { color: var(--primary) !important; }
 
         /* Hero Section */
         .hero-section {
-            padding: 120px 0 80px;
-            background: linear-gradient(135deg, #EFF6FF 0%, #FFFFFF 100%);
+            padding: 140px 0 80px;
+            background: linear-gradient(135deg, #E8F0EC 0%, #F4F7F6 50%, #FFFFFF 100%);
+            position: relative;
+        }
+
+        /* Ambient Blob in Hero */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(107, 144, 128, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            z-index: 0;
         }
         
+        .hero-content { position: relative; z-index: 1; }
+
         .hero-title {
             font-weight: 800;
-            color: #0F172A;
-            line-height: 1.2;
+            color: var(--text-main);
+            line-height: 1.25;
             letter-spacing: -1px;
         }
 
         .text-gradient {
-            background: linear-gradient(90deg, #2563EB, #7C3AED);
+            background: linear-gradient(90deg, var(--primary), #38A169);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         /* Feature Cards */
         .feature-card {
-            background: #fff;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 22px;
             padding: 40px 30px;
-            border: 1px solid #E2E8F0;
+            border: 1px solid rgba(203, 213, 208, 0.5);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             height: 100%;
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(74, 122, 109, 0.08);
         }
 
         .feature-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
+            width: 65px;
+            height: 65px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -70,32 +128,80 @@
             margin-bottom: 24px;
         }
 
-        /* Accordion Custom */
+        /* Soft Icon Colors */
+        .icon-sage { background: rgba(74, 122, 109, 0.1); color: var(--primary); }
+        .icon-emerald { background: rgba(56, 161, 105, 0.1); color: #38A169; }
+        .icon-warm { background: rgba(221, 107, 32, 0.1); color: var(--warning-soft); }
+
+        /* Accordion Custom (FAQ) */
+        .accordion-item {
+            border: 1px solid rgba(203, 213, 208, 0.5);
+            border-radius: 16px !important;
+            margin-bottom: 12px;
+            overflow: hidden;
+            background: white;
+        }
+        .accordion-button {
+            font-weight: 600;
+            color: var(--text-main);
+            padding: 20px 24px;
+        }
         .accordion-button:not(.collapsed) {
-            background-color: #EFF6FF;
-            color: #1D4ED8;
+            background-color: rgba(74, 122, 109, 0.05);
+            color: var(--primary);
             box-shadow: none;
         }
         .accordion-button:focus {
             box-shadow: none;
-            border-color: rgba(0,0,0,.125);
+            border-color: transparent;
+        }
+        .accordion-body {
+            color: var(--text-muted);
+            padding: 0 24px 24px;
+            line-height: 1.7;
+        }
+
+        /* Disclaimer Box - Warm & Not Intimidating */
+        .disclaimer-box {
+            background-color: rgba(221, 107, 32, 0.06);
+            border-left: 4px solid var(--warning-soft);
+            padding: 20px 24px;
+            border-radius: 0 12px 12px 0;
+            margin: 0;
+        }
+
+        /* Bottom CTA */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 24px;
+            padding: 60px 40px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 20px 40px rgba(74, 122, 109, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
         }
 
         /* Footer */
         .footer {
-            background-color: #0F172A;
-            color: #94A3B8;
-            padding: 60px 0 30px;
+            background-color: var(--footer-bg);
+            color: #A3B1AB;
+            padding: 70px 0 30px;
         }
         
-        .footer-heading {
-            color: #FFFFFF;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
         .footer a {
-            color: #94A3B8;
+            color: #A3B1AB;
             text-decoration: none;
             transition: color 0.2s ease;
         }
@@ -104,12 +210,14 @@
             color: #FFFFFF;
         }
 
-        .disclaimer-box {
-            background-color: rgba(239, 68, 68, 0.1);
-            border-left: 4px solid #EF4444;
-            padding: 16px 20px;
-            border-radius: 0 8px 8px 0;
-            margin: 30px 0;
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating-img {
+            animation: float 6s ease-in-out infinite;
         }
     </style>
 </head>
@@ -122,23 +230,23 @@
                 <i class="bi bi-heart-pulse-fill fs-4"></i>
                 <span>MindScreen</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="bi bi-list fs-2 text-dark"></i>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav align-items-center gap-3">
                     <li class="nav-item"><a class="nav-link fw-medium" href="#why">Kenapa Penting?</a></li>
                     <li class="nav-item"><a class="nav-link fw-medium" href="#how">Cara Kerja</a></li>
                     <li class="nav-item"><a class="nav-link fw-medium" href="#faq">FAQ</a></li>
-                    <li class="nav-item ms-lg-3">
+                    <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
                         @auth
                             @if(auth()->user()->role === 'admin')
-                                <a href="{{ route('admin.dashboard') }}" class="btn btn-primary rounded-pill px-4 fw-semibold">Dashboard Admin</a>
+                                <a href="{{ route('admin.dashboard') }}" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold w-100">Dashboard Admin</a>
                             @else
-                                <a href="{{ route('mahasiswa.dashboard') }}" class="btn btn-primary rounded-pill px-4 fw-semibold">Dashboard</a>
+                                <a href="{{ route('mahasiswa.dashboard') }}" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold w-100">Dashboard</a>
                             @endif
                         @else
-                            <a href="{{ route('login') }}" class="btn btn-primary rounded-pill px-4 fw-semibold shadow-sm">Masuk / Daftar</a>
+                            <a href="{{ route('login') }}" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold shadow-sm w-100">Masuk / Daftar</a>
                         @endauth
                     </li>
                 </ul>
@@ -148,54 +256,54 @@
 
     <!-- HERO SECTION -->
     <section class="hero-section text-center text-lg-start d-flex align-items-center">
-        <div class="container">
+        <div class="container hero-content">
             <div class="row align-items-center justify-content-between g-5">
                 <div class="col-lg-6">
-                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3 fw-bold">
+                    <span class="badge px-3 py-2 rounded-pill mb-4 fw-bold" style="background: rgba(74, 122, 109, 0.12); color: var(--primary); font-size: 13px;">
                         <i class="bi bi-stars me-1"></i> Skrining Mandiri DASS-42
                     </span>
                     <h1 class="hero-title display-4 mb-4">
                         Pahami Kondisi Mentalmu, <br>
                         <span class="text-gradient">Mulai Langkah Pertamamu.</span>
                     </h1>
-                    <p class="lead text-muted mb-5" style="font-size: 1.1rem; line-height: 1.7;">
+                    <p class="lead mb-5" style="font-size: 1.15rem; line-height: 1.7; color: var(--text-muted);">
                         Aplikasi skrining ini membantu Anda mengevaluasi tingkat depresi, kecemasan, dan stres secara mandiri dalam waktu kurang dari 10 menit. Kenali diri Anda lebih baik hari ini.
                     </p>
                     <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
-                        <!-- Perbaikan: Tombol diubah agar langsung ke halaman Login / Skrining -->
                         @guest
-                            <a href="{{ route('login') }}" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow">
+                            <a href="{{ route('login') }}" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold">
                                 Mulai Skrining Sekarang <i class="bi bi-arrow-right ms-2"></i>
                             </a>
                         @else
-                            <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow">
+                            <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold">
                                 Mulai Skrining Sekarang <i class="bi bi-arrow-right ms-2"></i>
                             </a>
                         @endguest
                         
-                        <a href="#how" class="btn btn-outline-secondary btn-lg rounded-pill px-5 fw-bold bg-white">
+                        <a href="#how" class="btn btn-lg rounded-pill px-5 fw-bold" style="background: white; border: 1px solid rgba(203, 213, 208, 0.8); color: var(--text-main);">
                             Pelajari Dulu
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-5 d-none d-lg-block">
-                    <img src="{{ asset('images/hero-image.png') }}" alt="MindScreen Illustration" class="img-fluid rounded-4 shadow-lg" style="animation: float 6s ease-in-out infinite;">
+                <div class="col-lg-5 d-none d-lg-block text-center">
+                    <!-- Gunakan ilustrasi yang warnanya kalem jika ada -->
+                    <img src="{{ asset('images/hero-image.png') }}" alt="Ilustrasi Ketenangan" class="img-fluid floating-img" style="max-height: 450px; filter: drop-shadow(0 20px 30px rgba(74, 122, 109, 0.15));">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- DISCLAIMER & VALIDATION -->
-    <section class="py-5 bg-white border-bottom">
+    <section class="py-5 bg-white border-bottom border-light">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    <div class="disclaimer-box text-start text-danger d-flex gap-3 align-items-start">
-                        <i class="bi bi-exclamation-triangle-fill fs-3"></i>
+                    <div class="disclaimer-box d-flex gap-3 align-items-start">
+                        <i class="bi bi-info-circle-fill fs-3" style="color: var(--warning-soft);"></i>
                         <div>
-                            <h6 class="fw-bold mb-1">Penting untuk Diketahui (Disclaimer)</h6>
-                            <p class="mb-0 small" style="color: #991B1B;">
-                                Aplikasi ini dirancang menggunakan instrumen <strong>DASS-42 (Depression Anxiety Stress Scales)</strong> yang valid secara akademis. Namun, hasil dari skrining ini <strong>BUKAN merupakan diagnosis medis atau psikologis</strong>. Aplikasi ini hanya berfungsi sebagai alat evaluasi awal. Jika Anda merasa kewalahan atau berada dalam kondisi krisis, mohon segera hubungi psikolog, psikiater, atau layanan bantuan profesional.
+                            <h6 class="fw-bold mb-1" style="color: #9C4221;">Penting untuk Diketahui (Disclaimer)</h6>
+                            <p class="mb-0 small" style="color: #B75D29; line-height: 1.6;">
+                                Aplikasi ini dirancang menggunakan instrumen <strong>DASS-42 (Depression Anxiety Stress Scales)</strong>. Namun, hasil dari skrining ini <strong>BUKAN merupakan diagnosis medis atau psikologis</strong>. Aplikasi ini berfungsi sebagai alat evaluasi awal. Jika Anda merasa kewalahan, mohon jangan ragu untuk berdiskusi dengan psikolog, psikiater, atau layanan bantuan profesional.
                             </p>
                         </div>
                     </div>
@@ -208,38 +316,38 @@
     <section id="why" class="py-5 my-5">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="fw-bold mb-3">Mengapa Skrining Ini Penting?</h2>
-                <p class="text-muted mx-auto" style="max-width: 600px;">
-                    Sering merasa lelah berlebihan, sulit fokus, atau mudah panik akhir-akhir ini? Mengetahui kondisi mental adalah langkah pertama menuju penyembuhan.
+                <h2 class="fw-bold mb-3" style="color: var(--text-main);">Mengapa Skrining Ini Penting?</h2>
+                <p class="mx-auto" style="max-width: 600px; color: var(--text-muted); line-height: 1.7;">
+                    Sering merasa lelah berlebihan, sulit fokus, atau mudah gelisah akhir-akhir ini? Mengetahui kondisi mental adalah langkah pertama menuju keseimbangan diri.
                 </p>
             </div>
             
             <div class="row g-4 justify-content-center">
                 <div class="col-md-4">
                     <div class="feature-card text-center">
-                        <div class="feature-icon bg-primary bg-opacity-10 text-primary mx-auto">
+                        <div class="feature-icon icon-sage mx-auto">
                             <i class="bi bi-journal-check"></i>
                         </div>
                         <h5 class="fw-bold mb-3">Instrumen Valid</h5>
-                        <p class="text-muted small mb-0">Menggunakan kuesioner standar internasional DASS-42 yang teruji untuk mengukur tingkat keparahan Depresi, Kecemasan, dan Stres.</p>
+                        <p class="small mb-0" style="color: var(--text-muted); line-height: 1.6;">Menggunakan kuesioner standar internasional DASS-42 yang teruji untuk mengukur tingkat Depresi, Kecemasan, dan Stres.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="feature-card text-center">
-                        <div class="feature-icon bg-success bg-opacity-10 text-success mx-auto">
+                        <div class="feature-icon icon-emerald mx-auto">
                             <i class="bi bi-shield-lock"></i>
                         </div>
                         <h5 class="fw-bold mb-3">Privasi Terjaga</h5>
-                        <p class="text-muted small mb-0">Data jawaban Anda dienkripsi dan dirahasiakan. Kami berkomitmen melindungi privasi pengguna sesuai standar keamanan data.</p>
+                        <p class="small mb-0" style="color: var(--text-muted); line-height: 1.6;">Data jawaban Anda dienkripsi dan dirahasiakan. Kami berkomitmen menciptakan ruang yang aman untuk Anda.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="feature-card text-center">
-                        <div class="feature-icon bg-warning bg-opacity-10 text-warning mx-auto">
+                        <div class="feature-icon icon-warm mx-auto">
                             <i class="bi bi-graph-up-arrow"></i>
                         </div>
                         <h5 class="fw-bold mb-3">Pantau Perkembangan</h5>
-                        <p class="text-muted small mb-0">Lakukan skrining secara berkala dan lihat riwayat hasil Anda untuk memantau perubahan kondisi mental dari waktu ke waktu.</p>
+                        <p class="small mb-0" style="color: var(--text-muted); line-height: 1.6;">Lakukan skrining secara berkala dan lihat riwayat hasil Anda untuk memantau perjalanan emosional dari waktu ke waktu.</p>
                     </div>
                 </div>
             </div>
@@ -247,40 +355,40 @@
     </section>
 
     <!-- HOW IT WORKS -->
-    <section id="how" class="py-5 bg-white">
+    <section id="how" class="py-5 bg-white border-top border-light">
         <div class="container py-5">
             <div class="row align-items-center">
                 <div class="col-lg-5 mb-5 mb-lg-0">
-                    <h2 class="fw-bold mb-4">Cara Kerja Aplikasi</h2>
-                    <p class="text-muted mb-4">Proses evaluasi didesain agar mudah, cepat, dan nyaman untuk digunakan oleh siapa saja.</p>
+                    <h2 class="fw-bold mb-4" style="color: var(--text-main);">Cara Kerja yang Sederhana</h2>
+                    <p class="mb-5" style="color: var(--text-muted);">Proses evaluasi didesain agar mudah, mengalir, dan nyaman untuk digunakan pada saat Anda memiliki waktu luang.</p>
                     
                     <div class="d-flex align-items-start mb-4">
-                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold shadow" style="width: 40px; height: 40px;">1</div>
-                        <div class="ms-3">
-                            <h6 class="fw-bold mb-1">Daftar / Buat Akun</h6>
-                            <p class="text-muted small mb-0">Buat akun untuk menyimpan riwayat hasil evaluasi Anda.</p>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold shadow-sm" style="width: 44px; height: 44px; background: rgba(74, 122, 109, 0.1); color: var(--primary);">1</div>
+                        <div class="ms-4">
+                            <h6 class="fw-bold mb-1">Buat Akun Pribadi</h6>
+                            <p class="small mb-0" style="color: var(--text-muted);">Daftar agar sistem dapat menyimpan riwayat Anda secara aman.</p>
                         </div>
                     </div>
                     <div class="d-flex align-items-start mb-4">
-                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold shadow" style="width: 40px; height: 40px;">2</div>
-                        <div class="ms-3">
-                            <h6 class="fw-bold mb-1">Jawab 42 Pertanyaan</h6>
-                            <p class="text-muted small mb-0">Pilih jawaban yang paling sesuai dengan kondisi Anda selama 1 minggu terakhir. Tidak ada jawaban salah.</p>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold shadow-sm" style="width: 44px; height: 44px; background: rgba(74, 122, 109, 0.1); color: var(--primary);">2</div>
+                        <div class="ms-4">
+                            <h6 class="fw-bold mb-1">Jawab dengan Jujur</h6>
+                            <p class="small mb-0" style="color: var(--text-muted);">Terdapat 42 pernyataan. Pilih yang paling sesuai dengan perasaanmu seminggu terakhir. Tidak ada jawaban yang salah.</p>
                         </div>
                     </div>
                     <div class="d-flex align-items-start">
-                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold shadow" style="width: 40px; height: 40px;">3</div>
-                        <div class="ms-3">
-                            <h6 class="fw-bold mb-1">Dapatkan Hasil Seketika</h6>
-                            <p class="text-muted small mb-0">Sistem akan mengklasifikasikan skor Anda ke dalam kategori Normal hingga Sangat Parah.</p>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold shadow-sm" style="width: 44px; height: 44px; background: var(--primary); color: white;">3</div>
+                        <div class="ms-4">
+                            <h6 class="fw-bold mb-1">Lihat Hasil & Insight</h6>
+                            <p class="small mb-0" style="color: var(--text-muted);">Dapatkan gambaran kondisi emosional Anda saat ini beserta saran langkah selanjutnya.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 offset-lg-1">
-                    <div class="bg-light rounded-4 p-5 text-center border">
-                        <i class="bi bi-ui-checks text-primary opacity-25" style="font-size: 8rem;"></i>
-                        <h4 class="fw-bold mt-4">Siap untuk mulai?</h4>
-                        <p class="text-muted">Butuh waktu sekitar 5-10 menit.</p>
+                    <div class="rounded-4 p-5 text-center" style="background: var(--bg-soft); border: 1px dashed rgba(203, 213, 208, 0.8);">
+                        <i class="bi bi-cup-hot text-primary opacity-50" style="font-size: 7rem;"></i>
+                        <h4 class="fw-bold mt-4">Ambil Waktu Sejenak</h4>
+                        <p class="text-muted">Siapkan minuman hangat, cari tempat tenang, dan butuh waktu sekitar 5-10 menit saja.</p>
                     </div>
                 </div>
             </div>
@@ -291,7 +399,7 @@
     <section id="faq" class="py-5 my-5">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="fw-bold mb-3">Pertanyaan yang Sering Diajukan</h2>
+                <h2 class="fw-bold mb-3" style="color: var(--text-main);">Pertanyaan yang Sering Diajukan</h2>
             </div>
             
             <div class="row justify-content-center">
@@ -299,43 +407,43 @@
                     <div class="accordion" id="faqAccordion">
                         
                         <!-- FAQ 1 -->
-                        <div class="accordion-item mb-3 border rounded-3 overflow-hidden">
+                        <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed fw-bold bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
                                     Siapa yang mengembangkan aplikasi ini?
                                 </button>
                             </h2>
                             <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body text-muted bg-white">
-                                    Aplikasi ini dikembangkan oleh - sebagai dedikasi untuk mempermudah akses skrining kesehatan mental berbasis bukti ilmiah (instrumen DASS-42).
+                                <div class="accordion-body">
+                                    Aplikasi ini dikembangkan sebagai dedikasi untuk mempermudah akses skrining kesehatan mental berbasis bukti ilmiah menggunakan instrumen DASS-42. Tujuannya adalah membangun kesadaran (*awareness*) kesehatan mental di lingkungan institusi.
                                 </div>
                             </div>
                         </div>
 
                         <!-- FAQ 2 -->
-                        <div class="accordion-item mb-3 border rounded-3 overflow-hidden">
+                        <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed fw-bold bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
                                     Apakah data jawaban saya dibagikan ke publik?
                                 </button>
                             </h2>
                             <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body text-muted bg-white">
+                                <div class="accordion-body">
                                     <strong>Sama sekali tidak.</strong> Privasi Anda adalah prioritas utama. Data Anda disimpan secara aman di server kami dan hanya digunakan untuk menampilkan histori hasil Anda secara pribadi.
                                 </div>
                             </div>
                         </div>
 
                         <!-- FAQ 3 -->
-                        <div class="accordion-item border rounded-3 overflow-hidden">
+                        <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed fw-bold bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
                                     Bagaimana jika hasil skrining saya "Sangat Parah"?
                                 </button>
                             </h2>
                             <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body text-muted bg-white">
-                                    Jangan panik. Hasil kuesioner bukanlah vonis pasti. Namun, itu adalah "alarm" dari tubuh dan pikiran Anda yang meminta bantuan. Kami sangat menyarankan Anda untuk membawa hasil ini sebagai bahan diskusi awal kepada konselor, psikolog, atau layanan kesehatan mental terdekat.
+                                <div class="accordion-body">
+                                    Hal pertama: tarik napas panjang, Anda tidak sendirian. Hasil kuesioner bukanlah vonis pasti, melainkan sinyal dari tubuh dan pikiran yang meminta jeda. Kami sangat menyarankan Anda untuk menggunakan hasil ini sebagai langkah awal untuk berdiskusi dengan konselor, psikolog, atau layanan kesehatan di kampus/fasilitas kesehatan terdekat.
                                 </div>
                             </div>
                         </div>
@@ -349,18 +457,17 @@
     <!-- BOTTOM CTA -->
     <section class="py-5 mb-5">
         <div class="container">
-            <div class="bg-primary rounded-4 p-5 text-center text-white position-relative overflow-hidden shadow-lg">
+            <div class="cta-section">
                 <div class="position-relative z-1">
-                    <h2 class="fw-bold mb-3">Kenali Pikiranmu Sekarang.</h2>
-                    <p class="mb-4 opacity-75 fs-5">Kesehatan mental sama pentingnya dengan kesehatan fisik.</p>
+                    <h2 class="fw-bold mb-3">Beri Ruang untuk Dirimu Sendiri.</h2>
+                    <p class="mb-4 fs-5" style="color: rgba(255,255,255,0.85);">Kesehatan pikiranmu sama berharganya dengan kesehatan fisikmu.</p>
                     
-                    <!-- Perbaikan: Tombol diubah agar langsung ke halaman Login / Skrining -->
                     @guest
-                        <a href="{{ route('login') }}" class="btn btn-light btn-lg rounded-pill px-5 fw-bold text-primary shadow">
+                        <a href="{{ route('login') }}" class="btn btn-light btn-lg rounded-pill px-5 fw-bold shadow-sm text-primary" style="transition: transform 0.3s ease;">
                             Mulai Skrining Gratis
                         </a>
                     @else
-                        <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-light btn-lg rounded-pill px-5 fw-bold text-primary shadow">
+                        <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-light btn-lg rounded-pill px-5 fw-bold shadow-sm text-primary" style="transition: transform 0.3s ease;">
                             Mulai Skrining Gratis
                         </a>
                     @endguest
@@ -372,29 +479,29 @@
     <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
-            <div class="row align-items-center border-bottom border-secondary pb-4 mb-4">
+            <div class="row align-items-center border-bottom pb-4 mb-4" style="border-color: rgba(255,255,255,0.1) !important;">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                     <h4 class="text-white fw-bold d-flex align-items-center justify-content-center justify-content-md-start gap-2">
-                        <i class="bi bi-heart-pulse-fill text-primary"></i> MindScreen
+                        <i class="bi bi-heart-pulse-fill" style="color: #6B9080;"></i> MindScreen
                     </h4>
-                    <p class="small mb-0 mt-2">Platform Evaluasi Kesehatan Mental Mandiri Berbasis DASS-42.</p>
+                    <p class="small mb-0 mt-2" style="color: #8C9C95;">Platform Evaluasi Kesehatan Mental Mandiri Berbasis DASS-42.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <a href="#" class="me-3 small">Kebijakan Privasi</a>
                     <a href="#" class="me-3 small">Syarat Penggunaan</a>
-                    <a href="mailto:admin@example.com" class="small"><i class="bi bi-envelope"></i> Kontak Bantuan</a>
+                    <a href="mailto:admin@example.com" class="small"><i class="bi bi-envelope"></i> Hubungi Kami</a>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 text-center small text-muted">
-                    &copy; {{ date('Y') }} [MentalHealth / Institut Teknologi Garut]. All rights reserved.<br>
-                    Dikembangkan untuk memajukan kesadaran kesehatan mental.
+                <div class="col-12 text-center small" style="color: #6C8076;">
+                    &copy; {{ date('Y') }} MentalHealth App. All rights reserved.<br>
+                    Dikembangkan untuk memajukan kesejahteraan mental.
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
