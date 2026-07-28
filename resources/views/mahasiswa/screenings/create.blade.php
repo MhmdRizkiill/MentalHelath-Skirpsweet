@@ -389,20 +389,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // JIKA ADA YANG BELUM DIISI
             if (!isValid) {
-                // 1. Langsung scroll otomatis ke pertanyaan pertama yang kosong
-                if (firstErrorBlock) {
-                    // Offset -150px agar tidak tertutup sticky progress bar
-                    const y = firstErrorBlock.getBoundingClientRect().top + window.scrollY - 150;
-                    window.scrollTo({top: y, behavior: 'smooth'});
-                }
-
-                // 2. Tampilkan popup SweetAlert informasi jumlah yang belum diisi
                 Swal.fire({
                     icon: 'warning',
                     title: 'Belum Selesai',
                     text: `Terdapat ${emptyCount} pertanyaan yang belum Anda jawab. Silakan periksa kembali bagian yang ditandai merah.`,
                     confirmButtonColor: '#4A7A6D', // Sage Green
                     confirmButtonText: 'Baik, Saya Periksa'
+                }).then(() => {
+                    // SOLUSI GULIR: Kita gunakan setTimeout agar browser melepas 
+                    // kunci scroll SweetAlert sebelum mulai menggulir.
+                    if (firstErrorBlock) {
+                        setTimeout(() => {
+                            // Offset -120 agar tidak tertutup sticky header/progress bar
+                            const y = firstErrorBlock.getBoundingClientRect().top + window.scrollY - 120;
+                            window.scrollTo({
+                                top: y, 
+                                behavior: 'smooth'
+                            });
+                        }, 250); // Jeda 250 milidetik setelah popup ditutup
+                    }
                 });
                 
                 return; // Hentikan proses submit
@@ -414,8 +419,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: "Pastikan semua pertanyaan telah dijawab sesuai dengan apa yang Anda rasakan.",
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonColor: '#4A7A6D', // Sage Green
-                cancelButtonColor: '#E53E3E', // Soft Red
+                confirmButtonColor: '#4A7A6D',
+                cancelButtonColor: '#E53E3E',
                 confirmButtonText: '<i class="bi bi-send-check"></i> Ya, Kirim Sekarang',
                 cancelButtonText: 'Cek Kembali',
                 reverseButtons: true,
