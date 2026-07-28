@@ -133,6 +133,35 @@
         .icon-emerald { background: rgba(56, 161, 105, 0.1); color: #38A169; }
         .icon-warm { background: rgba(221, 107, 32, 0.1); color: var(--warning-soft); }
 
+        /* Step Numbering - Cara Kerja */
+        .step-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(74, 122, 109, 0.12);
+        }
+        
+        .step-number-1 {
+            background: rgba(74, 122, 109, 0.1);
+            color: var(--primary);
+        }
+        
+        .step-number-2 {
+            background: rgba(74, 122, 109, 0.25);
+            color: var(--primary-hover);
+        }
+        
+        .step-number-3 {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
         /* Accordion Custom (FAQ) */
         .accordion-item {
             border: 1px solid rgba(203, 213, 208, 0.5);
@@ -363,21 +392,23 @@
                     <p class="mb-5" style="color: var(--text-muted);">Proses evaluasi didesain agar mudah, mengalir, dan nyaman untuk digunakan pada saat Anda memiliki waktu luang.</p>
                     
                     <div class="d-flex align-items-start mb-4">
-                        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold shadow-sm" style="width: 44px; height: 44px; background: rgba(74, 122, 109, 0.1); color: var(--primary);">1</div>
+                        <div class="step-number step-number-1">1</div>
                         <div class="ms-4">
                             <h6 class="fw-bold mb-1">Buat Akun Pribadi</h6>
                             <p class="small mb-0" style="color: var(--text-muted);">Daftar agar sistem dapat menyimpan riwayat Anda secara aman.</p>
                         </div>
                     </div>
+                    
                     <div class="d-flex align-items-start mb-4">
-                        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold shadow-sm" style="width: 44px; height: 44px; background: rgba(74, 122, 109, 0.1); color: var(--primary);">2</div>
+                        <div class="step-number step-number-2">2</div>
                         <div class="ms-4">
                             <h6 class="fw-bold mb-1">Jawab dengan Jujur</h6>
                             <p class="small mb-0" style="color: var(--text-muted);">Terdapat 42 pernyataan. Pilih yang paling sesuai dengan perasaanmu seminggu terakhir. Tidak ada jawaban yang salah.</p>
                         </div>
                     </div>
+                    
                     <div class="d-flex align-items-start">
-                        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold shadow-sm" style="width: 44px; height: 44px; background: var(--primary); color: white;">3</div>
+                        <div class="step-number step-number-3">3</div>
                         <div class="ms-4">
                             <h6 class="fw-bold mb-1">Lihat Hasil & Insight</h6>
                             <p class="small mb-0" style="color: var(--text-muted);">Dapatkan gambaran kondisi emosional Anda saat ini beserta saran langkah selanjutnya.</p>
