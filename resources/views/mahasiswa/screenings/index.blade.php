@@ -7,10 +7,10 @@
         CUSTOM STYLE RIWAYAT
     =========================== */
     .history-card {
-        border: 1px solid rgba(226, 232, 240, 0.8);
+        border: 1px solid rgba(203, 213, 208, 0.6);
         border-radius: 20px;
         background: #FFFFFF;
-        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
+        box-shadow: 0 4px 15px rgba(74, 122, 109, 0.04);
         transition: all 0.3s ease;
         margin-bottom: 24px;
         overflow: hidden;
@@ -18,18 +18,24 @@
 
     .history-card-header {
         background: #FFFFFF;
-        border-bottom: 1px solid #F1F5F9;
+        border-bottom: 1px solid rgba(203, 213, 208, 0.3);
         padding: 20px 24px;
     }
 
-    /* Tabel Modern - BERWARNA */
+    /* Tabel Modern - TEMA SAGE GREEN */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
     .custom-table {
         margin-bottom: 0;
+        white-space: nowrap; /* Mencegah teks turun ke bawah / tergencet di HP */
     }
 
     .custom-table thead th {
-        background: #3B82F6; 
-        color: #FFFFFF; 
+        background: var(--primary, #4A7A6D) !important; 
+        color: #FFFFFF !important; 
         font-size: 13px;
         font-weight: 600;
         text-transform: uppercase;
@@ -38,16 +44,24 @@
         border: none;
     }
 
-    .custom-table tbody tr { background-color: #F8FAFC; transition: background-color 0.2s ease; }
-    .custom-table tbody tr:nth-child(even) { background-color: #EFF6FF; }
-    .custom-table tbody tr:hover { background-color: #DBEAFE; }
+    .custom-table tbody tr { background-color: #FFFFFF; transition: background-color 0.2s ease; }
+    .custom-table tbody tr:nth-child(even) { background-color: rgba(74, 122, 109, 0.03); }
+    .custom-table tbody tr:hover { background-color: rgba(74, 122, 109, 0.08); }
 
     .custom-table tbody td {
         padding: 18px 20px;
-        color: #1E293B;
+        color: #2D3748;
         font-size: 14.5px;
-        border-bottom: 1px solid #E2E8F0;
+        border-bottom: 1px solid rgba(203, 213, 208, 0.4);
         vertical-align: middle;
+    }
+
+    /* Wrapper Flex untuk Badge agar Rapi di Mobile */
+    .badge-hasil-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        min-width: 260px; /* Lebar minimal supaya baris tabel rapi */
     }
 
     /* Badge Dasar */
@@ -57,7 +71,7 @@
         letter-spacing: 0.3px;
         padding: 6px 12px;
         border-radius: 20px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.06);
         display: inline-flex;
         align-items: center;
     }
@@ -70,11 +84,11 @@
     .badge-sangat-parah { background-color: #7C3AED !important; color: #FFFFFF !important; border: none; }
     .badge-default { background-color: #F1F5F9 !important; color: #334155 !important; border: 1px solid #CBD5E1; }
 
-    /* Action Button Custom */
+    /* Action Button Custom - Tema Sage */
     .btn-detail {
         background: #FFFFFF;
-        color: #3B82F6;
-        border: 1px solid #3B82F6;
+        color: var(--primary, #4A7A6D);
+        border: 1px solid var(--primary, #4A7A6D);
         font-weight: 600;
         font-size: 13px;
         padding: 6px 16px;
@@ -83,10 +97,10 @@
     }
 
     .btn-detail:hover {
-        background: #3B82F6;
+        background: var(--primary, #4A7A6D);
         color: #FFFFFF;
         transform: translateY(-1px);
-        box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+        box-shadow: 0 4px 10px rgba(74, 122, 109, 0.2);
     }
 </style>
 
@@ -105,11 +119,11 @@
     </div>
 
     <!-- Panel Informasi Klasifikasi Skor -->
-    <div class="accordion mb-4 shadow-sm" id="accordionInformasiSkor" style="border-radius: 16px; overflow: hidden; border: 1px solid rgba(226, 232, 240, 0.8);">
+    <div class="accordion mb-4 shadow-sm" id="accordionInformasiSkor" style="border-radius: 16px; overflow: hidden; border: 1px solid rgba(203, 213, 208, 0.6);">
         <div class="accordion-item" style="border: none;">
             <h2 class="accordion-header" id="headingSkor">
-                <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkor" aria-expanded="false" aria-controls="collapseSkor" style="background-color: #F8FAFC; box-shadow: none;">
-                    <i class="bi bi-info-circle text-primary me-2"></i> Klik untuk melihat panduan klasifikasi tingkat keparahan (DASS)
+                <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkor" aria-expanded="false" aria-controls="collapseSkor" style="background-color: rgba(74, 122, 109, 0.05); box-shadow: none;">
+                    <i class="bi bi-info-circle text-primary me-2" style="color: var(--primary) !important;"></i> Klik untuk melihat panduan klasifikasi tingkat keparahan (DASS)
                 </button>
             </h2>
             <div id="collapseSkor" class="accordion-collapse collapse" aria-labelledby="headingSkor" data-bs-parent="#accordionInformasiSkor">
@@ -119,7 +133,7 @@
                     </p>
                     <div class="table-responsive">
                         <table class="table table-bordered mb-0" style="font-size: 14px;">
-                            <thead style="background-color: #E2E8F0; color: #334155;">
+                            <thead style="background-color: #E8F0EC; color: #2D3748;">
                                 <tr>
                                     <th width="25%">Tingkat Keparahan</th>
                                     <th width="25%" class="text-center">Skor Depresi</th>
@@ -170,13 +184,13 @@
     @if(count($labels ?? []) > 0)
     <div class="history-card">
         <div class="history-card-header d-flex align-items-center">
-            <div class="bg-primary bg-opacity-10 p-2 rounded-lg me-3">
-                <i class="bi bi-activity text-primary fs-5"></i>
+            <div class="p-2 rounded-lg me-3" style="background-color: rgba(74, 122, 109, 0.1);">
+                <i class="bi bi-activity fs-5" style="color: var(--primary, #4A7A6D);"></i>
             </div>
             <h6 class="mb-0 fw-bold text-dark">Grafik Pemantauan Tingkat Stres</h6>
         </div>
         <div class="card-body p-4 pt-3">
-            <div style="overflow-x: auto; overflow-y: hidden; width: 100%; border-radius: 12px; background: #F8FAFC; padding: 15px;">
+            <div style="overflow-x: auto; overflow-y: hidden; width: 100%; border-radius: 12px; background: rgba(244, 247, 246, 0.5); padding: 15px;">
                 <div id="chartWrapper" style="position: relative; height: 350px; width: 100%;">
                     <canvas id="historyChart"></canvas>
                 </div>
@@ -188,8 +202,8 @@
     <!-- Panel Tabel Riwayat -->
     <div class="history-card">
         <div class="history-card-header d-flex align-items-center">
-            <div class="bg-primary bg-opacity-10 p-2 rounded-lg me-3">
-                <i class="bi bi-clock-history text-primary fs-5"></i>
+            <div class="p-2 rounded-lg me-3" style="background-color: rgba(74, 122, 109, 0.1);">
+                <i class="bi bi-clock-history fs-5" style="color: var(--primary, #4A7A6D);"></i>
             </div>
             <h6 class="mb-0 fw-bold text-dark">Detail Riwayat Skrining</h6>
         </div>
@@ -233,7 +247,8 @@
                                 <div class="text-muted small">{{ $s->created_at->format('H:i') }} WIB</div>
                             </td>
                             <td>
-                                <div class="d-flex gap-2 flex-wrap">
+                                <!-- Diubah menjadi Wrapper Fleksibel agar tidak tergencet -->
+                                <div class="badge-hasil-wrapper">
                                     <span class="badge-status {{ $classDepresi }}">
                                         Depresi: {{ ucfirst($s->status_depresi ?? '-') }} ({{ $s->score_depresi ?? 0 }})
                                     </span>
@@ -312,20 +327,20 @@
                     {
                         label: 'Skor Depresi',
                         data: dataDepresi,
-                        borderColor: '#3B82F6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderColor: '#4A7A6D', /* Sage Green untuk Depresi */
+                        backgroundColor: 'rgba(74, 122, 109, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
                         fill: true,
                         pointBackgroundColor: '#FFFFFF',
-                        pointBorderColor: '#3B82F6',
+                        pointBorderColor: '#4A7A6D',
                         pointRadius: 4,
                         pointHoverRadius: 6
                     },
                     {
                         label: 'Skor Kecemasan',
                         data: dataKecemasan,
-                        borderColor: '#EAB308',
+                        borderColor: '#EAB308', /* Yellow */
                         backgroundColor: 'rgba(234, 179, 8, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
@@ -338,7 +353,7 @@
                     {
                         label: 'Skor Stres',
                         data: dataStres,
-                        borderColor: '#EF4444',
+                        borderColor: '#EF4444', /* Red */
                         backgroundColor: 'rgba(239, 68, 68, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
@@ -362,7 +377,7 @@
                         beginAtZero: true,
                         max: 42, 
                         grid: {
-                            color: 'rgba(226, 232, 240, 0.6)',
+                            color: 'rgba(203, 213, 208, 0.4)',
                             drawBorder: false,
                         },
                         title: { display: true, text: 'Skor Penilaian', font: { weight: '600', family: "'Plus Jakarta Sans', sans-serif" }, color: '#64748B' }
