@@ -427,7 +427,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('mahasiswa.screenings.create') ? 'active' : '' }}" href="{{ route('mahasiswa.screenings.create') }}">
+                            <!-- PERUBAHAN: Link diarahkan ke onboarding, dan deteksi rute aktif mencakup onboarding dan create -->
+                            <a class="nav-link {{ request()->routeIs('mahasiswa.screenings.onboarding', 'mahasiswa.screenings.create') ? 'active' : '' }}" href="{{ route('mahasiswa.screenings.onboarding') }}">
                                 <i class="bi bi-clipboard2-pulse"></i> Skrining Baru
                             </a>
                         </li>
