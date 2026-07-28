@@ -117,7 +117,6 @@
                         </div>
                     </div>
 
-                    <!-- Tambahkan ID formUpdateProfile -->
                     <form id="formUpdateProfile" action="{{ route('profile.update') }}" method="POST">
                         @csrf
                         @method('PUT')
@@ -153,7 +152,6 @@
                         </div>
                     </div>
 
-                    <!-- Tambahkan ID formUpdatePassword -->
                     <form id="formUpdatePassword" action="{{ route('profile.password') }}" method="POST">
                         @csrf
                         @method('PUT')
@@ -202,15 +200,11 @@
     </div>
 </div>
 
-@endsection
-
-@push('scripts')
-<!-- Tambahkan CDN SweetAlert2 -->
+<!-- PINDAHKAN SCRIPT KE SINI AGAR LANGSUNG DI-RENDER OLEH BLADE -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Fungsi generik untuk menangani konfirmasi form
+        // Fungsi untuk menangani konfirmasi form
         function setupFormConfirmation(formId, title, text) {
             const form = document.getElementById(formId);
             if (form) {
@@ -222,17 +216,16 @@
                         text: text,
                         icon: 'question',
                         showCancelButton: true,
-                        confirmButtonColor: '#4A7A6D', // Warna tombol sesuai tema Sage
+                        confirmButtonColor: '#4A7A6D', // Warna sage
                         cancelButtonColor: '#94a3b8',
                         confirmButtonText: 'Ya, Simpan!',
                         cancelButtonText: 'Batal',
-                        reverseButtons: true, // Menukar posisi tombol (Ya di kanan, Batal di kiri)
+                        reverseButtons: true,
                         customClass: {
                             popup: 'rounded-4'
                         }
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Tampilkan loading saat form disubmit
                             Swal.fire({
                                 title: 'Memproses...',
                                 allowOutsideClick: false,
@@ -241,21 +234,20 @@
                                     Swal.showLoading();
                                 }
                             });
-                            form.submit(); // Submit form sesungguhnya
+                            form.submit();
                         }
                     });
                 });
             }
         }
 
-        // Terapkan ke Form Username
+        // Terapkan ke kedua form
         setupFormConfirmation(
             'formUpdateProfile',
             'Simpan Perubahan?',
             'Apakah Anda yakin ingin memperbarui informasi akun ini?'
         );
 
-        // Terapkan ke Form Password
         setupFormConfirmation(
             'formUpdatePassword',
             'Ubah Password?',
@@ -263,4 +255,5 @@
         );
     });
 </script>
-@endpush
+
+@endsection
