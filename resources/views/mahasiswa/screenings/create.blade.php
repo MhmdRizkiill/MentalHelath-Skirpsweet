@@ -324,7 +324,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (progressBar) {
             progressBar.style.width = percentage + '%';
             
-            // Tambahkan efek komplit jika 100%
             if (percentage === 100) {
                 progressBar.classList.add('completed');
                 if (progressText) progressText.style.color = 'var(--success)';
@@ -388,23 +387,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
+            // JIKA ADA YANG BELUM DIISI
             if (!isValid) {
+                // 1. Langsung scroll otomatis ke pertanyaan pertama yang kosong
+                if (firstErrorBlock) {
+                    // Offset -150px agar tidak tertutup sticky progress bar
+                    const y = firstErrorBlock.getBoundingClientRect().top + window.scrollY - 150;
+                    window.scrollTo({top: y, behavior: 'smooth'});
+                }
+
+                // 2. Tampilkan popup SweetAlert informasi jumlah yang belum diisi
                 Swal.fire({
                     icon: 'warning',
                     title: 'Belum Selesai',
                     text: `Terdapat ${emptyCount} pertanyaan yang belum Anda jawab. Silakan periksa kembali bagian yang ditandai merah.`,
                     confirmButtonColor: '#4A7A6D', // Sage Green
                     confirmButtonText: 'Baik, Saya Periksa'
-                }).then(() => {
-                    if (firstErrorBlock) {
-                        // Offset -150px agar pertanyaan yang error tidak tertutup sticky progress bar
-                        const y = firstErrorBlock.getBoundingClientRect().top + window.scrollY - 150;
-                        window.scrollTo({top: y, behavior: 'smooth'});
-                    }
                 });
-                return;
+                
+                return; // Hentikan proses submit
             }
 
+            // JIKA SEMUA SUDAH DIISI
             Swal.fire({
                 title: 'Sudah Yakin?',
                 text: "Pastikan semua pertanyaan telah dijawab sesuai dengan apa yang Anda rasakan.",
