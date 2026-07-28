@@ -125,7 +125,7 @@
         font-size: 14.5px;
         border-bottom: 1px dashed var(--border-soft);
         vertical-align: middle;
-        white-space: normal; /* Biarkan teks pertanyaan wrap (turun ke bawah) */
+        white-space: normal;
     }
 
     /* ===========================
@@ -149,17 +149,25 @@
     .badge-sangat-parah { background-color: rgba(124, 58, 237, 0.15) !important; color: #6d28d9 !important; border: 1px solid rgba(124, 58, 237, 0.3); }
     .badge-default { background-color: #F1F5F9 !important; color: #475569 !important; border: 1px solid #CBD5E1; }
 
+    /* --- PERBAIKAN TAMPILAN JAWABAN (ANSWER TAGS) --- */
     .answer-tag {
-        background: var(--sage-light);
-        color: var(--sage-hover);
         font-weight: 600;
-        padding: 8px 14px;
-        border-radius: 10px;
-        display: inline-block;
-        font-size: 13.5px;
-        border: 1px solid var(--border-soft);
+        padding: 6px 16px;
+        border-radius: 50px; /* Diubah menjadi pill shape agar lebih modern */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
         white-space: nowrap;
+        border: 1px solid transparent;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
+
+    /* Warna gradasi berdasarkan tingkat intensitas jawaban */
+    .ans-0 { background-color: #F1F5F9; color: #64748B; border-color: #E2E8F0; } /* Tidak Pernah - Abu-abu netral */
+    .ans-1 { background-color: #ECFDF5; color: #059669; border-color: #A7F3D0; } /* Kadang-kadang - Hijau lembut */
+    .ans-2 { background-color: #FFF7ED; color: #EA580C; border-color: #FED7AA; } /* Sering - Oranye terang */
+    .ans-3 { background-color: #FEF2F2; color: #DC2626; border-color: #FECACA; } /* Sangat Sering - Merah tegas */
 
     /* ===========================
         INFO PANEL (ACCORDION)
@@ -378,11 +386,19 @@
                                 </thead>
                                 <tbody>
                                     @php 
+                                        // Array label teks
                                         $opsiTeks = [
                                             0 => 'Tidak pernah (0)',
                                             1 => 'Kadang-kadang (1)',
                                             2 => 'Sering (2)',
                                             3 => 'Sangat sering (3)'
+                                        ];
+                                        // Array class warna spesifik untuk mempercantik tampilan
+                                        $opsiClass = [
+                                            0 => 'ans-0',
+                                            1 => 'ans-1',
+                                            2 => 'ans-2',
+                                            3 => 'ans-3'
                                         ];
                                     @endphp
 
@@ -395,7 +411,8 @@
                                             <td class="fw-medium text-dark">{{ $q->pertanyaan ?? $q->question_text ?? 'Teks pertanyaan tidak ditemukan' }}</td>
                                             <td class="text-center">
                                                 @if($jawabanSkor !== null)
-                                                    <span class="answer-tag">
+                                                    <!-- Class akan dinamis menyesuaikan array $opsiClass -->
+                                                    <span class="answer-tag {{ $opsiClass[$jawabanSkor] ?? 'ans-0' }}">
                                                         {{ $opsiTeks[$jawabanSkor] }}
                                                     </span>
                                                 @else
