@@ -102,6 +102,15 @@
         transform: translateY(-1px);
         box-shadow: 0 4px 10px rgba(74, 122, 109, 0.2);
     }
+    
+    /* Custom Scrollbar untuk area grafik */
+    .chart-scroll-area::-webkit-scrollbar {
+        height: 6px;
+    }
+    .chart-scroll-area::-webkit-scrollbar-thumb {
+        background: #A3C1AD;
+        border-radius: 10px;
+    }
 </style>
 
 <div class="container pb-4">
@@ -190,8 +199,9 @@
             <h6 class="mb-0 fw-bold text-dark">Grafik Pemantauan Tingkat Stres</h6>
         </div>
         <div class="card-body p-4 pt-3">
-            <div style="overflow-x: auto; overflow-y: hidden; width: 100%; border-radius: 12px; background: rgba(244, 247, 246, 0.5); padding: 15px;">
-                <div id="chartWrapper" style="position: relative; height: 350px; width: 100%;">
+            <div class="chart-scroll-area" style="overflow-x: auto; overflow-y: hidden; width: 100%; border-radius: 12px; background: rgba(244, 247, 246, 0.5); padding: 15px;">
+                <!-- min-width diset 100% agar di layar PC tetap penuh -->
+                <div id="chartWrapper" style="position: relative; height: 350px; min-width: 100%;">
                     <canvas id="historyChart"></canvas>
                 </div>
             </div>
@@ -308,14 +318,20 @@
 
         if(labels.length === 0) return;
 
+        // --- PERBAIKAN LOGIKA LEBAR GRAFIK UNTUK MOBILE ---
         const chartWrapper = document.getElementById('chartWrapper');
         const parentLayar = chartWrapper.parentElement;
         
-        if (labels.length > 10) {
-            let lebarLayar = parentLayar.clientWidth || 800; 
-            const ekstraLebar = (labels.length - 10) * 100;
-            chartWrapper.style.width = (lebarLayar + ekstraLebar) + 'px';
+        // Tentukan lebar minimal yang dibutuhkan per titik data (misal 90px agar renggang)
+        const minWidthPerPoint = 90;
+        const requiredWidth = labels.length * minWidthPerPoint;
+        const containerWidth = parentLayar.clientWidth;
+
+        // Jika lebar yang dibutuhkan untuk merenggangkan data lebih besar dari lebar layar HP
+        if (requiredWidth > containerWidth) {
+            chartWrapper.style.width = requiredWidth + 'px';
         } else {
+            // Jika di PC/Tablet (layar cukup luas), biarkan memenuhi layar (100%)
             chartWrapper.style.width = '100%';
         }
 
@@ -327,7 +343,7 @@
                     {
                         label: 'Skor Depresi',
                         data: dataDepresi,
-                        borderColor: '#4A7A6D', /* Sage Green untuk Depresi */
+                        borderColor: '#4A7A6D',
                         backgroundColor: 'rgba(74, 122, 109, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
@@ -340,7 +356,7 @@
                     {
                         label: 'Skor Kecemasan',
                         data: dataKecemasan,
-                        borderColor: '#EAB308', /* Yellow */
+                        borderColor: '#EAB308',
                         backgroundColor: 'rgba(234, 179, 8, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
@@ -353,7 +369,7 @@
                     {
                         label: 'Skor Stres',
                         data: dataStres,
-                        borderColor: '#EF4444', /* Red */
+                        borderColor: '#EF4444',
                         backgroundColor: 'rgba(239, 68, 68, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
