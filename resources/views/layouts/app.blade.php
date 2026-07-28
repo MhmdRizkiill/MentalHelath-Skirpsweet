@@ -48,7 +48,8 @@
         /* LATAR BELAKANG GRADASI MENENANGKAN (Berbasis Palet) */
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-mid) 40%, var(--bg-soft) 70%, var(--bg-mid) 100%);
+            /* Gradasi dasar dibuat lebih smooth dan menyebar */
+            background: linear-gradient(135deg, #F4F7F6 0%, #E6EFE9 50%, #EEF2F0 100%);
             background-attachment: fixed;
             color: var(--text);
             min-height: 100vh;
@@ -56,33 +57,50 @@
             position: relative;
         }
 
-        /* AMBIENT GLOW SOFT SAGE IN BACKGROUND */
+        /* AMBIENT GLOW SOFT SAGE IN BACKGROUND (Mesh Gradient Effect) */
         body::before {
             content: '';
             position: fixed;
-            top: -12%;
-            right: -8%;
-            width: 600px;
-            height: 600px;
-            /* Menggunakan var(--secondary) dengan 15% Opacity (#6B908026) */
-            background: radial-gradient(circle, #6B908026 0%, transparent 70%);
+            top: -15%;
+            right: -10%;
+            width: 750px;
+            height: 750px;
+            /* Warna Teal Mint dengan opacity lebih pas */
+            background: radial-gradient(circle, rgba(107, 144, 128, 0.18) 0%, rgba(107, 144, 128, 0) 70%);
             border-radius: 50%;
             z-index: -1;
             pointer-events: none;
+            filter: blur(40px); /* Kunci untuk membuat gradasi menyatu sempurna (Mesh effect) */
+            animation: floatAmbient 12s ease-in-out infinite;
         }
 
         body::after {
             content: '';
             position: fixed;
-            bottom: -10%;
-            left: 10%;
-            width: 650px;
-            height: 650px;
-            /* Menggunakan var(--accent) dengan 20% Opacity (#A3C1AD33) */
-            background: radial-gradient(circle, #A3C1AD33 0%, transparent 70%);
+            bottom: -15%;
+            left: -10%;
+            width: 800px;
+            height: 800px;
+            /* Warna Soft Leaf dengan opacity */
+            background: radial-gradient(circle, rgba(163, 193, 173, 0.22) 0%, rgba(163, 193, 173, 0) 70%);
             border-radius: 50%;
             z-index: -1;
             pointer-events: none;
+            filter: blur(40px);
+            animation: floatAmbient 15s ease-in-out infinite reverse;
+        }
+
+        /* ANIMASI NAFAS HALUS UNTUK GRADASI */
+        @keyframes floatAmbient {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(-30px, 20px) scale(1.05);
+            }
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
         }
 
         /* LAYOUT CONTAINER */
