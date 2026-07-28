@@ -48,7 +48,6 @@
         /* LATAR BELAKANG GRADASI MENENANGKAN (Berbasis Palet) */
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            /* Gradasi dasar dibuat lebih smooth dan menyebar */
             background: linear-gradient(135deg, #F4F7F6 0%, #E6EFE9 50%, #EEF2F0 100%);
             background-attachment: fixed;
             color: var(--text);
@@ -65,12 +64,11 @@
             right: -10%;
             width: 750px;
             height: 750px;
-            /* Warna Teal Mint dengan opacity lebih pas */
             background: radial-gradient(circle, rgba(107, 144, 128, 0.18) 0%, rgba(107, 144, 128, 0) 70%);
             border-radius: 50%;
             z-index: -1;
             pointer-events: none;
-            filter: blur(40px); /* Kunci untuk membuat gradasi menyatu sempurna (Mesh effect) */
+            filter: blur(40px);
             animation: floatAmbient 12s ease-in-out infinite;
         }
 
@@ -81,7 +79,6 @@
             left: -10%;
             width: 800px;
             height: 800px;
-            /* Warna Soft Leaf dengan opacity */
             background: radial-gradient(circle, rgba(163, 193, 173, 0.22) 0%, rgba(163, 193, 173, 0) 70%);
             border-radius: 50%;
             z-index: -1;
@@ -90,17 +87,10 @@
             animation: floatAmbient 15s ease-in-out infinite reverse;
         }
 
-        /* ANIMASI NAFAS HALUS UNTUK GRADASI */
         @keyframes floatAmbient {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            50% {
-                transform: translate(-30px, 20px) scale(1.05);
-            }
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-30px, 20px) scale(1.05); }
+            100% { transform: translate(0, 0) scale(1); }
         }
 
         /* LAYOUT CONTAINER */
@@ -112,22 +102,47 @@
         /* SIDEBAR (SOFT GLASSMORPHISM) */
         .sidebar {
             width: var(--sidebar-width);
-            background: rgba(255, 255, 255, 0.82);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            /* Border disesuaikan agar nyambung dengan gradasi */
             border-right: 1px solid rgba(163, 193, 173, 0.4);
             box-shadow: 4px 0 24px rgba(74, 122, 109, 0.04);
+            
+            /* PERBAIKAN HP: Menggunakan dvh agar pas dengan layar browser mobile */
             height: 100vh;
+            height: 100dvh;
             position: fixed;
             top: 0;
             left: 0;
             z-index: 1020;
             display: flex;
             flex-direction: column;
-            padding: 26px 22px;
+            padding: 24px 20px 24px 20px;
             overflow-y: auto;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-overflow-scrolling: touch; /* Scroll lancar untuk iOS */
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* OVERLAY UNTUK MOBILE SAAT SIDEBAR TERBUKA */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 1015;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.show {
+            display: block;
+            opacity: 1;
         }
 
         /* LOGO BRANDING */
@@ -136,13 +151,13 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
+            flex-shrink: 0;
         }
 
         .brand-icon-wrapper {
             width: 44px;
             height: 44px;
-            /* Dipadukan langsung dari --primary dan --secondary palette dengan opacity */
             background: linear-gradient(135deg, #4A7A6D26 0%, #6B908033 100%);
             border: 1px solid #4A7A6D33;
             border-radius: 14px;
@@ -163,7 +178,8 @@
             background: rgba(244, 247, 246, 0.85);
             border: 1px solid rgba(203, 213, 208, 0.6);
             border-radius: var(--radius-md);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
         }
 
         .user-avatar {
@@ -195,7 +211,7 @@
             color: var(--muted);
             font-weight: 700;
             letter-spacing: 1px;
-            padding: 12px 12px 6px;
+            padding: 10px 12px 6px;
         }
 
         .nav-item {
@@ -276,7 +292,7 @@
         @media (max-width: 991.98px) {
             .sidebar {
                 transform: translateX(-100%);
-                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.08);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.12);
             }
 
             .sidebar.show {
@@ -387,6 +403,9 @@
 </head>
 <body>
 
+    <!-- OVERLAY GELAP SAAT SIDEBAR HP TERBUKA -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="app-layout">
 
         <!-- ==========================================
@@ -445,7 +464,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <!-- PERUBAHAN: Link diarahkan ke onboarding, dan deteksi rute aktif mencakup onboarding dan create -->
                             <a class="nav-link {{ request()->routeIs('mahasiswa.screenings.onboarding', 'mahasiswa.screenings.create') ? 'active' : '' }}" href="{{ route('mahasiswa.screenings.onboarding') }}">
                                 <i class="bi bi-clipboard2-pulse"></i> Skrining Baru
                             </a>
@@ -478,8 +496,8 @@
             </ul>
 
             @auth
-                <!-- TOMBOL KELUAR DI BAWAH SIDEBAR -->
-                <div class="pt-3 border-top mt-auto" style="border-color: rgba(203, 213, 208, 0.6) !important;">
+                <!-- TOMBOL KELUAR DI BAWAH SIDEBAR (Ditambahkan flex-shrink-0 agar tidak tertekan) -->
+                <div class="pt-3 border-top mt-auto flex-shrink-0" style="border-color: rgba(203, 213, 208, 0.6) !important;">
                     <button type="button" class="btn w-100 fw-bold d-flex align-items-center justify-content-center" 
                             style="border: 1px solid rgba(229, 62, 62, 0.2); background: rgba(254, 242, 242, 0.9); color: #C53030; border-radius: var(--radius-md); padding: 11px;"
                             data-bs-toggle="modal" data-bs-target="#logoutModal">
@@ -593,14 +611,24 @@
             const toastList = [...toastElList].map(toastEl => new bootstrap.Toast(toastEl, { delay: 3000 }));
             toastList.forEach(toast => toast.show());
 
-            // Toggle Sidebar khusus layar Mobile
+            // Toggle Sidebar & Overlay khusus Layar Mobile
             const sidebarToggle = document.getElementById('sidebarToggle');
             const mainSidebar = document.getElementById('mainSidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-            if (sidebarToggle && mainSidebar) {
-                sidebarToggle.addEventListener('click', function() {
+            function toggleSidebar() {
+                if (mainSidebar && sidebarOverlay) {
                     mainSidebar.classList.toggle('show');
-                });
+                    sidebarOverlay.classList.toggle('show');
+                }
+            }
+
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', toggleSidebar);
+            }
+
+            if (sidebarOverlay) {
+                sidebarOverlay.addEventListener('click', toggleSidebar);
             }
         });
     </script>
