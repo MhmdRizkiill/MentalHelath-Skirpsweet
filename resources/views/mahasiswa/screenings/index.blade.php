@@ -4,13 +4,29 @@
 
 <style>
     /* ===========================
+        VARIABEL TEMA & WARNA
+    =========================== */
+    :root {
+        --sage-primary: #4A7A6D;
+        --sage-hover: #3b6358;
+        --sage-light: #e8f0ec;
+        --sage-surface: #f4f7f6;
+        --text-dark: #1e293b;
+        --text-muted: #64748b;
+        --border-soft: rgba(74, 122, 109, 0.15);
+        --radius-xl: 24px;
+        --radius-lg: 16px;
+        --shadow-soft: 0 12px 30px rgba(74, 122, 109, 0.06);
+    }
+
+    /* ===========================
         CUSTOM STYLE RIWAYAT
     =========================== */
     .history-card {
-        border: 1px solid rgba(203, 213, 208, 0.6);
-        border-radius: 20px;
         background: #FFFFFF;
-        box-shadow: 0 4px 15px rgba(74, 122, 109, 0.04);
+        border: none;
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-soft);
         transition: all 0.3s ease;
         margin-bottom: 24px;
         overflow: hidden;
@@ -18,7 +34,7 @@
 
     .history-card-header {
         background: #FFFFFF;
-        border-bottom: 1px solid rgba(203, 213, 208, 0.3);
+        border-bottom: 1px solid var(--border-soft);
         padding: 20px 24px;
     }
 
@@ -30,14 +46,14 @@
 
     .custom-table {
         margin-bottom: 0;
-        white-space: nowrap; /* Mencegah teks turun ke bawah / tergencet di HP */
+        white-space: nowrap;
     }
 
     .custom-table thead th {
-        background: var(--primary, #4A7A6D) !important; 
-        color: #FFFFFF !important; 
+        background: var(--sage-light) !important; 
+        color: var(--sage-primary) !important; 
         font-size: 13px;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         padding: 16px 20px;
@@ -45,76 +61,97 @@
     }
 
     .custom-table tbody tr { background-color: #FFFFFF; transition: background-color 0.2s ease; }
-    .custom-table tbody tr:nth-child(even) { background-color: rgba(74, 122, 109, 0.03); }
-    .custom-table tbody tr:hover { background-color: rgba(74, 122, 109, 0.08); }
+    .custom-table tbody tr:nth-child(even) { background-color: var(--sage-surface); }
+    .custom-table tbody tr:hover { background-color: var(--sage-light); }
 
     .custom-table tbody td {
         padding: 18px 20px;
-        color: #2D3748;
+        color: var(--text-dark);
         font-size: 14.5px;
-        border-bottom: 1px solid rgba(203, 213, 208, 0.4);
+        border-bottom: 1px solid var(--border-soft);
         vertical-align: middle;
     }
 
-    /* Wrapper Flex untuk Badge agar Rapi di Mobile */
+    /* ===========================
+        BADGES & TAGS
+    =========================== */
     .badge-hasil-wrapper {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
-        min-width: 260px; /* Lebar minimal supaya baris tabel rapi */
+        min-width: 260px;
     }
 
-    /* Badge Dasar */
     .badge-status {
         font-size: 12px;
         font-weight: 700;
         letter-spacing: 0.3px;
-        padding: 6px 12px;
-        border-radius: 20px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+        padding: 6px 14px;
+        border-radius: 30px;
         display: inline-flex;
         align-items: center;
     }
 
-    /* CLASS WARNA SPESIFIK (Mengatasi Blokir Inline Style) */
-    .badge-normal { background-color: #22C55E !important; color: #FFFFFF !important; border: none; }
-    .badge-ringan { background-color: #EAB308 !important; color: #000000 !important; border: none; }
-    .badge-sedang { background-color: #F97316 !important; color: #FFFFFF !important; border: none; }
-    .badge-parah { background-color: #EF4444 !important; color: #FFFFFF !important; border: none; }
-    .badge-sangat-parah { background-color: #7C3AED !important; color: #FFFFFF !important; border: none; }
-    .badge-default { background-color: #F1F5F9 !important; color: #334155 !important; border: 1px solid #CBD5E1; }
+    .badge-normal { background-color: rgba(34, 197, 94, 0.15) !important; color: #16a34a !important; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .badge-ringan { background-color: rgba(234, 179, 8, 0.15) !important; color: #ca8a04 !important; border: 1px solid rgba(234, 179, 8, 0.3); }
+    .badge-sedang { background-color: rgba(249, 115, 22, 0.15) !important; color: #ea580c !important; border: 1px solid rgba(249, 115, 22, 0.3); }
+    .badge-parah { background-color: rgba(239, 68, 68, 0.15) !important; color: #dc2626 !important; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .badge-sangat-parah { background-color: rgba(124, 58, 237, 0.15) !important; color: #6d28d9 !important; border: 1px solid rgba(124, 58, 237, 0.3); }
+    .badge-default { background-color: var(--sage-surface) !important; color: var(--text-muted) !important; border: 1px solid var(--border-soft); }
 
-    /* Action Button Custom - Tema Sage */
-    .btn-detail {
+    /* ===========================
+        TOMBOL SAGE
+    =========================== */
+    .btn-sage {
+        background: var(--sage-primary);
+        border: none;
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-sage:hover {
+        background: var(--sage-hover);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(74, 122, 109, 0.2);
+    }
+
+    .btn-outline-sage {
         background: #FFFFFF;
-        color: var(--primary, #4A7A6D);
-        border: 1px solid var(--primary, #4A7A6D);
+        border: 1.5px solid var(--sage-primary);
+        color: var(--sage-primary);
         font-weight: 600;
         font-size: 13px;
         padding: 6px 16px;
         border-radius: 10px;
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
     }
 
-    .btn-detail:hover {
-        background: var(--primary, #4A7A6D);
-        color: #FFFFFF;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 10px rgba(74, 122, 109, 0.2);
+    .btn-outline-sage:hover {
+        background: var(--sage-primary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(74, 122, 109, 0.15);
     }
     
     /* Custom Scrollbar untuk area grafik */
     .chart-scroll-area::-webkit-scrollbar {
-        height: 6px;
+        height: 8px;
     }
     .chart-scroll-area::-webkit-scrollbar-thumb {
-        background: #A3C1AD;
+        background: var(--sage-primary);
+        border-radius: 10px;
+    }
+    .chart-scroll-area::-webkit-scrollbar-track {
+        background: var(--sage-light);
         border-radius: 10px;
     }
 </style>
 
-<div class="container pb-4">
+<div class="container pb-4 pt-3">
     
+    <!-- HEADER -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
         <div>
             <h3 class="fw-bold text-dark mb-1" style="letter-spacing: -0.5px;">Riwayat Skrining</h3>
@@ -122,17 +159,17 @@
                 Pantau perkembangan tingkat depresi, kecemasan, dan stres Anda.
             </p>
         </div>
-        <a href="{{ route('mahasiswa.screenings.create') }}" class="btn btn-primary rounded-pill px-4 shadow-sm d-inline-flex align-items-center">
+        <a href="{{ route('mahasiswa.screenings.create') }}" class="btn btn-sage rounded-pill px-4 py-2 shadow-sm d-inline-flex align-items-center">
             <i class="bi bi-plus-circle me-2"></i> Mulai Skrining Baru
         </a>
     </div>
 
-    <!-- Panel Informasi Klasifikasi Skor -->
-    <div class="accordion mb-4 shadow-sm" id="accordionInformasiSkor" style="border-radius: 16px; overflow: hidden; border: 1px solid rgba(203, 213, 208, 0.6);">
+    <!-- PANEL INFORMASI SKOR -->
+    <div class="accordion mb-4 shadow-sm" id="accordionInformasiSkor" style="border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-soft); background: #FFFFFF;">
         <div class="accordion-item" style="border: none;">
             <h2 class="accordion-header" id="headingSkor">
-                <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkor" aria-expanded="false" aria-controls="collapseSkor" style="background-color: rgba(74, 122, 109, 0.05); box-shadow: none;">
-                    <i class="bi bi-info-circle text-primary me-2" style="color: var(--primary) !important;"></i> Klik untuk melihat panduan klasifikasi tingkat keparahan (DASS)
+                <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkor" aria-expanded="false" aria-controls="collapseSkor" style="background-color: var(--sage-surface); box-shadow: none;">
+                    <i class="bi bi-info-circle me-2" style="color: var(--sage-primary);"></i> Klik untuk melihat panduan klasifikasi tingkat keparahan (DASS-42)
                 </button>
             </h2>
             <div id="collapseSkor" class="accordion-collapse collapse" aria-labelledby="headingSkor" data-bs-parent="#accordionInformasiSkor">
@@ -141,45 +178,45 @@
                         Skrining ini menggunakan instrumen standar yang memiliki ambang batas <em>(cutoff)</em> spesifik untuk tiap kondisi. Kategori <strong>"Sangat Parah"</strong> adalah batas maksimal.
                     </p>
                     <div class="table-responsive">
-                        <table class="table table-bordered mb-0" style="font-size: 14px;">
-                            <thead style="background-color: #E8F0EC; color: #2D3748;">
+                        <table class="table table-bordered mb-0" style="font-size: 14px; border-color: var(--border-soft);">
+                            <thead style="background-color: var(--sage-light); color: var(--text-dark);">
                                 <tr>
-                                    <th width="25%">Tingkat Keparahan</th>
-                                    <th width="25%" class="text-center">Skor Depresi</th>
-                                    <th width="25%" class="text-center">Skor Kecemasan</th>
-                                    <th width="25%" class="text-center">Skor Stres</th>
+                                    <th width="25%" class="border-0">Tingkat Keparahan</th>
+                                    <th width="25%" class="text-center border-0">Skor Depresi</th>
+                                    <th width="25%" class="text-center border-0">Skor Kecemasan</th>
+                                    <th width="25%" class="text-center border-0">Skor Stres</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td><span class="badge" style="background-color: #22C55E; color: white; border: none;">Normal</span></td>
-                                <td class="text-center">0 - 9</td>
-                                <td class="text-center">0 - 7</td>
-                                <td class="text-center">0 - 14</td>
+                                <td><span class="badge-status badge-normal">Normal</span></td>
+                                <td class="text-center text-muted fw-medium">0 - 9</td>
+                                <td class="text-center text-muted fw-medium">0 - 7</td>
+                                <td class="text-center text-muted fw-medium">0 - 14</td>
                             </tr>
                             <tr>
-                                <td><span class="badge" style="background-color: #EAB308; color: black; border: none;">Ringan</span></td>
-                                <td class="text-center">10 - 13</td>
-                                <td class="text-center">8 - 9</td>
-                                <td class="text-center">15 - 18</td>
+                                <td><span class="badge-status badge-ringan">Ringan</span></td>
+                                <td class="text-center text-muted fw-medium">10 - 13</td>
+                                <td class="text-center text-muted fw-medium">8 - 9</td>
+                                <td class="text-center text-muted fw-medium">15 - 18</td>
                             </tr>
                             <tr>
-                                <td><span class="badge" style="background-color: #F97316; color: white; border: none;">Sedang</span></td>
-                                <td class="text-center">14 - 20</td>
-                                <td class="text-center">10 - 14</td>
-                                <td class="text-center">19 - 25</td>
+                                <td><span class="badge-status badge-sedang">Sedang</span></td>
+                                <td class="text-center text-muted fw-medium">14 - 20</td>
+                                <td class="text-center text-muted fw-medium">10 - 14</td>
+                                <td class="text-center text-muted fw-medium">19 - 25</td>
                             </tr>
                             <tr>
-                                <td><span class="badge" style="background-color: #EF4444; color: white; border: none;">Parah</span></td>
-                                <td class="text-center">21 - 27</td>
-                                <td class="text-center">15 - 19</td>
-                                <td class="text-center">26 - 33</td>
+                                <td><span class="badge-status badge-parah">Parah</span></td>
+                                <td class="text-center text-muted fw-medium">21 - 27</td>
+                                <td class="text-center text-muted fw-medium">15 - 19</td>
+                                <td class="text-center text-muted fw-medium">26 - 33</td>
                             </tr>
                             <tr>
-                                <td><span class="badge" style="background-color: #7C3AED; color: white; border: none;">Sangat Parah</span></td>
-                                <td class="text-center fw-bold">28 - 42</td>
-                                <td class="text-center fw-bold">20 - 42</td>
-                                <td class="text-center fw-bold">34 - 42</td>
+                                <td><span class="badge-status badge-sangat-parah">Sangat Parah</span></td>
+                                <td class="text-center text-dark fw-bold">28 - 42</td>
+                                <td class="text-center text-dark fw-bold">20 - 42</td>
+                                <td class="text-center text-dark fw-bold">34 - 42</td>
                             </tr>
                         </tbody>
                         </table>
@@ -189,18 +226,17 @@
         </div>
     </div>
 
-    <!-- Panel Grafik -->
+    <!-- PANEL GRAFIK -->
     @if(count($labels ?? []) > 0)
     <div class="history-card">
         <div class="history-card-header d-flex align-items-center">
-            <div class="p-2 rounded-lg me-3" style="background-color: rgba(74, 122, 109, 0.1);">
-                <i class="bi bi-activity fs-5" style="color: var(--primary, #4A7A6D);"></i>
+            <div class="bg-sage-light p-2 rounded-lg me-3" style="background-color: var(--sage-light); width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;">
+                <i class="bi bi-graph-up fs-5" style="color: var(--sage-primary);"></i>
             </div>
-            <h6 class="mb-0 fw-bold text-dark">Grafik Pemantauan Tingkat Stres</h6>
+            <h5 class="mb-0 fw-bold text-dark">Grafik Pemantauan Tingkat Stres</h5>
         </div>
         <div class="card-body p-4 pt-3">
-            <div class="chart-scroll-area" style="overflow-x: auto; overflow-y: hidden; width: 100%; border-radius: 12px; background: rgba(244, 247, 246, 0.5); padding: 15px;">
-                <!-- min-width diset 100% agar di layar PC tetap penuh -->
+            <div class="chart-scroll-area" style="overflow-x: auto; overflow-y: hidden; width: 100%; border-radius: var(--radius-lg); background: var(--sage-surface); padding: 20px; border: 1px solid var(--border-soft);">
                 <div id="chartWrapper" style="position: relative; height: 350px; min-width: 100%;">
                     <canvas id="historyChart"></canvas>
                 </div>
@@ -209,13 +245,13 @@
     </div>
     @endif
 
-    <!-- Panel Tabel Riwayat -->
+    <!-- PANEL TABEL RIWAYAT -->
     <div class="history-card">
         <div class="history-card-header d-flex align-items-center">
-            <div class="p-2 rounded-lg me-3" style="background-color: rgba(74, 122, 109, 0.1);">
-                <i class="bi bi-clock-history fs-5" style="color: var(--primary, #4A7A6D);"></i>
+            <div class="bg-sage-light p-2 rounded-lg me-3" style="background-color: var(--sage-light); width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;">
+                <i class="bi bi-clock-history fs-5" style="color: var(--sage-primary);"></i>
             </div>
-            <h6 class="mb-0 fw-bold text-dark">Detail Riwayat Skrining</h6>
+            <h5 class="mb-0 fw-bold text-dark">Detail Riwayat Skrining</h5>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -230,7 +266,6 @@
                     </thead>
                     <tbody>
                         
-                        {{-- Logika Mapping Class CSS Aman --}}
                         @php
                             $badgeMap = [
                                 'normal' => 'badge-normal',
@@ -243,7 +278,6 @@
                         
                         @forelse($screenings as $index => $s)
                         @php
-                            // Ambil nama class berdasarkan status (lowercase), jika tidak cocok pakai default
                             $classDepresi = $badgeMap[strtolower(trim($s->status_depresi ?? ''))] ?? 'badge-default';
                             $classCemas = $badgeMap[strtolower(trim($s->status_kecemasan ?? ''))] ?? 'badge-default';
                             $classStres = $badgeMap[strtolower(trim($s->status_stres ?? ''))] ?? 'badge-default';
@@ -257,7 +291,6 @@
                                 <div class="text-muted small">{{ $s->created_at->format('H:i') }} WIB</div>
                             </td>
                             <td>
-                                <!-- Diubah menjadi Wrapper Fleksibel agar tidak tergencet -->
                                 <div class="badge-hasil-wrapper">
                                     <span class="badge-status {{ $classDepresi }}">
                                         Depresi: {{ ucfirst($s->status_depresi ?? '-') }} ({{ $s->score_depresi ?? 0 }})
@@ -271,16 +304,18 @@
                                 </div>
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('mahasiswa.screenings.show', $s->id) }}" class="btn btn-detail">
-                                    Lihat Detail
+                                <a href="{{ route('mahasiswa.screenings.show', $s->id) }}" class="btn btn-outline-sage">
+                                    <i class="bi bi-eye me-1"></i> Detail
                                 </a>
                             </td>
                         </tr>
                         @empty
                         <tr>
                             <td colspan="4" class="text-center py-5" style="background-color: #FFFFFF;">
-                                <div class="d-flex flex-column align-items-center justify-content-center opacity-50">
-                                    <i class="bi bi-inbox fs-1 text-muted mb-3"></i>
+                                <div class="d-flex flex-column align-items-center justify-content-center opacity-75">
+                                    <div class="mb-3" style="width: 80px; height: 80px; background: var(--sage-light); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        <i class="bi bi-folder2-open fs-1 text-sage" style="color: var(--sage-primary);"></i>
+                                    </div>
                                     <span class="text-muted fw-medium">Belum ada riwayat skrining yang tercatat.</span>
                                 </div>
                             </td>
@@ -292,7 +327,7 @@
             
             <!-- Pagination Wrapper -->
             @if($screenings->hasPages())
-                <div class="d-flex justify-content-center pt-4 pb-3 border-top" style="background-color: #FFFFFF;">
+                <div class="d-flex justify-content-center pt-4 pb-3 border-top" style="background-color: #FFFFFF; border-color: var(--border-soft) !important;">
                     {{ $screenings->links('pagination::bootstrap-5') }}
                 </div>
             @endif
@@ -318,20 +353,16 @@
 
         if(labels.length === 0) return;
 
-        // --- PERBAIKAN LOGIKA LEBAR GRAFIK UNTUK MOBILE ---
         const chartWrapper = document.getElementById('chartWrapper');
         const parentLayar = chartWrapper.parentElement;
         
-        // Tentukan lebar minimal yang dibutuhkan per titik data (misal 90px agar renggang)
-        const minWidthPerPoint = 90;
+        const minWidthPerPoint = 100;
         const requiredWidth = labels.length * minWidthPerPoint;
-        const containerWidth = parentLayar.clientWidth;
+        const containerWidth = parentLayar.clientWidth || window.innerWidth;
 
-        // Jika lebar yang dibutuhkan untuk merenggangkan data lebih besar dari lebar layar HP
         if (requiredWidth > containerWidth) {
             chartWrapper.style.width = requiredWidth + 'px';
         } else {
-            // Jika di PC/Tablet (layar cukup luas), biarkan memenuhi layar (100%)
             chartWrapper.style.width = '100%';
         }
 
@@ -343,41 +374,41 @@
                     {
                         label: 'Skor Depresi',
                         data: dataDepresi,
-                        borderColor: '#4A7A6D',
+                        borderColor: '#4A7A6D', // Sage
                         backgroundColor: 'rgba(74, 122, 109, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
                         fill: true,
                         pointBackgroundColor: '#FFFFFF',
                         pointBorderColor: '#4A7A6D',
-                        pointRadius: 4,
-                        pointHoverRadius: 6
+                        pointRadius: 5,
+                        pointHoverRadius: 7
                     },
                     {
                         label: 'Skor Kecemasan',
                         data: dataKecemasan,
-                        borderColor: '#EAB308',
-                        backgroundColor: 'rgba(234, 179, 8, 0.1)',
+                        borderColor: '#E9C46A', // Soft Gold
+                        backgroundColor: 'rgba(233, 196, 106, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
                         fill: true,
                         pointBackgroundColor: '#FFFFFF',
-                        pointBorderColor: '#EAB308',
-                        pointRadius: 4,
-                        pointHoverRadius: 6
+                        pointBorderColor: '#E9C46A',
+                        pointRadius: 5,
+                        pointHoverRadius: 7
                     },
                     {
                         label: 'Skor Stres',
                         data: dataStres,
-                        borderColor: '#EF4444',
-                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        borderColor: '#E76F51', // Terracotta
+                        backgroundColor: 'rgba(231, 111, 81, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
                         fill: true,
                         pointBackgroundColor: '#FFFFFF',
-                        pointBorderColor: '#EF4444',
-                        pointRadius: 4,
-                        pointHoverRadius: 6
+                        pointBorderColor: '#E76F51',
+                        pointRadius: 5,
+                        pointHoverRadius: 7
                     }
                 ]
             },
@@ -393,7 +424,7 @@
                         beginAtZero: true,
                         max: 42, 
                         grid: {
-                            color: 'rgba(203, 213, 208, 0.4)',
+                            color: 'rgba(74, 122, 109, 0.1)',
                             drawBorder: false,
                         },
                         title: { display: true, text: 'Skor Penilaian', font: { weight: '600', family: "'Plus Jakarta Sans', sans-serif" }, color: '#64748B' }
@@ -413,15 +444,16 @@
                         labels: {
                             usePointStyle: true,
                             padding: 20,
-                            font: { family: "'Plus Jakarta Sans', sans-serif", weight: '500' }
+                            font: { family: "'Plus Jakarta Sans', sans-serif", weight: '600', size: 13 },
+                            color: '#1e293b'
                         }
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                        titleFont: { family: "'Plus Jakarta Sans', sans-serif", size: 13 },
+                        backgroundColor: 'rgba(30, 41, 59, 0.95)',
+                        titleFont: { family: "'Plus Jakarta Sans', sans-serif", size: 13, weight: '700' },
                         bodyFont: { family: "'Plus Jakarta Sans', sans-serif", size: 13 },
                         padding: 12,
-                        cornerRadius: 8,
+                        cornerRadius: 12,
                         displayColors: true
                     }
                 }
