@@ -190,7 +190,7 @@
             line-height: 1.7;
         }
 
-        /* Disclaimer Box - Warm & Not Intimidating */
+        /* Disclaimer Box */
         .disclaimer-box {
             background-color: rgba(221, 107, 32, 0.06);
             border-left: 4px solid var(--warning-soft);
@@ -264,6 +264,8 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav align-items-center gap-3">
+                    <!-- Ditambahkan Menu Tentang Kami -->
+                    <li class="nav-item"><a class="nav-link fw-medium" href="#about">Tentang Kami</a></li>
                     <li class="nav-item"><a class="nav-link fw-medium" href="#why">Kenapa Penting?</a></li>
                     <li class="nav-item"><a class="nav-link fw-medium" href="#how">Cara Kerja</a></li>
                     <li class="nav-item"><a class="nav-link fw-medium" href="#faq">FAQ</a></li>
@@ -309,13 +311,12 @@
                             </a>
                         @endguest
                         
-                        <a href="#how" class="btn btn-lg rounded-pill px-5 fw-bold" style="background: white; border: 1px solid rgba(203, 213, 208, 0.8); color: var(--text-main);">
+                        <a href="#about" class="btn btn-lg rounded-pill px-5 fw-bold" style="background: white; border: 1px solid rgba(203, 213, 208, 0.8); color: var(--text-main);">
                             Pelajari Dulu
                         </a>
                     </div>
                 </div>
                 <div class="col-lg-5 d-none d-lg-block text-center">
-                    <!-- Gunakan ilustrasi yang warnanya kalem jika ada -->
                     <img src="{{ asset('images/hero-image.png') }}" alt="Ilustrasi Ketenangan" class="img-fluid floating-img" style="max-height: 450px; filter: drop-shadow(0 20px 30px rgba(74, 122, 109, 0.15));">
                 </div>
             </div>
@@ -323,7 +324,7 @@
     </section>
 
     <!-- DISCLAIMER & VALIDATION -->
-    <section class="py-5 bg-white border-bottom border-light">
+    <section class="py-4 bg-white border-bottom border-light">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
@@ -341,9 +342,70 @@
         </div>
     </section>
 
+    <!-- ABOUT SECTION (NEW) -->
+    <section id="about" class="py-5 my-3">
+        <div class="container py-4">
+            <div class="row align-items-center g-5">
+                <!-- Kolom Teks Utama -->
+                <div class="col-lg-5">
+                    <span class="badge px-3 py-2 rounded-pill mb-3 fw-bold shadow-sm" style="background: white; color: var(--primary); border: 1px solid rgba(74, 122, 109, 0.2);">
+                        Tentang MindScreen
+                    </span>
+                    <h2 class="fw-bold mb-4" style="color: var(--text-main);">Membangun Kesadaran Mental, Satu Langkah Kecil Setiap Harinya.</h2>
+                    <p style="color: var(--text-muted); line-height: 1.7;">
+                        Kami percaya bahwa kesehatan mental sama pentingnya dengan kesehatan fisik. MindScreen diciptakan untuk mendobrak stigma dengan menyediakan akses evaluasi awal yang mudah dipahami, aman, dan dapat dilakukan kapan saja.
+                    </p>
+                    <p style="color: var(--text-muted); line-height: 1.7;">
+                        Fokus utama kami adalah memberikan ruang bagi Anda untuk berhenti sejenak, mengenali emosi yang sedang dirasakan, dan memberikan panduan langkah selanjutnya yang tepat.
+                    </p>
+                </div>
+                
+                <!-- Kolom Poin-Poin -->
+                <div class="col-lg-6 offset-lg-1">
+                    <div class="d-flex flex-column gap-3">
+                        
+                        <!-- Point 1: Instrumen DASS-42 -->
+                        <div class="d-flex align-items-start gap-3 p-4 rounded-4 bg-white shadow-sm" style="border: 1px solid rgba(203, 213, 208, 0.3);">
+                            <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle" style="width: 48px; height: 48px; background: rgba(74, 122, 109, 0.1); color: var(--primary); font-size: 1.25rem;">
+                                <i class="bi bi-clipboard2-pulse"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1" style="color: var(--text-main);">Berbasis Ilmiah (DASS-42)</h6>
+                                <p class="small mb-0" style="color: var(--text-muted); line-height: 1.6;">Dirancang mengadaptasi instrumen skala psikologis internasional yang teruji validitasnya untuk mengukur intensitas Depresi, Kecemasan, dan Stres.</p>
+                            </div>
+                        </div>
+
+                        <!-- Point 2: Privasi -->
+                        <div class="d-flex align-items-start gap-3 p-4 rounded-4 bg-white shadow-sm" style="border: 1px solid rgba(203, 213, 208, 0.3);">
+                            <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle" style="width: 48px; height: 48px; background: rgba(74, 122, 109, 0.1); color: var(--primary); font-size: 1.25rem;">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1" style="color: var(--text-main);">Ruang Aman & Rahasia</h6>
+                                <p class="small mb-0" style="color: var(--text-muted); line-height: 1.6;">Setiap data jawaban Anda dienkripsi secara ketat. Tidak ada data yang dipublikasikan. Ini adalah ruang privat murni untuk wawasan Anda sendiri.</p>
+                            </div>
+                        </div>
+
+                        <!-- Point 3: Batasan Edukasi -->
+                        <div class="d-flex align-items-start gap-3 p-4 rounded-4 bg-white shadow-sm" style="border: 1px solid rgba(203, 213, 208, 0.3);">
+                            <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle" style="width: 48px; height: 48px; background: rgba(221, 107, 32, 0.1); color: var(--warning-soft); font-size: 1.25rem;">
+                                <i class="bi bi-exclamation-triangle"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1" style="color: var(--text-main);">Bukan Pengganti Profesional</h6>
+                                <p class="small mb-0" style="color: var(--text-muted); line-height: 1.6;">Hasil skrining berfungsi sebagai alarm pencegahan dini. Kami selalu mendorong konsultasi dengan psikolog klinis jika Anda membutuhkan pendampingan lebih lanjut.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- WHY QUESTION & SOLUTION -->
-    <section id="why" class="py-5 my-5">
-        <div class="container">
+    <section id="why" class="py-5 bg-white border-top border-light">
+        <div class="container py-4">
             <div class="text-center mb-5">
                 <h2 class="fw-bold mb-3" style="color: var(--text-main);">Mengapa Skrining Ini Penting?</h2>
                 <p class="mx-auto" style="max-width: 600px; color: var(--text-muted); line-height: 1.7;">
@@ -353,7 +415,7 @@
             
             <div class="row g-4 justify-content-center">
                 <div class="col-md-4">
-                    <div class="feature-card text-center">
+                    <div class="feature-card text-center bg-soft">
                         <div class="feature-icon icon-sage mx-auto">
                             <i class="bi bi-journal-check"></i>
                         </div>
@@ -362,16 +424,16 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="feature-card text-center">
+                    <div class="feature-card text-center bg-soft">
                         <div class="feature-icon icon-emerald mx-auto">
-                            <i class="bi bi-shield-lock"></i>
+                            <i class="bi bi-person-bounding-box"></i>
                         </div>
-                        <h5 class="fw-bold mb-3">Privasi Terjaga</h5>
-                        <p class="small mb-0" style="color: var(--text-muted); line-height: 1.6;">Data jawaban Anda dienkripsi dan dirahasiakan. Kami berkomitmen menciptakan ruang yang aman untuk Anda.</p>
+                        <h5 class="fw-bold mb-3">Kenali Diri Sendiri</h5>
+                        <p class="small mb-0" style="color: var(--text-muted); line-height: 1.6;">Membantu Anda mengidentifikasi beban pikiran yang mungkin sering diabaikan selama menjalani rutinitas harian.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="feature-card text-center">
+                    <div class="feature-card text-center bg-soft">
                         <div class="feature-icon icon-warm mx-auto">
                             <i class="bi bi-graph-up-arrow"></i>
                         </div>
