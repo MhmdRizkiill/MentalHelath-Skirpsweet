@@ -582,7 +582,6 @@
                 <div class="col-md-6 text-center text-md-end">
                     <a href="#" class="me-3 small">Kebijakan Privasi</a>
                     <a href="#" class="me-3 small">Syarat Penggunaan</a>
-                    <a href="mailto:admin@example.com" class="small"><i class="bi bi-envelope"></i> Hubungi Kami</a>
                 </div>
             </div>
             <div class="row">
