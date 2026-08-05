@@ -230,7 +230,7 @@
         .footer {
             background-color: var(--footer-bg);
             color: #A3B1AB;
-            padding: 70px 0 30px;
+            padding: 60px 0 30px;
         }
         
         .footer a {
@@ -575,8 +575,10 @@
                     <p class="small mb-0 mt-2" style="color: #8C9C95;">Platform Evaluasi Kesehatan Mental Mandiri Berbasis DASS-42.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <a href="#" class="me-3 small">Kebijakan Privasi</a>
-                    <a href="#" class="me-3 small">Syarat Penggunaan</a>
+                    <a href="#about" class="me-3 small opacity-75">Tentang Kami</a>
+                    <a href="#why" class="me-3 small opacity-75">Kenapa Penting?</a>
+                    <a href="#how" class="me-3 small opacity-75">Cara Kerja</a>
+                    <a href="#faq" class="small opacity-75">FAQ</a>
                 </div>
             </div>
             <div class="row">
