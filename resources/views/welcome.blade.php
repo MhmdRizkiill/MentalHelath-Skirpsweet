@@ -27,6 +27,10 @@
             --footer-bg: #2C3E38;        /* Deep Forest Muted */
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             color: var(--text-main);
@@ -34,7 +38,7 @@
             overflow-x: hidden;
         }
 
-        /* Meng-override class Bootstrap default untuk tema ini */
+        /* Override Class Bootstrap Default */
         .text-primary { color: var(--primary) !important; }
         .bg-primary { background-color: var(--primary) !important; }
         .btn-primary {
@@ -133,7 +137,7 @@
         .icon-emerald { background: rgba(56, 161, 105, 0.1); color: #38A169; }
         .icon-warm { background: rgba(221, 107, 32, 0.1); color: var(--warning-soft); }
 
-        /* Step Numbering - Cara Kerja */
+        /* Step Numbering */
         .step-number {
             width: 48px;
             height: 48px;
@@ -264,7 +268,6 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav align-items-center gap-3">
-                    <!-- Ditambahkan Menu Tentang Kami -->
                     <li class="nav-item"><a class="nav-link fw-medium" href="#about">Tentang Kami</a></li>
                     <li class="nav-item"><a class="nav-link fw-medium" href="#why">Kenapa Penting?</a></li>
                     <li class="nav-item"><a class="nav-link fw-medium" href="#how">Cara Kerja</a></li>
@@ -342,11 +345,10 @@
         </div>
     </section>
 
-    <!-- ABOUT SECTION (NEW) -->
+    <!-- ABOUT SECTION -->
     <section id="about" class="py-5 my-3">
         <div class="container py-4">
             <div class="row align-items-center g-5">
-                <!-- Kolom Teks Utama -->
                 <div class="col-lg-5">
                     <span class="badge px-3 py-2 rounded-pill mb-3 fw-bold shadow-sm" style="background: white; color: var(--primary); border: 1px solid rgba(74, 122, 109, 0.2);">
                         Tentang MindScreen
@@ -360,11 +362,9 @@
                     </p>
                 </div>
                 
-                <!-- Kolom Poin-Poin -->
                 <div class="col-lg-6 offset-lg-1">
                     <div class="d-flex flex-column gap-3">
                         
-                        <!-- Point 1: Instrumen DASS-42 -->
                         <div class="d-flex align-items-start gap-3 p-4 rounded-4 bg-white shadow-sm" style="border: 1px solid rgba(203, 213, 208, 0.3);">
                             <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle" style="width: 48px; height: 48px; background: rgba(74, 122, 109, 0.1); color: var(--primary); font-size: 1.25rem;">
                                 <i class="bi bi-clipboard2-pulse"></i>
@@ -375,7 +375,6 @@
                             </div>
                         </div>
 
-                        <!-- Point 2: Privasi -->
                         <div class="d-flex align-items-start gap-3 p-4 rounded-4 bg-white shadow-sm" style="border: 1px solid rgba(203, 213, 208, 0.3);">
                             <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle" style="width: 48px; height: 48px; background: rgba(74, 122, 109, 0.1); color: var(--primary); font-size: 1.25rem;">
                                 <i class="bi bi-shield-lock"></i>
@@ -386,7 +385,6 @@
                             </div>
                         </div>
 
-                        <!-- Point 3: Batasan Edukasi -->
                         <div class="d-flex align-items-start gap-3 p-4 rounded-4 bg-white shadow-sm" style="border: 1px solid rgba(203, 213, 208, 0.3);">
                             <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle" style="width: 48px; height: 48px; background: rgba(221, 107, 32, 0.1); color: var(--warning-soft); font-size: 1.25rem;">
                                 <i class="bi bi-exclamation-triangle"></i>
@@ -499,7 +497,6 @@
                 <div class="col-lg-8">
                     <div class="accordion" id="faqAccordion">
                         
-                        <!-- FAQ 1 -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
@@ -508,12 +505,11 @@
                             </h2>
                             <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
-                                    Aplikasi ini dikembangkan sebagai dedikasi untuk mempermudah akses skrining kesehatan mental berbasis bukti ilmiah menggunakan instrumen DASS-42. Tujuannya adalah membangun kesadaran (*awareness*) kesehatan mental di lingkungan institusi.
+                                    Aplikasi ini dikembangkan sebagai dedikasi untuk mempermudah akses skrining kesehatan mental berbasis bukti ilmiah menggunakan instrumen DASS-42. Tujuannya adalah membangun kesadaran (<em>awareness</em>) kesehatan mental di lingkungan institusi.
                                 </div>
                             </div>
                         </div>
 
-                        <!-- FAQ 2 -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
@@ -527,7 +523,6 @@
                             </div>
                         </div>
 
-                        <!-- FAQ 3 -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
@@ -586,7 +581,7 @@
             </div>
             <div class="row">
                 <div class="col-12 text-center small" style="color: #6C8076;">
-                    &copy; {{ date('Y') }} MentalHealth App. All rights reserved.<br>
+                    &copy; {{ date('Y') }} MindScreen. All rights reserved.<br>
                     Dikembangkan untuk memajukan kesejahteraan mental.
                 </div>
             </div>
