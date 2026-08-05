@@ -55,6 +55,21 @@
             color: white;
         }
         
+        /* Custom Outline Button Fix */
+        .btn-outline-custom {
+            background-color: white;
+            border: 1px solid rgba(203, 213, 208, 0.8);
+            color: var(--text-main) !important;
+            transition: all 0.3s ease;
+        }
+        .btn-outline-custom:hover {
+            background-color: var(--bg-soft);
+            border-color: var(--primary);
+            color: var(--primary) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(74, 122, 109, 0.1);
+        }
+        
         /* Navbar */
         .navbar {
             background-color: rgba(255, 255, 255, 0.85);
@@ -314,7 +329,7 @@
                             </a>
                         @endguest
                         
-                        <a href="#about" class="btn btn-lg rounded-pill px-5 fw-bold" style="background: white; border: 1px solid rgba(203, 213, 208, 0.8); color: var(--text-main);">
+                        <a href="#about" class="btn btn-outline-custom btn-lg rounded-pill px-5 fw-bold">
                             Pelajari Dulu
                         </a>
                     </div>
