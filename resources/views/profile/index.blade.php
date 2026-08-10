@@ -4,7 +4,7 @@
 
 <style>
     /* ===========================
-        VARIABEL TEMA & WARNA
+        VARIABEL TEMA & WARNA (LIGHT MODE)
     =========================== */
     :root {
         --sage-primary: #4A7A6D;
@@ -14,16 +14,55 @@
         --text-dark: #1e293b;
         --text-muted: #64748b;
         --border-soft: rgba(74, 122, 109, 0.15);
+        --bg-card: #FFFFFF;
+        --bg-input: #FAFCFB;
+        
         --radius-xl: 24px;
         --radius-lg: 16px;
         --shadow-soft: 0 12px 30px rgba(74, 122, 109, 0.06);
     }
 
     /* ===========================
+        VARIABEL TEMA & WARNA (DARK MODE)
+    =========================== */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --sage-primary: #63a895;
+            --sage-hover: #4A7A6D;
+            --sage-light: #21332e;
+            --sage-surface: #162420;
+            --text-dark: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-soft: rgba(255, 255, 255, 0.1);
+            --bg-card: #1e293b;
+            --bg-input: #0f172a;
+            --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            background-color: #0f172a;
+            color: var(--text-dark);
+        }
+        
+        /* Ubah warna teks placeholder di dark mode */
+        .form-control-sage::placeholder {
+            color: #64748b;
+        }
+    }
+
+    /* ===========================
+        ADAPTIVE UTILITIES
+    =========================== */
+    .bg-adaptive { background-color: var(--bg-card) !important; }
+    .text-adaptive { color: var(--text-dark) !important; }
+    .text-adaptive-muted { color: var(--text-muted) !important; }
+    .border-adaptive { border-color: var(--border-soft) !important; }
+
+    /* ===========================
         CUSTOM CARDS
     =========================== */
     .profile-card {
-        background: #FFFFFF;
+        background: var(--bg-card);
         border: 1px solid var(--border-soft);
         border-radius: var(--radius-xl);
         box-shadow: var(--shadow-soft);
@@ -51,12 +90,14 @@
         padding: 12px 16px;
         font-size: 14.5px;
         transition: all 0.2s ease-in-out;
-        background-color: #FAFCFB;
+        background-color: var(--bg-input);
+        color: var(--text-dark);
     }
 
     .form-control-sage:focus {
         border-color: var(--sage-primary);
-        background-color: #FFFFFF;
+        background-color: var(--bg-card);
+        color: var(--text-dark);
         box-shadow: 0 0 0 4px rgba(74, 122, 109, 0.1);
         outline: none;
     }
@@ -94,8 +135,8 @@
     <!-- HEADER -->
     <div class="d-flex align-items-center mb-4">
         <div>
-            <h3 class="fw-bold text-dark mb-1" style="letter-spacing: -0.5px;">Profil Saya</h3>
-            <p class="text-muted mb-0" style="font-size: 14.5px;">
+            <h3 class="fw-bold text-adaptive mb-1" style="letter-spacing: -0.5px;">Profil Saya</h3>
+            <p class="text-adaptive-muted mb-0" style="font-size: 14.5px;">
                 Kelola informasi akun dan pengaturan keamanan Anda.
             </p>
         </div>
@@ -112,8 +153,8 @@
                             <i class="bi bi-person-badge fs-4"></i>
                         </div>
                         <div>
-                            <h5 class="fw-bold text-dark mb-1">Informasi Akun</h5>
-                            <p class="text-muted small mb-0">Perbarui profil atau username Anda</p>
+                            <h5 class="fw-bold text-adaptive mb-1">Informasi Akun</h5>
+                            <p class="text-adaptive-muted small mb-0">Perbarui profil atau username Anda</p>
                         </div>
                     </div>
 
@@ -122,7 +163,7 @@
                         @method('PUT')
                         
                         <div class="mb-4">
-                            <label for="username" class="form-label fw-semibold text-dark mb-2">Username</label>
+                            <label for="username" class="form-label fw-semibold text-adaptive mb-2">Username</label>
                             <input type="text" class="form-control form-control-sage @error('username') is-invalid @enderror" id="username" name="username" value="{{ old('username', Auth::user()->username) }}" required placeholder="Masukkan username baru">
                             @error('username')
                                 <div class="invalid-feedback mt-2 fw-medium">{{ $message }}</div>
@@ -147,8 +188,8 @@
                             <i class="bi bi-shield-lock fs-4"></i>
                         </div>
                         <div>
-                            <h5 class="fw-bold text-dark mb-1">Keamanan Akun</h5>
-                            <p class="text-muted small mb-0">Perbarui kata sandi secara berkala</p>
+                            <h5 class="fw-bold text-adaptive mb-1">Keamanan Akun</h5>
+                            <p class="text-adaptive-muted small mb-0">Perbarui kata sandi secara berkala</p>
                         </div>
                     </div>
 
@@ -157,7 +198,7 @@
                         @method('PUT')
 
                         <div class="mb-3">
-                            <label for="current_password" class="form-label fw-semibold text-dark mb-2">Password Saat Ini</label>
+                            <label for="current_password" class="form-label fw-semibold text-adaptive mb-2">Password Saat Ini</label>
                             <input type="password" class="form-control form-control-sage @error('current_password') is-invalid @enderror" id="current_password" name="current_password" required placeholder="Masukkan password lama">
                             @error('current_password')
                                 <div class="invalid-feedback mt-2 fw-medium">{{ $message }}</div>
@@ -165,15 +206,15 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label fw-semibold text-dark mb-2">Password Baru</label>
+                            <label for="password" class="form-label fw-semibold text-adaptive mb-2">Password Baru</label>
                             <input type="password" class="form-control form-control-sage @error('password') is-invalid @enderror" id="password" name="password" required placeholder="Masukkan password baru">
                             
                             <!-- INFORMASI REQUIREMENT PASSWORD -->
                             <div class="password-req-box">
-                                <div class="fw-bold text-dark mb-2" style="font-size: 13.5px;">
+                                <div class="fw-bold text-adaptive mb-2" style="font-size: 13.5px;">
                                     <i class="bi bi-info-circle me-1" style="color: var(--sage-primary);"></i> Persyaratan Password:
                                 </div>
-                                <ul class="mb-0 ps-3 text-muted" style="font-size: 13px; line-height: 1.6;">
+                                <ul class="mb-0 ps-3 text-adaptive-muted" style="font-size: 13px; line-height: 1.6;">
                                     <li>Minimal 8 karakter.</li>
                                     <li>Kombinasi huruf dan angka (disarankan).</li>
                                     <li>Tidak boleh sama dengan password saat ini.</li>
@@ -186,7 +227,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="password_confirmation" class="form-label fw-semibold text-dark mb-2">Konfirmasi Password Baru</label>
+                            <label for="password_confirmation" class="form-label fw-semibold text-adaptive mb-2">Konfirmasi Password Baru</label>
                             <input type="password" class="form-control form-control-sage" id="password_confirmation" name="password_confirmation" required placeholder="Ulangi password baru">
                         </div>
 
@@ -204,6 +245,12 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // Cek mode saat ini untuk menyesuaikan warna background SweetAlert
+        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        const swalBg = isDarkMode ? '#1e293b' : '#FFFFFF';
+        const swalColor = isDarkMode ? '#f8fafc' : '#1e293b';
+
         // Fungsi untuk menangani konfirmasi form
         function setupFormConfirmation(formId, title, text) {
             const form = document.getElementById(formId);
@@ -215,6 +262,8 @@
                         title: title,
                         text: text,
                         icon: 'question',
+                        background: swalBg,
+                        color: swalColor,
                         showCancelButton: true,
                         confirmButtonColor: '#4A7A6D', // Warna sage
                         cancelButtonColor: '#94a3b8',
@@ -228,6 +277,8 @@
                         if (result.isConfirmed) {
                             Swal.fire({
                                 title: 'Memproses...',
+                                background: swalBg,
+                                color: swalColor,
                                 allowOutsideClick: false,
                                 showConfirmButton: false,
                                 didOpen: () => {
