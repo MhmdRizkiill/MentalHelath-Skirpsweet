@@ -250,6 +250,40 @@
             padding: 14px 16px;
         }
     }
+
+    /* ===========================
+   SWEETALERT DARK MODE
+=========================== */
+html[data-bs-theme="dark"] .swal2-popup {
+    background: #1E293B !important;
+    color: #F8FAFC !important;
+    border: 1px solid #334155 !important;
+}
+
+html[data-bs-theme="dark"] .swal2-title {
+    color: #F8FAFC !important;
+}
+
+html[data-bs-theme="dark"] .swal2-html-container {
+    color: #CBD5E1 !important;
+}
+
+html[data-bs-theme="dark"] .swal2-icon.swal2-question {
+    border-color: #83B3C5 !important;
+    color: #83B3C5 !important;
+}
+
+html[data-bs-theme="dark"] .swal2-actions {
+    gap: 10px;
+}
+
+html[data-bs-theme="dark"] .swal2-cancel {
+    color: #FFFFFF !important;
+}
+
+html[data-bs-theme="dark"] .swal2-confirm {
+    color: #FFFFFF !important;
+}
 </style>
 
 <div class="row justify-content-center mb-5 pt-3">
