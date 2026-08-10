@@ -1126,13 +1126,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     ];
 
+    const STORAGE_KEY = 'mindscreen_music_state';
+
     let currentSong = 0;
+    let isRestoring = true;
 
     function formatTime(seconds) {
-        if (!Number.isFinite(seconds)) return '0:00';
+        if (!Number.isFinite(seconds)) {
+            return '0:00';
+        }
+
         const minutes = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
+        const secs = Math.floor(seconds % 60)
+            .toString()
+            .padStart(2, '0');
+
         return `${minutes}:${secs}`;
+    }
+
+    function saveMusicState() {
+        const state = {
+            song: currentSong,
+            time: audio.currentTime || 0,
+            volume: audio.volume,
+            playing: !audio.paused,
+            panelOpen: player.classList.contains('active')
+        };
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function getMusicState() {
+        try {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || null;
+        } catch (error) {
+            return null;
+        }
     }
 
     function renderList() {
@@ -1140,71 +1169,196 @@ document.addEventListener('DOMContentLoaded', function() {
 
         songs.forEach((song, index) => {
             const item = document.createElement('button');
-            item.className = `music-item ${index === currentSong ? 'active' : ''}`;
+
+            item.type = 'button';
+            item.className =
+                `music-item ${index === currentSong ? 'active' : ''}`;
+
             item.innerHTML = `
-                <i class="bi ${index === currentSong ? 'bi-music-note-beamed' : 'bi-music-note'}"></i>
+                <i class="bi ${
+                    index === currentSong
+                        ? 'bi-music-note-beamed'
+                        : 'bi-music-note'
+                }"></i>
                 <span>${song.title}</span>
             `;
 
             item.addEventListener('click', function() {
-                loadSong(index);
-                audio.play();
+                loadSong(index, true);
             });
 
             list.appendChild(item);
         });
     }
 
-    function loadSong(index) {
+    function loadSong(index, shouldPlay = false) {
         currentSong = index;
+
         audio.src = songs[index].file;
+        audio.load();
+
         title.textContent = songs[index].title;
+
         progress.value = 0;
         currentTime.textContent = '0:00';
         duration.textContent = '0:00';
 
         renderList();
+
+        if (shouldPlay) {
+            audio.play().catch(function() {
+                console.log('Autoplay diblokir browser.');
+            });
+        }
+
+        saveMusicState();
     }
 
     function updatePlayButton() {
-        play.innerHTML = audio.paused
-            ? '<i class="bi bi-play-fill"></i>'
-            : '<i class="bi bi-pause-fill"></i>';
+        if (audio.paused) {
+            play.innerHTML = '<i class="bi bi-play-fill"></i>';
+            play.title = 'Putar';
+        } else {
+            play.innerHTML = '<i class="bi bi-pause-fill"></i>';
+            play.title = 'Jeda';
+        }
+    }
+
+    function restoreMusic() {
+        const state = getMusicState();
+
+        if (!state) {
+            audio.volume = 0.7;
+            volume.value = 0.7;
+
+            loadSong(0, false);
+
+            isRestoring = false;
+            return;
+        }
+
+        const savedSong =
+            Number.isInteger(state.song) &&
+            state.song >= 0 &&
+            state.song < songs.length
+                ? state.song
+                : 0;
+
+        currentSong = savedSong;
+
+        audio.volume =
+            typeof state.volume === 'number'
+                ? state.volume
+                : 0.7;
+
+        volume.value = audio.volume;
+
+        audio.src = songs[currentSong].file;
+        audio.load();
+
+        title.textContent = songs[currentSong].title;
+
+        renderList();
+
+        audio.addEventListener('loadedmetadata', function restorePosition() {
+            audio.removeEventListener(
+                'loadedmetadata',
+                restorePosition
+            );
+
+            if (
+                typeof state.time === 'number' &&
+                state.time > 0 &&
+                state.time < audio.duration
+            ) {
+                audio.currentTime = state.time;
+            }
+
+            progress.max = audio.duration;
+            progress.value = audio.currentTime;
+
+            currentTime.textContent =
+                formatTime(audio.currentTime);
+
+            duration.textContent =
+                formatTime(audio.duration);
+
+            updatePlayButton();
+
+            if (state.playing) {
+                audio.play()
+                    .then(function() {
+                        updatePlayButton();
+                    })
+                    .catch(function() {
+                        console.log(
+                            'Autoplay diblokir browser. Tekan tombol Play.'
+                        );
+
+                        updatePlayButton();
+                    });
+            }
+
+            isRestoring = false;
+        });
     }
 
     toggle.addEventListener('click', function() {
         player.classList.toggle('active');
+        saveMusicState();
     });
 
     close.addEventListener('click', function() {
         player.classList.remove('active');
+        saveMusicState();
     });
 
     play.addEventListener('click', function() {
         if (audio.paused) {
-            audio.play();
+            audio.play()
+                .then(function() {
+                    saveMusicState();
+                })
+                .catch(function(error) {
+                    console.log('Gagal memutar musik:', error);
+                });
         } else {
             audio.pause();
+            saveMusicState();
         }
     });
 
     prev.addEventListener('click', function() {
-        currentSong = currentSong === 0
-            ? songs.length - 1
-            : currentSong - 1;
+        currentSong =
+            currentSong === 0
+                ? songs.length - 1
+                : currentSong - 1;
 
-        loadSong(currentSong);
-        audio.play();
+        loadSong(currentSong, true);
     });
 
     next.addEventListener('click', function() {
-        currentSong = (currentSong + 1) % songs.length;
-        loadSong(currentSong);
-        audio.play();
+        currentSong =
+            (currentSong + 1) % songs.length;
+
+        loadSong(currentSong, true);
     });
 
-    audio.addEventListener('play', updatePlayButton);
-    audio.addEventListener('pause', updatePlayButton);
+    audio.addEventListener('play', function() {
+        updatePlayButton();
+
+        if (!isRestoring) {
+            saveMusicState();
+        }
+    });
+
+    audio.addEventListener('pause', function() {
+        updatePlayButton();
+
+        if (!isRestoring) {
+            saveMusicState();
+        }
+    });
 
     audio.addEventListener('loadedmetadata', function() {
         progress.max = audio.duration;
@@ -1213,27 +1367,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
     audio.addEventListener('timeupdate', function() {
         progress.value = audio.currentTime;
-        currentTime.textContent = formatTime(audio.currentTime);
+        currentTime.textContent =
+            formatTime(audio.currentTime);
+
+        if (!isRestoring) {
+            saveMusicState();
+        }
     });
 
     audio.addEventListener('ended', function() {
-        currentSong = (currentSong + 1) % songs.length;
-        loadSong(currentSong);
-        audio.play();
+        currentSong =
+            (currentSong + 1) % songs.length;
+
+        loadSong(currentSong, true);
     });
 
     progress.addEventListener('input', function() {
-        audio.currentTime = progress.value;
+        audio.currentTime = Number(progress.value);
+        saveMusicState();
     });
 
     volume.addEventListener('input', function() {
-        audio.volume = volume.value;
+        audio.volume = Number(volume.value);
+        saveMusicState();
     });
 
-    audio.volume = 0.7;
+    window.addEventListener('beforeunload', function() {
+        saveMusicState();
+    });
 
-    loadSong(0);
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'hidden') {
+            saveMusicState();
+        }
+    });
+
+    restoreMusic();
 });
 </script>
+
 </body>
 </html>
