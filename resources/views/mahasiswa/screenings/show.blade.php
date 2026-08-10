@@ -29,30 +29,29 @@
 
     /* ===========================
         VARIABEL TEMA & WARNA (DARK MODE)
+        Menggunakan class untuk sinkronisasi dengan toggle aplikasi
     =========================== */
-    @media (prefers-color-scheme: dark) {
-        :root {
-            --sage-primary: #63a895;
-            --sage-hover: #4A7A6D;
-            --sage-light: #21332e;
-            --sage-surface: #162420;
-            --text-dark: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-soft: rgba(255, 255, 255, 0.1);
-            --bg-card: #1e293b;
-            --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.3);
+    html.dark, body.dark-mode, [data-bs-theme="dark"] {
+        --sage-primary: #63a895;
+        --sage-hover: #4A7A6D;
+        --sage-light: #21332e;
+        --sage-surface: #162420;
+        --text-dark: #f8fafc;
+        --text-muted: #94a3b8;
+        --border-soft: rgba(255, 255, 255, 0.1);
+        --bg-card: #1e293b;
+        --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.3);
 
-            /* Variabel Tag Jawaban Dark Mode */
-            --ans-0-bg: #334155; --ans-0-text: #cbd5e1; --ans-0-border: #475569;
-            --ans-1-bg: rgba(6, 78, 59, 0.4); --ans-1-text: #34d399; --ans-1-border: rgba(52, 211, 153, 0.3);
-            --ans-2-bg: rgba(124, 45, 18, 0.4); --ans-2-text: #fb923c; --ans-2-border: rgba(251, 146, 60, 0.3);
-            --ans-3-bg: rgba(127, 29, 29, 0.4); --ans-3-text: #f87171; --ans-3-border: rgba(248, 113, 113, 0.3);
-        }
+        /* Variabel Tag Jawaban Dark Mode */
+        --ans-0-bg: #334155; --ans-0-text: #cbd5e1; --ans-0-border: #475569;
+        --ans-1-bg: rgba(6, 78, 59, 0.4); --ans-1-text: #34d399; --ans-1-border: rgba(52, 211, 153, 0.3);
+        --ans-2-bg: rgba(124, 45, 18, 0.4); --ans-2-text: #fb923c; --ans-2-border: rgba(251, 146, 60, 0.3);
+        --ans-3-bg: rgba(127, 29, 29, 0.4); --ans-3-text: #f87171; --ans-3-border: rgba(248, 113, 113, 0.3);
+    }
 
-        body {
-            background-color: #0f172a;
-            color: var(--text-dark);
-        }
+    html.dark body, body.dark-mode, [data-bs-theme="dark"] body {
+        background-color: #0f172a;
+        color: var(--text-dark);
     }
 
     /* ===========================
