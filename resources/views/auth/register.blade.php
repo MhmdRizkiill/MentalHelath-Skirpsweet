@@ -3,319 +3,579 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MindScreen - Daftar Akun Baru</title>
+    <title>Register - MindScreen</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --primary:#4A7A6D;
-            --primary-hover:#3B6358;
-            --secondary:#6B9080;
-            --page-bg-start:#E8F0EC;
-            --page-bg-end:#F4F7F6;
-            --card-bg:rgba(255,255,255,.92);
-            --card-border:rgba(203,213,208,.6);
-            --text-main:#2D3748;
-            --text-muted:#64748B;
-            --label-text:#334155;
-            --input-bg:#FFFFFF;
-            --input-border:#CBD5E1;
-            --input-text:#1E293B;
-            --placeholder:#94A3B8;
+            --bg: #F4F7F6;
+            --bg-secondary: #E8F0EC;
+            --card: #FFFFFF;
+            --text: #2D3748;
+            --text-secondary: #64748B;
+            --border: #CBD5E1;
+            --input: #FFFFFF;
+            --primary: #4A7A6D;
+            --primary-dark: #3B6358;
+            --primary-light: #6B9080;
         }
 
-        * { box-sizing:border-box; }
+        html[data-bs-theme="dark"] {
+            --bg: #0F172A;
+            --bg-secondary: #172235;
+            --card: #1E293B;
+            --text: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --border: #475569;
+            --input: #172033;
+        }
 
-        html,body { min-height:100%; }
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
         body {
-            font-family:'Plus Jakarta Sans',sans-serif;
-            background:radial-gradient(circle at 50% 30%,var(--page-bg-start) 0%,var(--page-bg-end) 100%);
-            min-height:100vh;
-            margin:0;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            color:var(--text-main);
-            transition:background .35s ease,color .35s ease;
-        }
-
-        .register-wrapper { width:100%; padding:30px 15px; }
-
-        .register-card {
-            border:1px solid var(--card-border);
-            border-radius:24px;
-            overflow:hidden;
-            background:var(--card-bg);
-            backdrop-filter:blur(16px);
-            -webkit-backdrop-filter:blur(16px);
-            box-shadow:0 4px 6px -1px rgba(74,122,109,.03),0 20px 30px -5px rgba(74,122,109,.08);
-            transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease,background .35s ease,border-color .35s ease;
-        }
-
-        .register-card:hover {
-            transform:translateY(-4px);
-            box-shadow:0 10px 15px -3px rgba(74,122,109,.05),0 25px 35px -5px rgba(74,122,109,.12);
-        }
-
-        .register-header { padding:40px 40px 15px;border-bottom:none;background:transparent; }
-
-        .register-icon {
-            width:64px;
-            height:64px;
-            margin:0 auto 20px;
-            border-radius:18px;
-            background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%);
-            color:#fff;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-size:26px;
-            box-shadow:0 8px 20px rgba(74,122,109,.25);
-            transition:transform .3s ease,box-shadow .35s ease;
-        }
-
-        .register-card:hover .register-icon { transform:scale(1.05) rotate(-5deg); }
-
-        .register-title {
-            font-weight:800;
-            color:var(--text-main);
-            letter-spacing:-.5px;
-            transition:color .35s ease;
-        }
-
-        .register-subtitle {
-            color:var(--text-muted);
-            font-size:14px;
-            font-weight:400;
-            line-height:1.5;
-            transition:color .35s ease;
-        }
-
-        .form-label {
-            font-weight:600;
-            color:var(--label-text);
-            font-size:14px;
-            margin-bottom:8px;
-            transition:color .35s ease;
-        }
-
-        .input-group {
-            border:1px solid var(--input-border);
-            border-radius:14px;
-            background:var(--input-bg);
-            transition:border-color .3s ease,box-shadow .3s ease,background .35s ease;
-            overflow:hidden;
-        }
-
-        .input-group:focus-within {
-            border-color:var(--primary);
-            box-shadow:0 0 0 4px rgba(74,122,109,.15);
-        }
-
-        .input-group.is-invalid-group { border-color:#E53E3E; }
-
-        .input-group.is-invalid-group:focus-within {
-            box-shadow:0 0 0 4px rgba(229,62,62,.15);
-        }
-
-        .input-group-text {
-            background:transparent;
-            border:none;
-            color:var(--placeholder);
-            padding-left:16px;
-            padding-right:10px;
-            transition:color .35s ease;
-        }
-
-        .form-control {
-            border:none;
-            border-radius:0 14px 14px 0;
-            height:50px;
-            padding-left:6px;
-            font-size:15px;
-            color:var(--input-text);
-            background:transparent;
-            transition:color .35s ease;
-        }
-
-        .form-control:focus { background:transparent;box-shadow:none;border:none; }
-        .form-control::placeholder { color:var(--placeholder);font-size:14px; }
-
-        .btn-register {
-            height:50px;
-            border-radius:14px;
-            font-weight:600;
-            font-size:15px;
-            letter-spacing:.2px;
-            background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%);
-            border:none;
-            color:#fff;
-            box-shadow:0 4px 15px rgba(74,122,109,.2);
-            transition:all .3s cubic-bezier(.16,1,.3,1);
-        }
-
-        .btn-register:hover {
-            background:linear-gradient(135deg,var(--primary-hover) 0%,var(--primary) 100%);
-            transform:translateY(-2px);
-            color:#fff;
-            box-shadow:0 8px 20px rgba(74,122,109,.3);
-        }
-
-        .btn-register:active { transform:translateY(0); }
-
-        .register-footer a {
-            text-decoration:none;
-            font-weight:600;
-            color:var(--primary);
-            transition:color .2s ease;
-        }
-
-        .register-footer a:hover { color:var(--primary-hover);text-decoration:underline; }
-
-        /* DARK MODE */
-        html[data-bs-theme="dark"] {
-            --primary:#6BB29E;
-            --primary-hover:#83C5B3;
-            --secondary:#5FA18E;
-            --page-bg-start:#172A25;
-            --page-bg-end:#0F172A;
-            --card-bg:rgba(30,41,59,.94);
-            --card-border:rgba(71,85,105,.65);
-            --text-main:#F1F5F9;
-            --text-muted:#A8B4C3;
-            --label-text:#CBD5E1;
-            --input-bg:#111827;
-            --input-border:#475569;
-            --input-text:#F8FAFC;
-            --placeholder:#94A3B8;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(
+                circle at 50% 30%,
+                var(--bg-secondary) 0%,
+                var(--bg) 100%
+            );
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
         }
 
         html[data-bs-theme="dark"] body {
-            background:radial-gradient(circle at 50% 20%,rgba(74,122,109,.20) 0%,rgba(15,23,42,.95) 45%,#080D17 100%);
-            color:#F1F5F9;
+            background: radial-gradient(
+                circle at 50% 30%,
+                #172235 0%,
+                #0F172A 100%
+            );
+            color: var(--text);
         }
 
+        /* Register */
+        .register-wrapper {
+            width: 100%;
+            padding: 30px 15px;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 520px;
+            margin: auto;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            background: var(--card);
+            color: var(--text);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .register-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .register-header {
+            padding: 35px 40px 15px;
+            text-align: center;
+            background: transparent;
+            border: 0;
+        }
+
+        .register-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 18px;
+            border-radius: 18px;
+            background: linear-gradient(
+                135deg,
+                var(--primary),
+                var(--primary-light)
+            );
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: 0 8px 20px rgba(74, 122, 109, 0.25);
+        }
+
+        .register-title {
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.5px;
+        }
+
+        .register-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Form */
+        .form-label {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .input-group {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--input);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .input-group:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(74, 122, 109, 0.15);
+        }
+
+        .input-group-text {
+            background: transparent;
+            border: 0;
+            color: #94A3B8;
+            padding-left: 16px;
+            padding-right: 10px;
+        }
+
+        .form-control {
+            border: 0;
+            border-radius: 0 14px 14px 0;
+            height: 50px;
+            padding-left: 6px;
+            font-size: 14px;
+            color: var(--text);
+            background: transparent;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            background: transparent;
+            color: var(--text);
+        }
+
+        .form-control::placeholder {
+            color: #94A3B8;
+            font-size: 13px;
+        }
+
+        /* Button */
+        .btn-register {
+            height: 50px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 15px;
+            background: linear-gradient(
+                135deg,
+                var(--primary),
+                var(--primary-light)
+            );
+            border: none;
+            color: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(74, 122, 109, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-register:hover {
+            background: linear-gradient(
+                135deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+            transform: translateY(-2px);
+            color: #FFFFFF;
+            box-shadow: 0 8px 20px rgba(74, 122, 109, 0.3);
+        }
+
+        /* Footer */
+        .register-footer {
+            color: var(--text-secondary);
+        }
+
+        .register-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .register-footer a:hover {
+            color: #83C5B3;
+            text-decoration: underline;
+        }
+
+        /* Dark Mode */
         html[data-bs-theme="dark"] .register-card {
-            background:var(--card-bg);
-            border-color:var(--card-border);
-            box-shadow:0 10px 30px rgba(0,0,0,.25),0 25px 60px rgba(0,0,0,.22);
+            background: #1E293B !important;
+            color: #F8FAFC !important;
+            border-color: #334155 !important;
         }
 
-        html[data-bs-theme="dark"] .register-card:hover {
-            box-shadow:0 15px 35px rgba(0,0,0,.30),0 30px 65px rgba(0,0,0,.28);
+        html[data-bs-theme="dark"] .register-title,
+        html[data-bs-theme="dark"] .form-label {
+            color: #F8FAFC !important;
         }
 
-        html[data-bs-theme="dark"] .register-icon { box-shadow:0 10px 25px rgba(0,0,0,.28); }
-        html[data-bs-theme="dark"] .register-title { color:#F8FAFC; }
-        html[data-bs-theme="dark"] .register-subtitle { color:#A8B4C3; }
-        html[data-bs-theme="dark"] .form-label { color:#CBD5E1; }
+        html[data-bs-theme="dark"] .register-subtitle,
+        html[data-bs-theme="dark"] .register-footer {
+            color: #94A3B8 !important;
+        }
 
         html[data-bs-theme="dark"] .input-group {
-            background:#111827;
-            border-color:#475569;
+            background: #172033 !important;
+            border-color: #475569 !important;
         }
 
-        html[data-bs-theme="dark"] .input-group:focus-within {
-            border-color:#6BB29E;
-            box-shadow:0 0 0 4px rgba(107,178,158,.15);
+        html[data-bs-theme="dark"] .form-control {
+            background: transparent !important;
+            color: #F8FAFC !important;
         }
 
-        html[data-bs-theme="dark"] .input-group-text { color:#94A3B8; }
-        html[data-bs-theme="dark"] .form-control { color:#F8FAFC;background:transparent; }
-        html[data-bs-theme="dark"] .form-control:focus { color:#F8FAFC;background:transparent; }
-        html[data-bs-theme="dark"] .form-control::placeholder { color:#64748B; }
-        html[data-bs-theme="dark"] .register-footer .text-muted { color:#94A3B8!important; }
-        html[data-bs-theme="dark"] .register-footer a { color:#83C5B3; }
-        html[data-bs-theme="dark"] .register-footer a:hover { color:#A3D8CA; }
-        html[data-bs-theme="dark"] .invalid-feedback { color:#FCA5A5; }
+        html[data-bs-theme="dark"] .form-control::placeholder {
+            color: #64748B !important;
+        }
 
-        @media(max-width:576px) {
-            .register-wrapper { padding:15px; }
-            .register-card { border-radius:20px; }
-            .register-header { padding:35px 25px 10px; }
-            .card-body { padding:25px!important; }
-            .register-icon { width:58px;height:58px;font-size:23px;border-radius:16px; }
-            .register-title { font-size:1.45rem; }
-            .register-subtitle { font-size:13px; }
+        html[data-bs-theme="dark"] .input-group-text {
+            color: #94A3B8 !important;
+        }
+
+        html[data-bs-theme="dark"] .register-footer a {
+            color: #83C5B3 !important;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle-auth {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            border: 1px solid rgba(203, 213, 208, 0.7);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            color: #2D3748;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 99999;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-auth i {
+            font-size: 21px;
+            line-height: 1;
+        }
+
+        .theme-toggle-auth:hover {
+            transform: translateY(-2px) rotate(8deg);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        html[data-bs-theme="dark"] .theme-toggle-auth {
+            background: #1E293B !important;
+            border-color: #475569 !important;
+            color: #F8FAFC !important;
+        }
+
+        html[data-bs-theme="dark"] .theme-toggle-auth:hover {
+            color: #83C5B3 !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+            .theme-toggle-auth {
+                top: 15px;
+                right: 15px;
+                width: 46px;
+                height: 46px;
+            }
+
+            .theme-toggle-auth i {
+                font-size: 19px;
+            }
+
+            .register-wrapper {
+                padding: 25px 15px;
+            }
+
+            .register-header {
+                padding: 30px 25px 15px;
+            }
         }
     </style>
+
+    <script>
+        (function () {
+            const html = document.documentElement;
+            const savedTheme = localStorage.getItem('theme');
+            const systemDark = window.matchMedia(
+                '(prefers-color-scheme: dark)'
+            ).matches;
+
+            const theme = savedTheme || (systemDark ? 'dark' : 'light');
+            html.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
 </head>
+
 <body>
-    @include('components.theme-toggle')
 
+    <!-- Theme Toggle -->
+    <button
+        type="button"
+        class="theme-toggle-auth"
+        id="authThemeToggle"
+        aria-label="Ganti tema"
+    >
+        <i class="bi bi-moon-stars-fill" id="authThemeIcon"></i>
+    </button>
+
+    <!-- Register -->
     <div class="register-wrapper">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-5 col-md-7 col-sm-10 col-12">
-                    <div class="card register-card">
-                        <div class="card-header register-header text-center">
-                            <div class="register-icon">
-                                <i class="bi bi-person-plus-fill"></i>
-                            </div>
-                            <h3 class="register-title mb-2">Daftar Akun Baru</h3>
-                            <p class="register-subtitle mb-0">
-                                Buat username anonim Anda untuk mulai menggunakan aplikasi monitoring kesehatan mental.
-                            </p>
-                        </div>
+        <div class="register-card">
 
-                        <div class="card-body p-4 pt-2">
-                            <form method="POST" action="{{ route('register') }}">
-                                @csrf
+            <!-- Header -->
+            <div class="register-header">
+                <div class="register-icon">
+                    <i class="bi bi-person-plus-fill"></i>
+                </div>
 
-                                <div class="mb-4">
-                                    <label for="username" class="form-label">Username (Nama Samaran)</label>
-                                    <div class="input-group @error('username') is-invalid-group @enderror">
-                                        <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
-                                        <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" value="{{ old('username') }}" placeholder="Buat username unik (contoh: user123)" required autofocus>
-                                    </div>
-                                    @error('username')
-                                        <div class="invalid-feedback d-block mt-2 px-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                <h3 class="register-title mb-2">
+                    Buat Akun
+                </h3>
 
-                                <div class="mb-4">
-                                    <label for="password" class="form-label">Password</label>
-                                    <div class="input-group @error('password') is-invalid-group @enderror">
-                                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Masukkan password" required>
-                                    </div>
-                                    @error('password')
-                                        <div class="invalid-feedback d-block mt-2 px-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="bi bi-shield-lock"></i></span>
-                                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Ulangi password" required>
-                                    </div>
-                                </div>
-
-                                <div class="d-grid mt-4">
-                                    <button type="submit" class="btn btn-register">
-                                        <i class="bi bi-person-check-fill me-2"></i>Daftar Sekarang
-                                    </button>
-                                </div>
-                            </form>
-
-                            <div class="text-center mt-4 register-footer">
-                                <small class="text-muted">
-                                    Sudah memiliki akun?
-                                    <a href="{{ route('login') }}">Login di sini</a>
-                                </small>
-                            </div>
-                        </div>
-                    </div>
+                <div class="register-subtitle">
+                    Daftar untuk menggunakan Aplikasi Monitoring Kesehatan Mental
                 </div>
             </div>
+
+            <!-- Form -->
+            <div class="card-body p-4 pt-2">
+                <form action="{{ route('register') }}" method="POST">
+                    @csrf
+
+                    <!-- Nama -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">
+                            Nama Lengkap
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-person"></i>
+                            </span>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="name"
+                                name="name"
+                                value="{{ old('name') }}"
+                                placeholder="Masukkan nama lengkap"
+                                required
+                            >
+                        </div>
+
+                        @error('name')
+                            <small class="text-danger">
+                                {{ $message }}
+                            </small>
+                        @enderror
+                    </div>
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label for="username" class="form-label">
+                            Username
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-person-badge"></i>
+                            </span>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="username"
+                                name="username"
+                                value="{{ old('username') }}"
+                                placeholder="Masukkan username"
+                                required
+                            >
+                        </div>
+
+                        @error('username')
+                            <small class="text-danger">
+                                {{ $message }}
+                            </small>
+                        @enderror
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">
+                            Email
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-envelope"></i>
+                            </span>
+
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                value="{{ old('email') }}"
+                                placeholder="Masukkan email"
+                                required
+                            >
+                        </div>
+
+                        @error('email')
+                            <small class="text-danger">
+                                {{ $message }}
+                            </small>
+                        @enderror
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">
+                            Password
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-lock"></i>
+                            </span>
+
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                name="password"
+                                placeholder="Masukkan password"
+                                required
+                            >
+                        </div>
+
+                        @error('password')
+                            <small class="text-danger">
+                                {{ $message }}
+                            </small>
+                        @enderror
+                    </div>
+
+                    <!-- Konfirmasi Password -->
+                    <div class="mb-4">
+                        <label for="password_confirmation" class="form-label">
+                            Konfirmasi Password
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-shield-lock"></i>
+                            </span>
+
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password_confirmation"
+                                name="password_confirmation"
+                                placeholder="Ulangi password"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="d-grid mt-4">
+                        <button
+                            type="submit"
+                            class="btn btn-register"
+                        >
+                            <i class="bi bi-person-plus me-2"></i>
+                            Daftar
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Footer -->
+                <div class="text-center mt-4 register-footer">
+                    <small>
+                        Sudah memiliki akun?
+                        <a href="{{ route('login') }}">
+                            Login sekarang
+                        </a>
+                    </small>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const html = document.documentElement;
+            const button = document.getElementById('authThemeToggle');
+            const icon = document.getElementById('authThemeIcon');
+
+            function updateTheme(theme) {
+                html.setAttribute('data-bs-theme', theme);
+                localStorage.setItem('theme', theme);
+
+                if (icon) {
+                    icon.className = theme === 'dark'
+                        ? 'bi bi-sun-fill'
+                        : 'bi bi-moon-stars-fill';
+                }
+            }
+
+            updateTheme(
+                html.getAttribute('data-bs-theme') || 'light'
+            );
+
+            if (button) {
+                button.addEventListener('click', function () {
+                    const currentTheme =
+                        html.getAttribute('data-bs-theme') || 'light';
+
+                    updateTheme(
+                        currentTheme === 'dark'
+                            ? 'light'
+                            : 'dark'
+                    );
+                });
+            }
+        });
+    </script>
+
 </body>
 </html>
