@@ -24,30 +24,31 @@
 
     /* ===========================
         VARIABEL TEMA & WARNA (DARK MODE)
+        Menggunakan class untuk sinkronisasi dengan toggle aplikasi
     =========================== */
-    @media (prefers-color-scheme: dark) {
-        :root {
-            --sage-primary: #63a895;
-            --sage-hover: #4A7A6D;
-            --sage-light: #21332e;
-            --sage-surface: #162420;
-            --text-dark: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-soft: rgba(255, 255, 255, 0.1);
-            --bg-card: #1e293b;
-            --bg-input: #0f172a;
-            --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.3);
-        }
+    html.dark, body.dark-mode, [data-bs-theme="dark"] {
+        --sage-primary: #63a895;
+        --sage-hover: #4A7A6D;
+        --sage-light: #21332e;
+        --sage-surface: #162420;
+        --text-dark: #f8fafc;
+        --text-muted: #94a3b8;
+        --border-soft: rgba(255, 255, 255, 0.1);
+        --bg-card: #1e293b;
+        --bg-input: #0f172a;
+        --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.3);
+    }
 
-        body {
-            background-color: #0f172a;
-            color: var(--text-dark);
-        }
-        
-        /* Ubah warna teks placeholder di dark mode */
-        .form-control-sage::placeholder {
-            color: #64748b;
-        }
+    html.dark body, body.dark-mode, [data-bs-theme="dark"] body {
+        background-color: #0f172a;
+        color: var(--text-dark);
+    }
+
+    /* Ubah warna teks placeholder di dark mode */
+    html.dark .form-control-sage::placeholder,
+    body.dark-mode .form-control-sage::placeholder,
+    [data-bs-theme="dark"] .form-control-sage::placeholder {
+        color: #64748b;
     }
 
     /* ===========================
@@ -241,15 +242,15 @@
     </div>
 </div>
 
-<!-- PINDAHKAN SCRIPT KE SINI AGAR LANGSUNG DI-RENDER OLEH BLADE -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Cek mode saat ini untuk menyesuaikan warna background SweetAlert
-        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        const swalBg = isDarkMode ? '#1e293b' : '#FFFFFF';
-        const swalColor = isDarkMode ? '#f8fafc' : '#1e293b';
+        // Cek mode aktif secara dinamis dari Class atau Attribute HTML
+        function isDarkModeActive() {
+            return document.documentElement.classList.contains('dark') ||
+                   document.body.classList.contains('dark-mode') ||
+                   document.documentElement.getAttribute('data-bs-theme') === 'dark';
+        }
 
         // Fungsi untuk menangani konfirmasi form
         function setupFormConfirmation(formId, title, text) {
@@ -257,6 +258,10 @@
             if (form) {
                 form.addEventListener('submit', function (e) {
                     e.preventDefault(); // Mencegah form langsung tersubmit
+
+                    const isDark = isDarkModeActive();
+                    const swalBg = isDark ? '#1e293b' : '#FFFFFF';
+                    const swalColor = isDark ? '#f8fafc' : '#1e293b';
 
                     Swal.fire({
                         title: title,
