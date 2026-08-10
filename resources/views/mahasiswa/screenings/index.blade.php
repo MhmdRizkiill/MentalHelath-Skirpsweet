@@ -23,25 +23,24 @@
 
     /* ===========================
         VARIABEL TEMA & WARNA (DARK MODE)
+        Menggunakan class atau atribut (misal: .dark, .dark-mode, atau data-bs-theme) 
+        agar sinkron dengan toggle di sidebar, bukan OS.
     =========================== */
-    @media (prefers-color-scheme: dark) {
-        :root {
-            --sage-primary: #63a895; /* Sedikit lebih terang agar kontras */
-            --sage-hover: #4A7A6D;
-            --sage-light: #21332e; /* Hijau gelap redup */
-            --sage-surface: #162420; /* Lebih gelap dari light */
-            --text-dark: #f8fafc; /* Teks putih terang */
-            --text-muted: #94a3b8; /* Teks abu-abu terang */
-            --border-soft: rgba(255, 255, 255, 0.1);
-            --bg-card: #1e293b; /* Warna latar card mode gelap */
-            --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Opsional: Membuat background body utama ikut gelap jika belum diset di layout utama */
-        body {
-            background-color: #0f172a;
-            color: var(--text-dark);
-        }
+    html.dark, body.dark-mode, [data-bs-theme="dark"] {
+        --sage-primary: #63a895;
+        --sage-hover: #4A7A6D;
+        --sage-light: #21332e;
+        --sage-surface: #162420;
+        --text-dark: #f8fafc;
+        --text-muted: #94a3b8;
+        --border-soft: rgba(255, 255, 255, 0.1);
+        --bg-card: #1e293b;
+        --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    html.dark body, body.dark-mode, [data-bs-theme="dark"] body {
+        background-color: #0f172a;
+        color: var(--text-dark);
     }
 
     /* ===========================
