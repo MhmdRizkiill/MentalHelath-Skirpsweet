@@ -560,18 +560,62 @@
             }
         }
 
-        html[data-bs-theme="dark"] .hero-section .btn {
+                html[data-bs-theme="dark"] .hero-section .btn {
+            background: linear-gradient(135deg, #315B50 0%, #477D6D 100%) !important;
+            border-color: #477D6D !important;
+            color: #D5E9E2 !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.30) !important;
+        }
+
+        html[data-bs-theme="dark"] .hero-section .btn:hover {
+            background: linear-gradient(135deg, #477D6D 0%, #5FA18E 100%) !important;
+            border-color: #5FA18E !important;
+            color: #FFFFFF !important;
+        }
+
+        /* DARK MODE - NAVBAR LOGIN BUTTON */
+html[data-bs-theme="dark"] .navbar .btn,
+html[data-bs-theme="dark"] .navbar .btn-login,
+html[data-bs-theme="dark"] .navbar .btn-primary-custom {
     background: linear-gradient(135deg, #315B50 0%, #477D6D 100%) !important;
     border-color: #477D6D !important;
     color: #D5E9E2 !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+html[data-bs-theme="dark"] .navbar .btn:hover,
+html[data-bs-theme="dark"] .navbar .btn-login:hover,
+html[data-bs-theme="dark"] .navbar .btn-primary-custom:hover {
+    background: linear-gradient(135deg, #477D6D 0%, #5FA18E 100%) !important;
+    border-color: #5FA18E !important;
+    color: #FFFFFF !important;
+    transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.30) !important;
 }
 
-html[data-bs-theme="dark"] .hero-section .btn:hover {
+/* DARK MODE - SEMUA TOMBOL UTAMA */
+html[data-bs-theme="dark"] .btn-primary-custom,
+html[data-bs-theme="dark"] .btn-primary,
+html[data-bs-theme="dark"] .btn-success,
+html[data-bs-theme="dark"] .btn-login,
+html[data-bs-theme="dark"] .btn-register,
+html[data-bs-theme="dark"] .navbar .btn {
+    background: linear-gradient(135deg, #315B50 0%, #477D6D 100%) !important;
+    border-color: #477D6D !important;
+    color: #D5E9E2 !important;
+}
+
+html[data-bs-theme="dark"] .btn-primary-custom:hover,
+html[data-bs-theme="dark"] .btn-primary:hover,
+html[data-bs-theme="dark"] .btn-success:hover,
+html[data-bs-theme="dark"] .btn-login:hover,
+html[data-bs-theme="dark"] .btn-register:hover,
+html[data-bs-theme="dark"] .navbar .btn:hover {
     background: linear-gradient(135deg, #477D6D 0%, #5FA18E 100%) !important;
     border-color: #5FA18E !important;
     color: #FFFFFF !important;
 }
+
     </style>
 </head>
 <body>
