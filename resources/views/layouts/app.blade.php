@@ -67,6 +67,42 @@
             --muted: #94A3B8;
         }
 
+        /* ==========================================
+           OVERRIDE UTILITY BOOTSTRAP UNTUK DARK MODE
+           (Agar dashboard bawaan langsung rapi tanpa diubah)
+        =========================================== */
+        [data-bs-theme="dark"] .text-dark, 
+        [data-bs-theme="dark"] h1, 
+        [data-bs-theme="dark"] h2, 
+        [data-bs-theme="dark"] h3, 
+        [data-bs-theme="dark"] h4, 
+        [data-bs-theme="dark"] h5, 
+        [data-bs-theme="dark"] h6 {
+            color: #F8FAFC !important;
+        }
+
+        [data-bs-theme="dark"] .bg-white {
+            background-color: var(--card-bg) !important;
+            color: var(--text) !important;
+            border-color: var(--border) !important;
+        }
+
+        [data-bs-theme="dark"] .text-muted {
+            color: #94A3B8 !important;
+        }
+
+        [data-bs-theme="dark"] .card, 
+        [data-bs-theme="dark"] .card-header, 
+        [data-bs-theme="dark"] .card-footer {
+            background-color: var(--card-bg) !important;
+            border-color: var(--border) !important;
+            color: var(--text) !important;
+        }
+
+        [data-bs-theme="dark"] canvas {
+            filter: initial;
+        }
+
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
 
