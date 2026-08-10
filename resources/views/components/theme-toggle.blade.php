@@ -100,25 +100,25 @@ html[data-bs-theme="dark"] [style*="color:#1E293B"],
 html[data-bs-theme="dark"] [style*="color: #1E293B"] {
     color: #F8FAFC !important;
 }
-.theme-toggle-auth {
-    position: fixed;
-    top: 24px;
-    right: 24px;
-    width: 44px;
-    height: 44px;
-    border: 1px solid rgba(203,213,208,.7);
+.theme-toggle {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    margin-left: 28px;
+    border: 1px solid rgba(148, 163, 184, 0.35);
     border-radius: 50%;
-    background: rgba(255,255,255,.95);
-    color: #2D3748;
+    background: #1E293B;
+    color: #F8FAFC;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
     cursor: pointer;
-    z-index: 99999;
-    box-shadow: 0 6px 20px rgba(0,0,0,.12);
-    backdrop-filter: blur(12px);
-    transition: all .3s ease;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+    transition: all 0.3s ease;
 }
+
 .theme-toggle-auth:hover {
     transform: translateY(-2px) rotate(8deg);
 }
