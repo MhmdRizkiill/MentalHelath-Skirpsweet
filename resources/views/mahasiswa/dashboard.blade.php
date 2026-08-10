@@ -4,42 +4,36 @@
 <style>
     /* ===========================
        VARIABEL TEMA & WARNA 
-       (Disesuaikan untuk Mode Gelap)
+       (Default: MODE TERANG)
     =========================== */
     :root {
         --sage-primary: #4A7A6D;
-        --sage-hover: #5b9686;
-        --sage-light: rgba(74, 122, 109, 0.2); /* Dibuat transparan agar menyatu dengan background gelap */
-        --sage-surface: #1e293b; /* Warna latar kebiruan gelap */
-        
-        /* 👇 Latar belakang kartu diubah menjadi biru gelap menyesuaikan sidebar */
-        --card-bg: #151e2b; 
-        
-        /* 👇 Warna teks diubah menjadi terang agar terbaca di atas kotak gelap */
-        --text-dark: #f8fafc; 
-        --text-muted: #94a3b8; 
-        
-        --border-soft: rgba(255, 255, 255, 0.1); /* Border lebih transparan */
-        --radius-xl: 24px;
-        --radius-lg: 16px;
-        --shadow-soft: 0 8px 25px rgba(0, 0, 0, 0.3); /* Bayangan disesuaikan untuk mode gelap */
-    }
-
-    /* Dukungan jika kamu beralih ke Mode Terang suatu saat nanti */
-    [data-theme="light"] :root, 
-    [data-bs-theme="light"] :root, 
-    html.light {
-        --card-bg: #FFFFFF;
+        --sage-hover: #3b6358;
+        --sage-light: #e8f0ec;
         --sage-surface: #f4f7f6;
-        --text-dark: #1e293b;
+        --card-bg: #FFFFFF;   /* Latar kotak terang */
+        --text-dark: #1e293b; /* Teks warna gelap agar terbaca */
         --text-muted: #64748b;
         --border-soft: rgba(74, 122, 109, 0.15);
-        --sage-light: #e8f0ec;
+        --radius-xl: 24px;
+        --radius-lg: 16px;
+        --shadow-soft: 0 12px 30px rgba(74, 122, 109, 0.06);
     }
 
     /* ===========================
-       CUSTOM STYLING DASHBOARD
+       MODE GELAP (DARK MODE)
+       (Otomatis berubah jika tombol mode gelap diklik)
     =========================== */
+    html.dark, body.dark, body.dark-mode, [data-theme="dark"], [data-bs-theme="dark"] {
+        --sage-hover: #5b9686;
+        --sage-light: rgba(74, 122, 109, 0.2);
+        --sage-surface: #1e293b;
+        --card-bg: #151e2b;   /* Latar kotak gelap */
+        --text-dark: #f8fafc; /* Teks warna terang agar terbaca */
+        --text-muted: #94a3b8;
+        --border-soft: rgba(255, 255, 255, 0.1);
+        --shadow-soft: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
     .dashboard-card {
         border: none;
         border-radius: var(--radius-xl);
