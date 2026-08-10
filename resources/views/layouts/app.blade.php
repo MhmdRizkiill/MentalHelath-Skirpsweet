@@ -808,5 +808,9 @@
             }
         });
     </script>
+
+    {{-- Script tambahan dari setiap halaman melalui @push('scripts') --}}
+    @stack('scripts')
+
 </body>
 </html>
