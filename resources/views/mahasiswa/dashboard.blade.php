@@ -19,7 +19,6 @@
         --shadow-soft: 0 12px 30px rgba(74, 122, 109, 0.06);
     }
 
-    /* Dukungan Mode Gelap jika class 'dark' aktif di HTML/Body */
     .dark :root, html.dark {
         --card-bg: #1e293b;
         --sage-surface: #0f172a;
@@ -159,7 +158,7 @@
                     <h1 class="display-3 fw-bolder mb-4" style="letter-spacing: -2px; color: var(--text-dark);">{{ $totalScreening ?? 0 }}</h1>
                     
                     <div class="mt-auto">
-                        @if(($totalScreening ?? 0) == 0)
+                        @if(empty($totalScreening) || $totalScreening == 0)
                             <p class="small mb-3" style="color: var(--text-muted);">Anda belum pernah melakukan skrining.</p>
                             <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-sage px-4 py-2 w-100 rounded-pill">
                                 <i class="bi bi-plus-circle me-2"></i> Mulai Skrining Pertama
@@ -186,7 +185,7 @@
                     </div>
                     @if($latestScreening)
                         <span class="badge" style="background-color: var(--sage-surface); color: var(--sage-hover); border: 1px solid var(--border-soft); padding: 8px 16px; border-radius: 20px; font-weight: 600;">
-                            {{ optional($latestScreening->created_at)->format('d M Y, H:i') }} WIB
+                            {{ $latestScreening->created_at ? $latestScreening->created_at->format('d M Y - H:i') : '' }} WIB
                         </span>
                     @endif
                 </div>
@@ -198,12 +197,17 @@
                             'ringan' => 'badge-ringan',
                             'sedang' => 'badge-sedang',
                             'parah' => 'badge-parah',
-                            'sangat parah' => 'badge-sangat-parah',
+                            'sangat parah' => 'badge-sangat-parah'
                         ];
 
-                        $classDepresi = $badgeMap[strtolower(trim($latestScreening->status_depresi ?? ''))] ?? 'badge-default';
-                        $classCemas = $badgeMap[strtolower(trim($latestScreening->status_kecemasan ?? ''))] ?? 'badge-default';
-                        $classStres = $badgeMap[strtolower(trim($latestScreening->status_stres ?? ''))] ?? 'badge-default';
+                        // Logika PHP yang dipecah agar aman dari compiler syntax error
+                        $statusDepresi = strtolower(trim($latestScreening->status_depresi ?? ''));
+                        $statusCemas = strtolower(trim($latestScreening->status_kecemasan ?? ''));
+                        $statusStres = strtolower(trim($latestScreening->status_stres ?? ''));
+
+                        $classDepresi = $badgeMap[$statusDepresi] ?? 'badge-default';
+                        $classCemas = $badgeMap[$statusCemas] ?? 'badge-default';
+                        $classStres = $badgeMap[$statusStres] ?? 'badge-default';
                     @endphp
                     
                     <div class="row g-3 text-center">
@@ -250,7 +254,7 @@
     </div>
 
     <!-- GRAFIK -->
-    @if(($totalScreening ?? 0) > 0)
+    @if(!empty($totalScreening) && $totalScreening > 0)
     <div class="dashboard-card mb-5 p-1">
         <div class="card-header bg-transparent border-bottom-0 pt-4 pb-2 px-4 px-md-5 d-flex align-items-center">
             <div class="bg-sage-light p-2 rounded-lg me-3" style="width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;">
@@ -274,7 +278,7 @@
 @endsection
 
 @push('scripts')
-@if(($totalScreening ?? 0) > 0)
+@if(!empty($totalScreening) && $totalScreening > 0)
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -282,11 +286,16 @@
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         
-        // Menggunakan direktif Blade @json yang bersih
-        const labels = @json($labels ?? []);
-        const dataDepresi = (@json($dataDepresi ?? [])).map(Number);
-        const dataKecemasan = (@json($dataKecemasan ?? [])).map(Number);
-        const dataStres = (@json($dataStres ?? [])).map(Number);
+        // Pendekatan anti ParseError Blade & aman untuk Data Object/Array
+        const rawLabels = {!! json_encode($labels ?? []) !!};
+        const rawDepresi = {!! json_encode($dataDepresi ?? []) !!};
+        const rawKecemasan = {!! json_encode($dataKecemasan ?? []) !!};
+        const rawStres = {!! json_encode($dataStres ?? []) !!};
+
+        const labels = Array.isArray(rawLabels) ? rawLabels : Object.values(rawLabels);
+        const dataDepresi = (Array.isArray(rawDepresi) ? rawDepresi : Object.values(rawDepresi)).map(Number);
+        const dataKecemasan = (Array.isArray(rawKecemasan) ? rawKecemasan : Object.values(rawKecemasan)).map(Number);
+        const dataStres = (Array.isArray(rawStres) ? rawStres : Object.values(rawStres)).map(Number);
 
         if (!labels || labels.length === 0) return;
 
