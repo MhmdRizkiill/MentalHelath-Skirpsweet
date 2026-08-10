@@ -1059,13 +1059,36 @@ html[data-bs-theme="dark"] .music-current {
     background: #172235;
 }
 
+html[data-bs-theme="dark"] .music-item {
+    color: #CBD5E1;
+}
+
+html[data-bs-theme="dark"] .music-item i {
+    color: #64748B;
+}
+
+html[data-bs-theme="dark"] .music-item span {
+    color: #CBD5E1;
+}
+
 html[data-bs-theme="dark"] .music-item:hover {
     background: #263449;
+    color: #F8FAFC;
+}
+
+html[data-bs-theme="dark"] .music-item:hover i,
+html[data-bs-theme="dark"] .music-item:hover span {
+    color: #F8FAFC;
 }
 
 html[data-bs-theme="dark"] .music-item.active {
-    background: rgba(131,197,179,.12);
-    border-color: rgba(131,197,179,.2);
+    background: rgba(131,197,179,.14);
+    border-color: rgba(131,197,179,.3);
+    color: #83C5B3;
+}
+
+html[data-bs-theme="dark"] .music-item.active i,
+html[data-bs-theme="dark"] .music-item.active span {
     color: #83C5B3;
 }
 
