@@ -1106,23 +1106,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const songs = [
         {
             title: 'Ambient Relax',
-            file: '/music/ambient-relax.mp3'
+            file: '{{ asset("music/ambient-relax.mp3") }}'
         },
         {
             title: 'Guitar Relaxing',
-            file: '/music/guitar-relaxing.mp3'
+            file: '{{ asset("music/guitar-relaxing.mp3") }}'
         },
         {
             title: 'Meditation Ambient',
-            file: '/music/meditation-ambient.mp3'
+            file: '{{ asset("music/meditation-ambient.mp3") }}'
         },
         {
             title: 'Peaceful Ambient',
-            file: '/music/peaceful-ambient.mp3'
+            file: '{{ asset("music/peaceful-ambient.mp3") }}'
         },
         {
             title: 'Relaxing Piano',
-            file: '/music/relaxing-piano.mp3'
+            file: '{{ asset("music/relaxing-piano.mp3") }}'
         }
     ];
 
