@@ -559,6 +559,25 @@
                 border: 1px solid #334155;
             }
         }
+        html[data-bs-theme="dark"] .btn-primary-custom {
+            background: linear-gradient(135deg, #315B50 0%, #477D6D 100%) !important;
+            border-color: #477D6D !important;
+            color: #D5E9E2 !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.30) !important;
+        }
+
+        html[data-bs-theme="dark"] .btn-primary-custom:hover {
+            background: linear-gradient(135deg, #477D6D 0%, #5FA18E 100%) !important;
+            border-color: #5FA18E !important;
+            color: #FFFFFF !important;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35) !important;
+        }
+
+        html[data-bs-theme="dark"] .btn-primary-custom i,
+        html[data-bs-theme="dark"] .btn-primary-custom span {
+            color: inherit !important;
+        }
 
     </style>
 </head>
