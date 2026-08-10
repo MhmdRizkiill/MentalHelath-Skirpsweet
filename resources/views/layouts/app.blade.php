@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Monitoring Kesehatan Mental (DASS-42)</title>
-    
+
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
 
     <!-- Dependencies -->
@@ -21,9 +21,8 @@
     <script>
         const savedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-            document.documentElement.setAttribute('data-bs-theme', 'dark');
-        }
+        const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-bs-theme', theme);
     </script>
 
     <style>
@@ -33,11 +32,11 @@
             --primary-hover: #3B6358;
             --secondary: #6B9080;        /* Soft Teal Mint */
             --accent: #A3C1AD;           /* Soft Leaf */
-            
+
             --bg-light: #F4F7F6;
             --bg-mid: #E8F0EC;
             --bg-soft: #F0F4F1;
-            
+
             --success: #38A169;
             --danger: #E53E3E;
             --warning: #DD6B20;
@@ -56,11 +55,11 @@
             --primary-hover: #83C5B3;
             --secondary: #4A7A6D;
             --accent: #3B6358;
-            
+
             --bg-light: #0F172A;         /* Dark Slate */
             --bg-mid: #1E293B;           /* Medium Dark Slate */
             --bg-soft: #1E293B;
-            
+
             --card-bg: rgba(30, 41, 59, 0.88);
             --border: rgba(255, 255, 255, 0.1);
             --text: #F8FAFC;             /* Putih terang */
@@ -71,12 +70,12 @@
            OVERRIDE UTILITY BOOTSTRAP UNTUK DARK MODE
            (Agar dashboard bawaan langsung rapi tanpa diubah)
         =========================================== */
-        [data-bs-theme="dark"] .text-dark, 
-        [data-bs-theme="dark"] h1, 
-        [data-bs-theme="dark"] h2, 
-        [data-bs-theme="dark"] h3, 
-        [data-bs-theme="dark"] h4, 
-        [data-bs-theme="dark"] h5, 
+        [data-bs-theme="dark"] .text-dark,
+        [data-bs-theme="dark"] h1,
+        [data-bs-theme="dark"] h2,
+        [data-bs-theme="dark"] h3,
+        [data-bs-theme="dark"] h4,
+        [data-bs-theme="dark"] h5,
         [data-bs-theme="dark"] h6 {
             color: #F8FAFC !important;
         }
@@ -91,8 +90,8 @@
             color: #94A3B8 !important;
         }
 
-        [data-bs-theme="dark"] .card, 
-        [data-bs-theme="dark"] .card-header, 
+        [data-bs-theme="dark"] .card,
+        [data-bs-theme="dark"] .card-header,
         [data-bs-theme="dark"] .card-footer {
             background-color: var(--card-bg) !important;
             border-color: var(--border) !important;
@@ -455,7 +454,7 @@
         /* OPSI JAWABAN SKRINING */
         .option-label { display: block; margin-bottom: 12px; cursor: pointer; }
         .option-input { display: none; }
-        
+
         .option-button {
             display: flex; align-items: center; width: 100%;
             padding: 16px 20px; border: 2px solid var(--border);
@@ -466,7 +465,7 @@
         .option-label:hover .option-button {
             border-color: var(--primary); background-color: rgba(74, 122, 109, 0.05);
         }
-        
+
         [data-bs-theme="dark"] .option-label:hover .option-button {
             background-color: rgba(107, 178, 158, 0.1);
         }
@@ -506,7 +505,7 @@
         /* SCROLLBAR */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 10px; }
-        
+
         /* Modal Adjustments for Dark Mode */
         [data-bs-theme="dark"] .modal-content {
             background: rgba(30, 41, 59, 0.95) !important;
@@ -525,7 +524,7 @@
              SIDEBAR NAVIGASI
         =========================================== -->
         <aside class="sidebar" id="mainSidebar">
-            
+
             <!-- BRAND LOGO -->
             <a href="#" class="brand-logo">
                 <div class="brand-icon-wrapper">
@@ -606,11 +605,11 @@
                         </a>
                     </li>
                 @endauth
-                
+
                 <!-- TOMBOL TOGGLE TEMA (Desktop/Sidebar) -->
                 <li class="nav-item mt-2">
                     <button class="nav-link w-100 text-start bg-transparent border-0" id="themeToggleSidebar">
-                        <i class="bi bi-moon-stars-fill" id="themeIconSidebar"></i> 
+                        <i class="bi bi-moon-stars-fill" id="themeIconSidebar"></i>
                         <span id="themeTextSidebar">Mode Gelap</span>
                     </button>
                 </li>
@@ -619,7 +618,7 @@
             @auth
                 <!-- TOMBOL KELUAR DI BAWAH SIDEBAR -->
                 <div class="pt-3 border-top mt-auto flex-shrink-0" style="border-color: var(--border) !important;">
-                    <button type="button" class="btn w-100 fw-bold d-flex align-items-center justify-content-center" 
+                    <button type="button" class="btn w-100 fw-bold d-flex align-items-center justify-content-center"
                             style="border: 1px solid rgba(229, 62, 62, 0.2); background: rgba(229, 62, 62, 0.05); color: var(--danger); border-radius: var(--radius-md); padding: 11px;"
                             data-bs-toggle="modal" data-bs-target="#logoutModal">
                         <i class="bi bi-box-arrow-right me-2"></i> Keluar Aplikasi
@@ -633,7 +632,7 @@
              MAIN CONTENT AREA
         =========================================== -->
         <main class="main-content">
-            
+
             <!-- HEADER KHUSUS MOBILE -->
             <header class="mobile-header">
                 <a href="#" class="d-flex align-items-center gap-2 text-decoration-none">
@@ -642,7 +641,7 @@
                     </div>
                     <span class="fw-bold fs-4" style="color: var(--text);">Mind<span style="color: var(--primary);">Screen</span></span>
                 </a>
-                
+
                 <div class="d-flex align-items-center gap-2">
                     <!-- TOMBOL TOGGLE TEMA (Mobile) -->
                     <button class="btn btn-link text-decoration-none p-2" id="themeToggleMobile" style="color: var(--text);">
@@ -675,7 +674,7 @@
             <div class="toast align-items-center text-bg-success border-0 shadow-lg rounded-4 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body fw-semibold py-3 px-4 d-flex align-items-center" style="font-size: 14px;">
-                        <i class="bi bi-check-circle-fill me-3 fs-5"></i> 
+                        <i class="bi bi-check-circle-fill me-3 fs-5"></i>
                         {{ session('success') ?? session('status') }}
                     </div>
                     <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -687,7 +686,7 @@
             <div class="toast align-items-center text-bg-danger border-0 shadow-lg rounded-4 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body fw-semibold py-3 px-4 d-flex align-items-center" style="font-size: 14px;">
-                        <i class="bi bi-exclamation-triangle-fill me-3 fs-5"></i> 
+                        <i class="bi bi-exclamation-triangle-fill me-3 fs-5"></i>
                         {{ session('error') }}
                     </div>
                     <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -703,23 +702,23 @@
                 <div class="modal-header border-bottom-0 pb-0">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                
+
                 <div class="modal-body text-center py-4">
                     <div class="d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 rounded-circle mb-4" style="width: 80px; height: 80px;">
                         <i class="bi bi-box-arrow-right text-warning" style="font-size: 2.5rem;"></i>
                     </div>
-                    
+
                     <h5 class="fw-bold mb-2" style="color: var(--text);">Yakin Ingin Keluar?</h5>
                     <p class="text-muted mb-0" style="font-size: 15px;">
                         Sesi Anda akan diakhiri. Pastikan semua pekerjaan Anda sudah tersimpan.
                     </p>
                 </div>
-                
+
                 <div class="modal-footer border-top-0 justify-content-center pt-0 pb-4 gap-2">
                     <button type="button" class="btn btn-secondary px-4 py-2 fw-semibold rounded-pill" data-bs-dismiss="modal" style="background-color: var(--bg-mid); color: var(--text); border: none;">
                         Batal
                     </button>
-                    
+
                     <form action="{{ route('logout') }}" method="POST" class="m-0">
                         @csrf
                         <button type="submit" class="btn btn-danger px-4 py-2 fw-semibold rounded-pill shadow-sm" style="background-color: var(--danger); border: none;">
@@ -732,7 +731,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // ==========================================
@@ -772,10 +771,13 @@
             function toggleTheme() {
                 let activeTheme = document.documentElement.getAttribute('data-bs-theme');
                 let newTheme = activeTheme === 'dark' ? 'light' : 'dark';
-                
+
                 document.documentElement.setAttribute('data-bs-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
                 updateThemeUI(newTheme);
+                window.dispatchEvent(new CustomEvent('themeChanged', {
+                    detail: { theme: newTheme }
+                }));
             }
 
             // Pasang event listener ke tombol desktop dan mobile
