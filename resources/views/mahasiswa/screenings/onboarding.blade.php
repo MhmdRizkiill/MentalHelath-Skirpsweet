@@ -4,154 +4,131 @@
 
 <style>
     /* ===========================
-       VARIABEL TEMA & WARNA 
-       (Default: MODE TERANG)
-    =========================== */Karena Anda memberikan kode tampilan (view) untuk halaman *Onboarding/Welcome* dan meminta untuk "melakukan hal yang sama" tanpa konteks sebelumnya, saya berasumsi Anda ingin dibuatkan **Halaman Form Kuesioner (Skrining)** (`create.blade.php`) dengan **gaya desain (UI/UX) yang sama** (glassmorphism, nuansa *sage green*, dan tata letak kartu yang rapi).
-
-Berikut adalah desain untuk halaman pengisian kuesioner DASS-42 yang menggunakan elemen visual senada dengan halaman *onboarding* Anda:
-
-```html
-@extends('layouts.app')
-
-@section('content')
-
-<style>
-    /* ===========================
-        CUSTOM STYLE SCREENING FORM
+       VARIABEL TEMA ONBOARDING 
+       (Otomatis menyesuaikan Terang/Gelap)
     =========================== */
-    .screening-card {
-        border: 1px solid rgba(255, 255, 255, 0.9);
+    :root {
+        /* Warna untuk Mode Terang */
+        --ob-card-bg: rgba(255, 255, 255, 0.88);
+        --ob-card-border: rgba(255, 255, 255, 0.9);
+        --ob-box-bg: rgba(255, 255, 255, 0.6);
+        --ob-box-hover: #FFFFFF;
+        --ob-icon-bg: #FFFFFF;
+        --ob-dot-border: #FFFFFF;
+        --ob-gradient-start: rgba(74, 122, 109, 0.06);
+        --ob-gradient-end: rgba(107, 144, 128, 0.12);
+        --ob-shadow: rgba(74, 122, 109, 0.1);
+    }
+
+    /* Warna untuk Mode Gelap */
+    html.dark, body.dark, body.dark-mode, [data-theme="dark"], [data-bs-theme="dark"] {
+        --ob-card-bg: rgba(21, 30, 43, 0.88); /* Sesuai warna background biru gelap */
+        --ob-card-border: rgba(255, 255, 255, 0.08);
+        --ob-box-bg: rgba(30, 41, 59, 0.6);
+        --ob-box-hover: #1e293b;
+        --ob-icon-bg: #1e293b;
+        --ob-dot-border: #151e2b;
+        --ob-gradient-start: rgba(74, 122, 109, 0.15);
+        --ob-gradient-end: rgba(21, 30, 43, 0.5);
+        --ob-shadow: rgba(0, 0, 0, 0.25);
+    }
+
+    /* ===========================
+        CUSTOM STYLE ONBOARDING
+    =========================== */
+    .onboarding-card {
+        border: 1px solid var(--ob-card-border);
         border-radius: var(--radius-lg, 24px);
-        background: var(--card-bg, rgba(255, 255, 255, 0.88));
+        background: var(--ob-card-bg);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        box-shadow: 0 15px 40px -10px rgba(74, 122, 109, 0.1);
+        box-shadow: 0 15px 40px -10px var(--ob-shadow);
         overflow: hidden;
     }
 
-    .form-header {
-        background: linear-gradient(135deg, rgba(74, 122, 109, 0.06) 0%, rgba(107, 144, 128, 0.12) 100%);
-        padding: 40px 30px;
+    .hero-section {
+        background: linear-gradient(135deg, var(--ob-gradient-start) 0%, var(--ob-gradient-end) 100%);
+        padding: 60px 30px;
         text-align: center;
         border-bottom: 1px solid var(--border);
     }
 
-    .progress-container {
-        width: 100%;
-        background-color: rgba(74, 122, 109, 0.15);
-        border-radius: 10px;
-        margin-top: 20px;
-        height: 8px;
-        overflow: hidden;
+    .hero-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--ob-icon-bg);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px auto;
+        box-shadow: 0 8px 25px var(--ob-shadow);
+        color: var(--primary);
+        font-size: 36px;
     }
 
-    .progress-bar-custom {
-        height: 100%;
-        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-        border-radius: 10px;
-        transition: width 0.4s ease;
-    }
-
-    .question-box {
+    .feature-box {
         padding: 24px;
-        background: rgba(255, 255, 255, 0.6);
+        background: var(--ob-box-bg);
         border-radius: var(--radius-md, 16px);
         border: 1px solid var(--border);
-        margin-bottom: 24px;
+        height: 100%;
         transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
-    .question-box:hover {
-        background: #FFFFFF;
-        box-shadow: 0 8px 25px rgba(74, 122, 109, 0.08);
+    .feature-box:hover {
+        transform: translateY(-5px);
+        background: var(--ob-box-hover);
+        box-shadow: 0 12px 25px var(--ob-shadow);
         border-color: var(--accent);
     }
 
-    .question-number {
-        display: inline-block;
-        background: var(--primary);
-        color: #fff;
-        width: 32px;
-        height: 32px;
-        line-height: 32px;
-        text-align: center;
-        border-radius: 50%;
-        font-weight: bold;
-        margin-right: 12px;
-        font-size: 14px;
+    .feature-icon {
+        font-size: 28px;
+        margin-bottom: 16px;
+        color: var(--secondary);
     }
 
-    /* Custom Radio Buttons */
-    .radio-group {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin-top: 16px;
-    }
-
-    .radio-option {
+    .timeline-steps {
         position: relative;
-        display: flex;
-        align-items: center;
-        padding: 12px 16px;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        background: #fff;
+        padding-left: 30px;
+        margin-top: 30px;
     }
 
-    .radio-option:hover {
-        border-color: var(--primary);
-        background: rgba(74, 122, 109, 0.03);
-    }
-
-    .radio-option input[type="radio"] {
-        display: none;
-    }
-
-    .radio-option span {
-        margin-left: 12px;
-        color: var(--text);
-        font-size: 15px;
-    }
-
-    .radio-option input[type="radio"]:checked + .radio-circle {
-        border-color: var(--primary);
-    }
-
-    .radio-option input[type="radio"]:checked + .radio-circle::after {
-        transform: scale(1);
-    }
-
-    .radio-option input[type="radio"]:checked ~ span {
-        font-weight: 600;
-        color: var(--primary);
-    }
-
-    .radio-circle {
-        width: 20px;
-        height: 20px;
-        border: 2px solid #ccc;
-        border-radius: 50%;
-        position: relative;
-        transition: border-color 0.2s ease;
-    }
-
-    .radio-circle::after {
+    .timeline-steps::before {
         content: '';
-        width: 10px;
-        height: 10px;
-        background: var(--primary);
-        border-radius: 50%;
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        left: 11px;
+        top: 10px;
+        bottom: 20px;
+        width: 2px;
+        background: var(--border);
+        border-radius: 2px;
     }
 
-    .btn-submit {
+    .step-item {
+        position: relative;
+        margin-bottom: 24px;
+    }
+    
+    .step-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .step-dot {
+        position: absolute;
+        left: -30px;
+        top: 2px;
+        width: 24px;
+        height: 24px;
+        background: var(--primary);
+        border: 4px solid var(--ob-dot-border);
+        border-radius: 50%;
+        z-index: 1;
+        box-shadow: 0 2px 8px var(--ob-shadow);
+    }
+
+    .btn-start {
         height: 56px;
         font-size: 16px;
         font-weight: 700;
@@ -161,97 +138,109 @@ Berikut adalah desain untuk halaman pengisian kuesioner DASS-42 yang menggunakan
         border: none;
         box-shadow: 0 8px 20px rgba(74, 122, 109, 0.22);
         transition: all 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: #FFFFFF !important;
     }
 
-    .btn-submit:hover {
+    .btn-start:hover {
         transform: translateY(-3px);
         box-shadow: 0 12px 25px rgba(74, 122, 109, 0.32);
         background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%);
     }
+
+    .tips-box {
+        background: var(--ob-box-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+    }
 </style>
 
 <div class="row justify-content-center mb-5">
-    <div class="col-lg-10 col-xl-8">
-        <div class="card screening-card">
+    <div class="col-lg-10 col-xl-9">
+        <div class="card onboarding-card">
             
-            <!-- Header & Progress -->
-            <div class="form-header">
-                <h3 class="fw-bold mb-2" style="color: var(--text);">Skrining DASS-42</h3>
-                <p class="mb-0 mx-auto" style="color: var(--muted); max-width: 500px; font-size: 15px;">
-                    Pilih jawaban yang paling sesuai dengan kondisi Anda selama satu minggu terakhir.
-                </p>
-                
-                <!-- Progress Bar (Bisa diatur dinamis dengan JS nanti) -->
-                <div class="mt-4">
-                    <div class="d-flex justify-content-between mb-1" style="font-size: 13px; color: var(--muted);">
-                        <span>Progres Pengisian</span>
-                        <span class="fw-bold" style="color: var(--primary);">0%</span>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-bar-custom" style="width: 5%;"></div>
-                    </div>
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <div class="hero-icon">
+                    <i class="bi bi-heart-pulse-fill"></i>
                 </div>
+                <h2 class="fw-bold mb-3" style="color: var(--text);">Selamat Datang</h2>
+                <p class="mb-0 mx-auto" style="color: var(--muted); max-width: 600px; font-size: 16px; line-height: 1.6;">
+                    Sebelum kita mulai, luangkan waktu sejenak untuk memahami bagaimana proses skrining ini bekerja. Tes ini dirancang untuk memantau tingkat stres, kecemasan, dan depresi Anda (DASS-42).
+                </p>
             </div>
 
             <div class="card-body p-4 p-md-5">
                 
-                <form action="{{ route('mahasiswa.screenings.store') }}" method="POST">
-                    @csrf
+                <!-- Info Grid -->
+                <div class="row g-4 mb-5">
+                    <div class="col-md-4">
+                        <div class="feature-box text-center">
+                            <i class="bi bi-ui-checks-grid feature-icon"></i>
+                            <h6 class="fw-bold mb-2" style="color: var(--text);">42 Pertanyaan</h6>
+                            <p class="mb-0" style="color: var(--muted); font-size: 14px;">Bentuk pilihan ganda (Tidak Pernah hingga Hampir Selalu).</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-box text-center">
+                            <i class="bi bi-stopwatch feature-icon"></i>
+                            <h6 class="fw-bold mb-2" style="color: var(--text);">Estimasi 5-10 Menit</h6>
+                            <p class="mb-0" style="color: var(--muted); font-size: 14px;">Luangkan waktu sejenak di tempat yang tenang agar fokus.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-box text-center">
+                            <i class="bi bi-shield-check feature-icon"></i>
+                            <h6 class="fw-bold mb-2" style="color: var(--text);">Privasi Terjaga</h6>
+                            <p class="mb-0" style="color: var(--muted); font-size: 14px;">Data Anda dienkripsi dan hanya digunakan untuk konseling.</p>
+                        </div>
+                    </div>
+                </div>
 
-                    <!-- Contoh Looping Pertanyaan -->
-                    @php
-                        // Array contoh untuk demonstrasi visual
-                        $questions = [
-                            'Saya merasa bahwa saya menjadi marah karena hal-hal sepele.',
-                            'Saya merasa bibir saya sering kering.',
-                            'Saya sama sekali tidak dapat merasakan perasaan positif.'
-                        ];
-                    @endphp
+                <hr class="mb-5" style="border-color: var(--border);">
 
-                    @foreach($questions as $index => $question)
-                        <div class="question-box">
-                            <h6 class="fw-bold mb-3 d-flex align-items-center" style="color: var(--text); line-height: 1.5;">
-                                <span class="question-number">{{ $index + 1 }}</span>
-                                {{ $question }}
-                            </h6>
-                            
-                            <div class="radio-group">
-                                <label class="radio-option">
-                                    <input type="radio" name="answers[{{ $index + 1 }}]" value="0" required>
-                                    <div class="radio-circle"></div>
-                                    <span>Tidak pernah (Tidak sesuai dengan saya)</span>
-                                </label>
-                                
-                                <label class="radio-option">
-                                    <input type="radio" name="answers[{{ $index + 1 }}]" value="1" required>
-                                    <div class="radio-circle"></div>
-                                    <span>Kadang-kadang (Sesuai dengan saya sampai tingkat tertentu)</span>
-                                </label>
-                                
-                                <label class="radio-option">
-                                    <input type="radio" name="answers[{{ $index + 1 }}]" value="2" required>
-                                    <div class="radio-circle"></div>
-                                    <span>Sering (Sesuai dengan saya sampai tingkat yang dapat dipertimbangkan)</span>
-                                </label>
-
-                                <label class="radio-option">
-                                    <input type="radio" name="answers[{{ $index + 1 }}]" value="3" required>
-                                    <div class="radio-circle"></div>
-                                    <span>Hampir selalu (Sangat sesuai dengan saya)</span>
-                                </label>
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <h4 class="fw-bold mb-4" style="color: var(--text);">Bagaimana Prosesnya?</h4>
+                        <div class="timeline-steps">
+                            <div class="step-item">
+                                <div class="step-dot"></div>
+                                <h6 class="fw-bold mb-1" style="color: var(--text);">Jawab dengan Jujur</h6>
+                                <p class="mb-0" style="color: var(--muted); font-size: 14px;">Tidak ada jawaban benar/salah. Pilih yang paling menggambarkan kondisi Anda selama satu minggu terakhir.</p>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-dot"></div>
+                                <h6 class="fw-bold mb-1" style="color: var(--text);">Sistem Memproses Data</h6>
+                                <p class="mb-0" style="color: var(--muted); font-size: 14px;">Algoritma kami akan menghitung skor berdasarkan indikator psikologis standar (DASS).</p>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-dot"></div>
+                                <h6 class="fw-bold mb-1" style="color: var(--text);">Lihat Hasil & Rekomendasi</h6>
+                                <p class="mb-0" style="color: var(--muted); font-size: 14px;">Setelah selesai, Anda akan langsung melihat tingkat kesejahteraan Anda beserta langkah yang bisa diambil selanjutnya.</p>
                             </div>
                         </div>
-                    @endforeach
-
-                    <!-- Tombol Submit -->
-                    <div class="text-center mt-5">
-                        <button type="submit" class="btn btn-submit w-100 w-md-auto px-5">
-                            Kirim Jawaban <i class="bi bi-check2-circle ms-2"></i>
-                        </button>
                     </div>
-
-                </form>
+                    
+                    <div class="col-lg-6 px-lg-4">
+                        <div class="p-4 tips-box">
+                            <h6 class="fw-bold mb-3" style="color: var(--text);">
+                                <i class="bi bi-lightbulb-fill me-2" style="color: var(--warning);"></i>Tips Pengisian:
+                            </h6>
+                            <ul class="mb-4" style="color: var(--muted); font-size: 14px; padding-left: 20px;">
+                                <li class="mb-2">Jangan terlalu lama berpikir pada satu pertanyaan. Reaksi pertama Anda biasanya adalah yang paling akurat.</li>
+                                <li class="mb-2">Gunakan indikator "Progress Bar" di layar untuk melihat sisa pertanyaan.</li>
+                                <li>Pastikan koneksi internet Anda stabil sebelum menekan tombol kirim.</li>
+                            </ul>
+                            
+                            <a href="{{ route('mahasiswa.screenings.create') }}" class="btn btn-start w-100">
+                                Mulai Skrining Sekarang <i class="bi bi-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
