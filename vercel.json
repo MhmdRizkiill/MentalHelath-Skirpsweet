@@ -13,11 +13,15 @@
   "routes": [
     {
       "src": "/(css|js|images|music)/(.*)",
-      "dest": "public/$1/$2"
+      "dest": "/public/$1/$2"
+    },
+    {
+      "src": "/(.*)\\.(.+)$",
+      "dest": "/public/$1.$2"
     },
     {
       "src": "/(.*)",
-      "dest": "api/index.php"
+      "dest": "/api/index.php"
     }
   ]
 }
