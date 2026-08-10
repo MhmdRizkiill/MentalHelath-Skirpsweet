@@ -34,6 +34,7 @@
         --border-soft: rgba(255, 255, 255, 0.1);
         --shadow-soft: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
+
     .dashboard-card {
         border: none;
         border-radius: var(--radius-xl);
@@ -283,133 +284,283 @@
 
 @push('scripts')
 @if(!empty($totalScreening) && $totalScreening > 0)
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const canvas = document.getElementById('dashboardHistoryChart');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        
-        // Pendekatan anti ParseError Blade & aman untuk Data Object/Array
-        const rawLabels = {!! json_encode($labels ?? []) !!};
-        const rawDepresi = {!! json_encode($dataDepresi ?? []) !!};
-        const rawKecemasan = {!! json_encode($dataKecemasan ?? []) !!};
-        const rawStres = {!! json_encode($dataStres ?? []) !!};
+document.addEventListener('DOMContentLoaded', function () {
+    const canvas = document.getElementById('dashboardHistoryChart');
 
-        const labels = Array.isArray(rawLabels) ? rawLabels : Object.values(rawLabels);
-        const dataDepresi = (Array.isArray(rawDepresi) ? rawDepresi : Object.values(rawDepresi)).map(Number);
-        const dataKecemasan = (Array.isArray(rawKecemasan) ? rawKecemasan : Object.values(rawKecemasan)).map(Number);
-        const dataStres = (Array.isArray(rawStres) ? rawStres : Object.values(rawStres)).map(Number);
+    if (!canvas || typeof Chart === 'undefined') {
+        console.error('Canvas grafik atau Chart.js tidak ditemukan.');
+        return;
+    }
 
-        if (!labels || labels.length === 0) return;
+    const ctx = canvas.getContext('2d');
 
-        const chartWrapper = document.getElementById('chartWrapper');
-        const parentLayar = chartWrapper.parentElement;
-        
-        const minWidthPerPoint = 120; 
-        let calculatedWidth = labels.length * minWidthPerPoint;
-        let parentWidth = parentLayar.clientWidth || window.innerWidth;
+    // =====================================================
+    // DATA DARI CONTROLLER
+    // =====================================================
+    const rawLabels = {!! json_encode($labels ?? []) !!};
+    const rawDepresi = {!! json_encode($dataDepresi ?? []) !!};
+    const rawKecemasan = {!! json_encode($dataKecemasan ?? []) !!};
+    const rawStres = {!! json_encode($dataStres ?? []) !!};
 
-        if (calculatedWidth > parentWidth) {
-            chartWrapper.style.width = calculatedWidth + 'px';
-        } else {
-            chartWrapper.style.width = '100%';
+    const labels = Array.isArray(rawLabels) ? rawLabels : Object.values(rawLabels);
+    const dataDepresi = (Array.isArray(rawDepresi) ? rawDepresi : Object.values(rawDepresi)).map(Number);
+    const dataKecemasan = (Array.isArray(rawKecemasan) ? rawKecemasan : Object.values(rawKecemasan)).map(Number);
+    const dataStres = (Array.isArray(rawStres) ? rawStres : Object.values(rawStres)).map(Number);
+
+    if (labels.length === 0) return;
+
+    // =====================================================
+    // TEMA CHART
+    // =====================================================
+    function getChartTheme() {
+        const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+
+        if (isDark) {
+            return {
+                text: '#F8FAFC',
+                muted: '#CBD5E1',
+                grid: 'rgba(148, 163, 184, 0.12)',
+                border: 'rgba(148, 163, 184, 0.20)',
+                depresi: '#6BB29E',
+                kecemasan: '#F6C85F',
+                stres: '#FF7654',
+                backgroundDepresi: 'rgba(107, 178, 158, 0.12)',
+                backgroundKecemasan: 'rgba(246, 200, 95, 0.10)',
+                backgroundStres: 'rgba(255, 118, 84, 0.10)'
+            };
         }
 
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Skor Depresi',
-                        data: dataDepresi,
-                        borderColor: '#4A7A6D',
-                        backgroundColor: 'rgba(74, 122, 109, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: true,
-                        pointBackgroundColor: '#FFFFFF',
-                        pointBorderColor: '#4A7A6D',
-                        pointRadius: 5,
-                        pointHoverRadius: 7
-                    },
-                    {
-                        label: 'Skor Kecemasan',
-                        data: dataKecemasan,
-                        borderColor: '#E9C46A',
-                        backgroundColor: 'rgba(233, 196, 106, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: true,
-                        pointBackgroundColor: '#FFFFFF',
-                        pointBorderColor: '#E9C46A',
-                        pointRadius: 5,
-                        pointHoverRadius: 7
-                    },
-                    {
-                        label: 'Skor Stres',
-                        data: dataStres,
-                        borderColor: '#E76F51',
-                        backgroundColor: 'rgba(231, 111, 81, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: true,
-                        pointBackgroundColor: '#FFFFFF',
-                        pointBorderColor: '#E76F51',
-                        pointRadius: 5,
-                        pointHoverRadius: 7
-                    }
-                ]
+        return {
+            text: '#1E293B',
+            muted: '#64748B',
+            grid: 'rgba(100, 116, 139, 0.14)',
+            border: 'rgba(203, 213, 208, 0.60)',
+            depresi: '#4A7A6D',
+            kecemasan: '#E9C46A',
+            stres: '#E76F51',
+            backgroundDepresi: 'rgba(74, 122, 109, 0.10)',
+            backgroundKecemasan: 'rgba(233, 196, 106, 0.10)',
+            backgroundStres: 'rgba(231, 111, 81, 0.10)'
+        };
+    }
+
+    // =====================================================
+    // WIDTH GRAFIK DINAMIS
+    // =====================================================
+    const chartWrapper = document.getElementById('chartWrapper');
+    if (chartWrapper) {
+        const chartContainer = chartWrapper.parentElement;
+        const minWidthPerPoint = 120;
+        const calculatedWidth = labels.length * minWidthPerPoint;
+        const parentWidth = chartContainer.clientWidth || window.innerWidth;
+        chartWrapper.style.width = calculatedWidth > parentWidth ? calculatedWidth + 'px' : '100%';
+    }
+
+    // =====================================================
+    // TEMA AWAL
+    // =====================================================
+    let theme = getChartTheme();
+
+    // =====================================================
+    // INISIALISASI CHART
+    // =====================================================
+    const dashboardHistoryChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Skor Depresi',
+                    data: dataDepresi,
+                    borderColor: theme.depresi,
+                    backgroundColor: theme.backgroundDepresi,
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#FFFFFF',
+                    pointBorderColor: theme.depresi,
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                },
+                {
+                    label: 'Skor Kecemasan',
+                    data: dataKecemasan,
+                    borderColor: theme.kecemasan,
+                    backgroundColor: theme.backgroundKecemasan,
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#FFFFFF',
+                    pointBorderColor: theme.kecemasan,
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                },
+                {
+                    label: 'Skor Stres',
+                    data: dataStres,
+                    borderColor: theme.stres,
+                    backgroundColor: theme.backgroundStres,
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#FFFFFF',
+                    pointBorderColor: theme.stres,
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }
+            ]
+        },
+
+        // =================================================
+        // OPTIONS
+        // =================================================
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false, 
-                interaction: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 42, 
-                        grid: {
-                            color: 'rgba(74, 122, 109, 0.1)',
-                            drawBorder: false,
-                        },
-                        title: { display: true, text: 'Skor Penilaian', font: { weight: '600' }, color: '#64748B' }
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 42,
+                    ticks: {
+                        color: theme.muted,
+                        stepSize: 5,
+                        font: { family: 'Plus Jakarta Sans', size: 12 }
                     },
-                    x: {
-                        grid: {
-                            display: false,
-                            drawBorder: false,
-                        },
-                        title: { display: true, text: 'Tanggal Skrining', font: { weight: '600' }, color: '#64748B' }
+                    title: {
+                        display: true,
+                        text: 'Skor Penilaian',
+                        color: theme.muted,
+                        font: { family: 'Plus Jakarta Sans', size: 12, weight: '600' }
+                    },
+                    grid: {
+                        color: theme.grid,
+                        drawBorder: false
                     }
                 },
-                plugins: {
-                    legend: { 
-                        display: true, 
-                        position: 'top',
-                        labels: {
-                            usePointStyle: true,
-                            padding: 20,
-                            font: { weight: '600', size: 13 },
-                            color: '#1e293b'
-                        }
+                x: {
+                    ticks: {
+                        color: theme.muted,
+                        font: { family: 'Plus Jakarta Sans', size: 12 }
                     },
-                    tooltip: {
-                        backgroundColor: 'rgba(30, 41, 59, 0.95)',
-                        titleFont: { size: 13, weight: '700' },
-                        bodyFont: { size: 13 },
-                        padding: 12,
-                        cornerRadius: 12,
-                        displayColors: true
+                    title: {
+                        display: true,
+                        text: 'Tanggal Skrining',
+                        color: theme.muted,
+                        font: { family: 'Plus Jakarta Sans', size: 12, weight: '600' }
+                    },
+                    grid: {
+                        display: false,
+                        drawBorder: false
                     }
                 }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        color: theme.text,
+                        usePointStyle: true,
+                        pointStyle: 'circle',
+                        padding: 20,
+                        font: { family: 'Plus Jakarta Sans', size: 13, weight: '600' }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: document.documentElement.getAttribute('data-bs-theme') === 'dark' ? '#1E293B' : '#FFFFFF',
+                    titleColor: document.documentElement.getAttribute('data-bs-theme') === 'dark' ? '#F8FAFC' : '#1E293B',
+                    bodyColor: document.documentElement.getAttribute('data-bs-theme') === 'dark' ? '#E2E8F0' : '#1E293B',
+                    borderColor: theme.border,
+                    borderWidth: 1,
+                    padding: 12,
+                    cornerRadius: 10,
+                    displayColors: true
+                }
+            }
+        }
+    });
+
+    // =====================================================
+    // SIMPAN INSTANCE CHART
+    // =====================================================
+    window.dashboardHistoryChart = dashboardHistoryChart;
+
+    // =====================================================
+    // UPDATE TEMA CHART
+    // =====================================================
+    function updateDashboardChartTheme() {
+        const chart = window.dashboardHistoryChart;
+        if (!chart) return;
+
+        const newTheme = getChartTheme();
+        const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+
+        // Dataset 1 - Depresi
+        chart.data.datasets[0].borderColor = newTheme.depresi;
+        chart.data.datasets[0].backgroundColor = newTheme.backgroundDepresi;
+        chart.data.datasets[0].pointBorderColor = newTheme.depresi;
+
+        // Dataset 2 - Kecemasan
+        chart.data.datasets[1].borderColor = newTheme.kecemasan;
+        chart.data.datasets[1].backgroundColor = newTheme.backgroundKecemasan;
+        chart.data.datasets[1].pointBorderColor = newTheme.kecemasan;
+
+        // Dataset 3 - Stres
+        chart.data.datasets[2].borderColor = newTheme.stres;
+        chart.data.datasets[2].backgroundColor = newTheme.backgroundStres;
+        chart.data.datasets[2].pointBorderColor = newTheme.stres;
+
+        // Sumbu Y
+        chart.options.scales.y.ticks.color = newTheme.muted;
+        chart.options.scales.y.title.color = newTheme.muted;
+        chart.options.scales.y.grid.color = newTheme.grid;
+
+        // Sumbu X
+        chart.options.scales.x.ticks.color = newTheme.muted;
+        chart.options.scales.x.title.color = newTheme.muted;
+
+        // Legend
+        chart.options.plugins.legend.labels.color = newTheme.text;
+
+        // Tooltip
+        chart.options.plugins.tooltip.backgroundColor = isDark ? '#1E293B' : '#FFFFFF';
+        chart.options.plugins.tooltip.titleColor = isDark ? '#F8FAFC' : '#1E293B';
+        chart.options.plugins.tooltip.bodyColor = isDark ? '#E2E8F0' : '#1E293B';
+        chart.options.plugins.tooltip.borderColor = newTheme.border;
+
+        chart.update();
+    }
+
+    // =====================================================
+    // EVENT PERUBAHAN DARK / LIGHT MODE
+    // =====================================================
+    window.addEventListener('themeChanged', function () {
+        setTimeout(function () {
+            updateDashboardChartTheme();
+        }, 50);
+    });
+
+    // =====================================================
+    // SUPPORT JIKA TEMA DIUBAH OLEH KOMPONEN LAIN
+    // =====================================================
+    const themeObserver = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'data-bs-theme') {
+                updateDashboardChartTheme();
             }
         });
     });
+
+    themeObserver.observe(document.documentElement, { attributes: true });
+});
 </script>
 @endif
 @endpush
