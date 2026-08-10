@@ -4,7 +4,7 @@
 
 <style>
     /* ===========================
-        VARIABEL TEMA & WARNA
+        VARIABEL TEMA & WARNA (LIGHT MODE)
     =========================== */
     :root {
         --sage-primary: #4A7A6D;
@@ -14,10 +14,54 @@
         --text-dark: #1e293b;
         --text-muted: #64748b;
         --border-soft: rgba(74, 122, 109, 0.15);
+        --bg-card: #FFFFFF;
+        
         --radius-xl: 24px;
         --radius-lg: 16px;
         --shadow-soft: 0 12px 30px rgba(74, 122, 109, 0.06);
+
+        /* Variabel Tag Jawaban */
+        --ans-0-bg: #F1F5F9; --ans-0-text: #64748B; --ans-0-border: #E2E8F0;
+        --ans-1-bg: #ECFDF5; --ans-1-text: #059669; --ans-1-border: #A7F3D0;
+        --ans-2-bg: #FFF7ED; --ans-2-text: #EA580C; --ans-2-border: #FED7AA;
+        --ans-3-bg: #FEF2F2; --ans-3-text: #DC2626; --ans-3-border: #FECACA;
     }
+
+    /* ===========================
+        VARIABEL TEMA & WARNA (DARK MODE)
+    =========================== */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --sage-primary: #63a895;
+            --sage-hover: #4A7A6D;
+            --sage-light: #21332e;
+            --sage-surface: #162420;
+            --text-dark: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-soft: rgba(255, 255, 255, 0.1);
+            --bg-card: #1e293b;
+            --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.3);
+
+            /* Variabel Tag Jawaban Dark Mode */
+            --ans-0-bg: #334155; --ans-0-text: #cbd5e1; --ans-0-border: #475569;
+            --ans-1-bg: rgba(6, 78, 59, 0.4); --ans-1-text: #34d399; --ans-1-border: rgba(52, 211, 153, 0.3);
+            --ans-2-bg: rgba(124, 45, 18, 0.4); --ans-2-text: #fb923c; --ans-2-border: rgba(251, 146, 60, 0.3);
+            --ans-3-bg: rgba(127, 29, 29, 0.4); --ans-3-text: #f87171; --ans-3-border: rgba(248, 113, 113, 0.3);
+        }
+
+        body {
+            background-color: #0f172a;
+            color: var(--text-dark);
+        }
+    }
+
+    /* ===========================
+        ADAPTIVE UTILITIES
+    =========================== */
+    .bg-adaptive { background-color: var(--bg-card) !important; }
+    .text-adaptive { color: var(--text-dark) !important; }
+    .text-adaptive-muted { color: var(--text-muted) !important; }
+    .border-adaptive { border-color: var(--border-soft) !important; }
 
     /* ===========================
         CUSTOM STYLE DETAIL
@@ -30,7 +74,7 @@
     .detail-card {
         border: none;
         border-radius: var(--radius-xl);
-        background: #FFFFFF;
+        background: var(--bg-card);
         box-shadow: var(--shadow-soft);
         overflow: hidden;
         margin-bottom: 30px;
@@ -38,7 +82,7 @@
     }
 
     .detail-header {
-        background: #FFFFFF;
+        background: var(--bg-card);
         border-bottom: 1px solid var(--border-soft);
         padding: 24px 28px;
     }
@@ -58,7 +102,7 @@
         KOTAK STATUS SKOR
     =========================== */
     .stat-box {
-        background: #FFFFFF;
+        background: var(--bg-card);
         border: 1px solid var(--border-soft);
         border-radius: var(--radius-lg);
         padding: 24px 16px;
@@ -68,12 +112,12 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        box-shadow: 0 4px 12px rgba(74, 122, 109, 0.02);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     }
 
     .stat-box:hover {
         transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(74, 122, 109, 0.08);
+        box-shadow: var(--shadow-soft);
         border-color: var(--sage-primary);
         background: var(--sage-surface);
     }
@@ -111,7 +155,7 @@
     .custom-table thead th:last-child { border-top-right-radius: 12px; }
 
     .custom-table tbody tr { 
-        background-color: #FFFFFF; 
+        background-color: var(--bg-card); 
         transition: all 0.2s ease; 
     }
     
@@ -142,18 +186,18 @@
         justify-content: center;
     }
 
-    .badge-normal { background-color: rgba(34, 197, 94, 0.15) !important; color: #16a34a !important; border: 1px solid rgba(34, 197, 94, 0.3); }
-    .badge-ringan { background-color: rgba(234, 179, 8, 0.15) !important; color: #ca8a04 !important; border: 1px solid rgba(234, 179, 8, 0.3); }
-    .badge-sedang { background-color: rgba(249, 115, 22, 0.15) !important; color: #ea580c !important; border: 1px solid rgba(249, 115, 22, 0.3); }
-    .badge-parah { background-color: rgba(239, 68, 68, 0.15) !important; color: #dc2626 !important; border: 1px solid rgba(239, 68, 68, 0.3); }
-    .badge-sangat-parah { background-color: rgba(124, 58, 237, 0.15) !important; color: #6d28d9 !important; border: 1px solid rgba(124, 58, 237, 0.3); }
-    .badge-default { background-color: #F1F5F9 !important; color: #475569 !important; border: 1px solid #CBD5E1; }
+    .badge-normal { background-color: rgba(34, 197, 94, 0.15) !important; color: #34d399 !important; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .badge-ringan { background-color: rgba(234, 179, 8, 0.15) !important; color: #fbbf24 !important; border: 1px solid rgba(234, 179, 8, 0.3); }
+    .badge-sedang { background-color: rgba(249, 115, 22, 0.15) !important; color: #fb923c !important; border: 1px solid rgba(249, 115, 22, 0.3); }
+    .badge-parah { background-color: rgba(239, 68, 68, 0.15) !important; color: #f87171 !important; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .badge-sangat-parah { background-color: rgba(124, 58, 237, 0.15) !important; color: #a78bfa !important; border: 1px solid rgba(124, 58, 237, 0.3); }
+    .badge-default { background-color: var(--sage-surface) !important; color: var(--text-muted) !important; border: 1px solid var(--border-soft); }
 
     /* --- PERBAIKAN TAMPILAN JAWABAN (ANSWER TAGS) --- */
     .answer-tag {
         font-weight: 600;
         padding: 6px 16px;
-        border-radius: 50px; /* Diubah menjadi pill shape agar lebih modern */
+        border-radius: 50px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -163,11 +207,10 @@
         box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
 
-    /* Warna gradasi berdasarkan tingkat intensitas jawaban */
-    .ans-0 { background-color: #F1F5F9; color: #64748B; border-color: #E2E8F0; } /* Tidak Pernah - Abu-abu netral */
-    .ans-1 { background-color: #ECFDF5; color: #059669; border-color: #A7F3D0; } /* Kadang-kadang - Hijau lembut */
-    .ans-2 { background-color: #FFF7ED; color: #EA580C; border-color: #FED7AA; } /* Sering - Oranye terang */
-    .ans-3 { background-color: #FEF2F2; color: #DC2626; border-color: #FECACA; } /* Sangat Sering - Merah tegas */
+    .ans-0 { background-color: var(--ans-0-bg); color: var(--ans-0-text); border-color: var(--ans-0-border); }
+    .ans-1 { background-color: var(--ans-1-bg); color: var(--ans-1-text); border-color: var(--ans-1-border); }
+    .ans-2 { background-color: var(--ans-2-bg); color: var(--ans-2-text); border-color: var(--ans-2-border); }
+    .ans-3 { background-color: var(--ans-3-bg); color: var(--ans-3-text); border-color: var(--ans-3-border); }
 
     /* ===========================
         INFO PANEL (ACCORDION)
@@ -175,7 +218,7 @@
     .info-panel-wrapper {
         border-radius: var(--radius-lg);
         border: 1px solid var(--border-soft);
-        background: #FFFFFF;
+        background: var(--bg-card);
         box-shadow: 0 4px 15px rgba(0,0,0,0.02);
         overflow: hidden;
     }
@@ -198,7 +241,7 @@
         TOMBOL KEMBALI
     =========================== */
     .btn-back {
-        background: #FFFFFF;
+        background: var(--bg-card);
         border: 1.5px solid var(--sage-primary);
         color: var(--sage-primary);
         font-weight: 600;
@@ -223,8 +266,8 @@
             <!-- HEADER HALAMAN -->
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-2 gap-3 page-title-section">
                 <div>
-                    <h3 class="fw-bolder mb-2">Detail Skrining</h3>
-                    <p class="text-muted mb-0" style="font-size: 15px;">
+                    <h3 class="fw-bolder text-adaptive mb-2">Detail Skrining</h3>
+                    <p class="text-adaptive-muted mb-0" style="font-size: 15px;">
                         Tinjauan lengkap hasil evaluasi kesehatan mental Anda.
                     </p>
                 </div>
@@ -241,11 +284,11 @@
                             <i class="bi bi-clipboard2-data fs-5"></i>
                         </div>
                         <div>
-                            <h5 class="mb-0 fw-bold text-dark">Hasil Analisis DASS-42</h5>
-                            <span class="text-muted" style="font-size: 13px;">Skor evaluasi berdasarkan kuesioner yang Anda isi</span>
+                            <h5 class="mb-0 fw-bold text-adaptive">Hasil Analisis DASS-42</h5>
+                            <span class="text-adaptive-muted" style="font-size: 13px;">Skor evaluasi berdasarkan kuesioner yang Anda isi</span>
                         </div>
                     </div>
-                    <span class="badge" style="background-color: var(--sage-surface); color: var(--sage-hover); border: 1px solid var(--border-soft); padding: 8px 16px; border-radius: 20px; font-weight: 600;">
+                    <span class="badge" style="background-color: var(--sage-surface); color: var(--sage-primary); border: 1px solid var(--border-soft); padding: 8px 16px; border-radius: 20px; font-weight: 600;">
                         <i class="bi bi-calendar3 me-2"></i> {{ $screening->created_at->format('d M Y - H:i') }} WIB
                     </span>
                 </div>
@@ -268,8 +311,8 @@
                     <div class="row g-4 mb-2">
                         <div class="col-md-4">
                             <div class="stat-box">
-                                <h6 class="text-muted fw-bold text-uppercase mb-3" style="font-size: 12.5px; letter-spacing: 1.5px;">Depresi</h6>
-                                <h1 class="fw-bolder text-dark mb-4" style="font-size: 3rem; letter-spacing: -1.5px;">{{ $screening->score_depresi ?? 0 }}</h1>
+                                <h6 class="text-adaptive-muted fw-bold text-uppercase mb-3" style="font-size: 12.5px; letter-spacing: 1.5px;">Depresi</h6>
+                                <h1 class="fw-bolder text-adaptive mb-4" style="font-size: 3rem; letter-spacing: -1.5px;">{{ $screening->score_depresi ?? 0 }}</h1>
                                 <span class="badge-status w-100 {{ $classDepresi }}">
                                     {{ ucfirst($screening->status_depresi ?? '-') }}
                                 </span>
@@ -278,8 +321,8 @@
                         
                         <div class="col-md-4">
                             <div class="stat-box">
-                                <h6 class="text-muted fw-bold text-uppercase mb-3" style="font-size: 12.5px; letter-spacing: 1.5px;">Kecemasan</h6>
-                                <h1 class="fw-bolder text-dark mb-4" style="font-size: 3rem; letter-spacing: -1.5px;">{{ $screening->score_kecemasan ?? 0 }}</h1>
+                                <h6 class="text-adaptive-muted fw-bold text-uppercase mb-3" style="font-size: 12.5px; letter-spacing: 1.5px;">Kecemasan</h6>
+                                <h1 class="fw-bolder text-adaptive mb-4" style="font-size: 3rem; letter-spacing: -1.5px;">{{ $screening->score_kecemasan ?? 0 }}</h1>
                                 <span class="badge-status w-100 {{ $classCemas }}">
                                     {{ ucfirst($screening->status_kecemasan ?? '-') }}
                                 </span>
@@ -288,8 +331,8 @@
                         
                         <div class="col-md-4">
                             <div class="stat-box">
-                                <h6 class="text-muted fw-bold text-uppercase mb-3" style="font-size: 12.5px; letter-spacing: 1.5px;">Stres</h6>
-                                <h1 class="fw-bolder text-dark mb-4" style="font-size: 3rem; letter-spacing: -1.5px;">{{ $screening->score_stres ?? 0 }}</h1>
+                                <h6 class="text-adaptive-muted fw-bold text-uppercase mb-3" style="font-size: 12.5px; letter-spacing: 1.5px;">Stres</h6>
+                                <h1 class="fw-bolder text-adaptive mb-4" style="font-size: 3rem; letter-spacing: -1.5px;">{{ $screening->score_stres ?? 0 }}</h1>
                                 <span class="badge-status w-100 {{ $classStres }}">
                                     {{ ucfirst($screening->status_stres ?? '-') }}
                                 </span>
@@ -301,57 +344,57 @@
 
             <!-- PANEL EDUKASI / INFORMASI DASS -->
             <div class="accordion mb-5 info-panel-wrapper" id="accordionInformasiSkor">
-                <div class="accordion-item" style="border: none;">
+                <div class="accordion-item" style="border: none; background: transparent;">
                     <h2 class="accordion-header" id="headingSkor">
-                        <button class="accordion-button custom-acc collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkor" aria-expanded="false" aria-controls="collapseSkor">
+                        <button class="accordion-button custom-acc collapsed text-adaptive" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkor" aria-expanded="false" aria-controls="collapseSkor">
                             <i class="bi bi-info-circle-fill me-2 fs-5"></i> Mengapa skor saya termasuk kategori ini? (Panduan DASS-42)
                         </button>
                     </h2>
                     <div id="collapseSkor" class="accordion-collapse collapse" aria-labelledby="headingSkor" data-bs-parent="#accordionInformasiSkor">
-                        <div class="accordion-body p-4 p-md-5 bg-white">
-                            <p class="text-muted mb-4" style="font-size: 14.5px;">
+                        <div class="accordion-body p-4 p-md-5 bg-adaptive">
+                            <p class="text-adaptive-muted mb-4" style="font-size: 14.5px;">
                                 DASS-42 adalah instrumen psikologis standar yang memiliki 14 pertanyaan untuk masing-masing kategori (Depresi, Kecemasan, Stres). Karena skor poin tertinggi setiap pertanyaan adalah 3, maka <strong>batas maksimal skor untuk setiap kategori adalah 42</strong>. Kategori <strong>"Sangat Parah"</strong> merupakan rentang batas atas tertinggi, sehingga skor berapapun yang masuk di dalam rentang tersebut akan diklasifikasikan ke tingkat keparahan yang sama.
                             </p>
                             <div class="table-responsive px-0">
-                                <table class="table table-bordered mb-0" style="font-size: 14px; border-color: var(--border-soft);">
+                                <table class="table table-bordered mb-0 border-adaptive" style="font-size: 14px;">
                                     <thead style="background-color: var(--sage-surface); color: var(--text-dark);">
                                         <tr>
-                                            <th width="25%" class="fw-bold border-bottom-0">Tingkat Keparahan</th>
-                                            <th width="25%" class="text-center fw-bold border-bottom-0">Skor Depresi</th>
-                                            <th width="25%" class="text-center fw-bold border-bottom-0">Skor Kecemasan</th>
-                                            <th width="25%" class="text-center fw-bold border-bottom-0">Skor Stres</th>
+                                            <th width="25%" class="fw-bold border-adaptive">Tingkat Keparahan</th>
+                                            <th width="25%" class="text-center fw-bold border-adaptive">Skor Depresi</th>
+                                            <th width="25%" class="text-center fw-bold border-adaptive">Skor Kecemasan</th>
+                                            <th width="25%" class="text-center fw-bold border-adaptive">Skor Stres</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><span class="badge" style="background-color: #22C55E; color: white;">Normal</span></td>
-                                            <td class="text-center">0 - 9</td>
-                                            <td class="text-center">0 - 7</td>
-                                            <td class="text-center">0 - 14</td>
+                                            <td class="border-adaptive"><span class="badge-status badge-normal">Normal</span></td>
+                                            <td class="text-center text-adaptive-muted border-adaptive">0 - 9</td>
+                                            <td class="text-center text-adaptive-muted border-adaptive">0 - 7</td>
+                                            <td class="text-center text-adaptive-muted border-adaptive">0 - 14</td>
                                         </tr>
                                         <tr>
-                                            <td><span class="badge" style="background-color: #EAB308; color: black;">Ringan</span></td>
-                                            <td class="text-center">10 - 13</td>
-                                            <td class="text-center">8 - 9</td>
-                                            <td class="text-center">15 - 18</td>
+                                            <td class="border-adaptive"><span class="badge-status badge-ringan">Ringan</span></td>
+                                            <td class="text-center text-adaptive-muted border-adaptive">10 - 13</td>
+                                            <td class="text-center text-adaptive-muted border-adaptive">8 - 9</td>
+                                            <td class="text-center text-adaptive-muted border-adaptive">15 - 18</td>
                                         </tr>
                                         <tr>
-                                            <td><span class="badge" style="background-color: #F97316; color: white;">Sedang</span></td>
-                                            <td class="text-center">14 - 20</td>
-                                            <td class="text-center">10 - 14</td>
-                                            <td class="text-center">19 - 25</td>
+                                            <td class="border-adaptive"><span class="badge-status badge-sedang">Sedang</span></td>
+                                            <td class="text-center text-adaptive-muted border-adaptive">14 - 20</td>
+                                            <td class="text-center text-adaptive-muted border-adaptive">10 - 14</td>
+                                            <td class="text-center text-adaptive-muted border-adaptive">19 - 25</td>
                                         </tr>
                                         <tr>
-                                            <td><span class="badge" style="background-color: #EF4444; color: white;">Parah</span></td>
-                                            <td class="text-center">21 - 27</td>
-                                            <td class="text-center">15 - 19</td>
-                                            <td class="text-center">26 - 33</td>
+                                            <td class="border-adaptive"><span class="badge-status badge-parah">Parah</span></td>
+                                            <td class="text-center text-adaptive-muted border-adaptive">21 - 27</td>
+                                            <td class="text-center text-adaptive-muted border-adaptive">15 - 19</td>
+                                            <td class="text-center text-adaptive-muted border-adaptive">26 - 33</td>
                                         </tr>
                                         <tr>
-                                            <td><span class="badge" style="background-color: #7C3AED; color: white;">Sangat Parah</span></td>
-                                            <td class="text-center fw-bold text-dark">28 - 42</td>
-                                            <td class="text-center fw-bold text-dark">20 - 42</td>
-                                            <td class="text-center fw-bold text-dark">34 - 42</td>
+                                            <td class="border-adaptive"><span class="badge-status badge-sangat-parah">Sangat Parah</span></td>
+                                            <td class="text-center fw-bold text-adaptive border-adaptive">28 - 42</td>
+                                            <td class="text-center fw-bold text-adaptive border-adaptive">20 - 42</td>
+                                            <td class="text-center fw-bold text-adaptive border-adaptive">34 - 42</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -368,8 +411,8 @@
                         <i class="bi bi-ui-checks fs-5"></i>
                     </div>
                     <div>
-                        <h5 class="mb-0 fw-bold text-dark">Review Jawaban Anda</h5>
-                        <span class="text-muted" style="font-size: 13px;">Riwayat pilihan pada setiap instrumen pertanyaan</span>
+                        <h5 class="mb-0 fw-bold text-adaptive">Review Jawaban Anda</h5>
+                        <span class="text-adaptive-muted" style="font-size: 13px;">Riwayat pilihan pada setiap instrumen pertanyaan</span>
                     </div>
                 </div>
                 
@@ -386,14 +429,12 @@
                                 </thead>
                                 <tbody>
                                     @php 
-                                        // Array label teks
                                         $opsiTeks = [
                                             0 => 'Tidak pernah (0)',
                                             1 => 'Kadang-kadang (1)',
                                             2 => 'Sering (2)',
                                             3 => 'Sangat sering (3)'
                                         ];
-                                        // Array class warna spesifik untuk mempercantik tampilan
                                         $opsiClass = [
                                             0 => 'ans-0',
                                             1 => 'ans-1',
@@ -407,11 +448,10 @@
                                             $jawabanSkor = $screening->answers[$q->id] ?? null;
                                         @endphp
                                         <tr>
-                                            <td class="text-center fw-bold text-muted">{{ $index + 1 }}</td>
-                                            <td class="fw-medium text-dark">{{ $q->pertanyaan ?? $q->question_text ?? 'Teks pertanyaan tidak ditemukan' }}</td>
+                                            <td class="text-center fw-bold text-adaptive-muted">{{ $index + 1 }}</td>
+                                            <td class="fw-medium text-adaptive">{{ $q->pertanyaan ?? $q->question_text ?? 'Teks pertanyaan tidak ditemukan' }}</td>
                                             <td class="text-center">
                                                 @if($jawabanSkor !== null)
-                                                    <!-- Class akan dinamis menyesuaikan array $opsiClass -->
                                                     <span class="answer-tag {{ $opsiClass[$jawabanSkor] ?? 'ans-0' }}">
                                                         {{ $opsiTeks[$jawabanSkor] }}
                                                     </span>
@@ -427,13 +467,13 @@
                             </table>
                         </div>
                     @else
-                        <div class="text-center py-5">
-                            <div class="d-flex flex-column align-items-center justify-content-center py-4">
+                        <div class="text-center py-5 bg-adaptive">
+                            <div class="d-flex flex-column align-items-center justify-content-center py-4 opacity-75">
                                 <div class="mb-3" style="width: 80px; height: 80px; background: var(--sage-light); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                                     <i class="bi bi-inbox fs-1" style="color: var(--sage-primary);"></i>
                                 </div>
-                                <h6 class="fw-bold text-dark mb-2">Data Tidak Lengkap</h6>
-                                <p class="text-muted mb-0" style="max-width: 300px;">Detail rekaman jawaban tidak tersedia untuk skrining versi lama ini.</p>
+                                <h6 class="fw-bold text-adaptive mb-2">Data Tidak Lengkap</h6>
+                                <p class="text-adaptive-muted mb-0" style="max-width: 300px;">Detail rekaman jawaban tidak tersedia untuk skrining versi lama ini.</p>
                             </div>
                         </div>
                     @endif
