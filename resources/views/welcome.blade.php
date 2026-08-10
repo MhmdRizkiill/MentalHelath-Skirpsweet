@@ -647,6 +647,9 @@ html[data-bs-theme="dark"] .navbar .btn:hover {
                             <a href="{{ route('login') }}" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold shadow-sm w-100">Masuk / Daftar</a>
                         @endauth
                     </li>
+                    <button type="button" class="theme-toggle-auth" id="authThemeToggle" aria-label="Ganti tema">
+                        <i class="bi bi-moon-stars-fill" id="authThemeIcon"></i>
+                    </button>
                 </ul>
             </div>
         </div>

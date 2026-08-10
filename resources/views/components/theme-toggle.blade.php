@@ -100,27 +100,30 @@ html[data-bs-theme="dark"] [style*="color:#1E293B"],
 html[data-bs-theme="dark"] [style*="color: #1E293B"] {
     color: #F8FAFC !important;
 }
-.theme-toggle {
+
+/* THEME TOGGLE */
+.theme-toggle-auth {
     width: 50px;
     height: 50px;
     padding: 0;
     margin-left: 28px;
-    border: 1px solid rgba(148, 163, 184, 0.35);
+    border: 1px solid rgba(203,213,208,.7);
     border-radius: 50%;
-    background: #1E293B;
-    color: #F8FAFC;
-    display: flex;
+    background: rgba(255,255,255,.95);
+    color: #2D3748;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     font-size: 18px;
     cursor: pointer;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
-    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,.12);
+    backdrop-filter: blur(12px);
+    transition: all .3s ease;
 }
-
 .theme-toggle-auth:hover {
     transform: translateY(-2px) rotate(8deg);
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
 }
 html[data-bs-theme="dark"] .theme-toggle-auth {
     background: #1E293B;
@@ -129,20 +132,35 @@ html[data-bs-theme="dark"] .theme-toggle-auth {
 }
 html[data-bs-theme="dark"] .theme-toggle-auth:hover {
     color: #83C5B3;
+    border-color: #64748B;
 }
-@media(max-width:576px) {
+
+/* TOMBOL NAVBAR */
+html[data-bs-theme="dark"] .navbar .btn,
+html[data-bs-theme="dark"] .navbar .btn-login,
+html[data-bs-theme="dark"] .navbar .btn-primary-custom {
+    background: linear-gradient(135deg,#315B50 0%,#477D6D 100%) !important;
+    border-color: #477D6D !important;
+    color: #D5E9E2 !important;
+}
+html[data-bs-theme="dark"] .navbar .btn:hover,
+html[data-bs-theme="dark"] .navbar .btn-login:hover,
+html[data-bs-theme="dark"] .navbar .btn-primary-custom:hover {
+    background: linear-gradient(135deg,#477D6D 0%,#5FA18E 100%) !important;
+    border-color: #5FA18E !important;
+    color: #FFFFFF !important;
+}
+
+/* RESPONSIVE */
+@media(max-width:991px) {
     .theme-toggle-auth {
-        top: 15px;
-        right: 15px;
-        width: 40px;
-        height: 40px;
+        width: 46px;
+        height: 46px;
+        margin: 12px 0 8px;
+        font-size: 17px;
     }
 }
 </style>
-
-<button type="button" class="theme-toggle-auth" id="authThemeToggle" aria-label="Ganti tema">
-    <i class="bi bi-moon-stars-fill" id="authThemeIcon"></i>
-</button>
 
 <script>
 (function() {
