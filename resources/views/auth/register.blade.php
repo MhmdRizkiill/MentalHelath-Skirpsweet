@@ -201,6 +201,7 @@
     </style>
 </head>
 <body>
+    @include('components.theme-toggle')
 
 <div class="register-wrapper">
     <div class="container">

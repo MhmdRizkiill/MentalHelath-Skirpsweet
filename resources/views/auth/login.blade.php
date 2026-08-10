@@ -158,6 +158,7 @@
     </style>
 </head>
 <body>
+    @include('components.theme-toggle')
 
 <div class="login-wrapper">
     <div class="container">
