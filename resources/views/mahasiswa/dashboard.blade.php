@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-
 <style>
     /* ===========================
-        VARIABEL TEMA & WARNA
+       VARIABEL TEMA & WARNA
     =========================== */
     :root {
         --sage-primary: #4A7A6D;
         --sage-hover: #3b6358;
         --sage-light: #e8f0ec;
         --sage-surface: #f4f7f6;
+        --card-bg: #FFFFFF;
         --text-dark: #1e293b;
         --text-muted: #64748b;
         --border-soft: rgba(74, 122, 109, 0.15);
@@ -19,13 +19,22 @@
         --shadow-soft: 0 12px 30px rgba(74, 122, 109, 0.06);
     }
 
+    /* Dukungan Mode Gelap jika class 'dark' aktif di HTML/Body */
+    .dark :root, html.dark {
+        --card-bg: #1e293b;
+        --sage-surface: #0f172a;
+        --text-dark: #f8fafc;
+        --text-muted: #94a3b8;
+        --border-soft: rgba(255, 255, 255, 0.1);
+    }
+
     /* ===========================
-        CUSTOM STYLING DASHBOARD
+       CUSTOM STYLING DASHBOARD
     =========================== */
     .dashboard-card {
         border: none;
         border-radius: var(--radius-xl);
-        background: #FFFFFF;
+        background: var(--card-bg);
         box-shadow: var(--shadow-soft);
         position: relative;
         overflow: hidden;
@@ -50,7 +59,7 @@
 
     /* KOTAK STATISTIK */
     .stat-box {
-        background: #FFFFFF;
+        background: var(--card-bg);
         border: 1px solid var(--border-soft);
         border-radius: var(--radius-lg);
         padding: 20px 16px;
@@ -66,7 +75,7 @@
     }
 
     /* ===========================
-        BADGES & TAGS
+       BADGES & TAGS
     =========================== */
     .badge-modern {
         font-size: 13px;
@@ -92,7 +101,7 @@
     .bg-sage-light { background-color: var(--sage-light) !important; }
 
     /* ===========================
-        TOMBOL SAGE
+       TOMBOL SAGE
     =========================== */
     .btn-sage {
         background: var(--sage-primary);
@@ -110,7 +119,7 @@
     }
 
     .btn-outline-sage {
-        background: #FFFFFF;
+        background: var(--card-bg);
         border: 1.5px solid var(--sage-primary);
         color: var(--sage-primary);
         font-weight: 600;
@@ -129,8 +138,8 @@
     <!-- HEADER -->
     <div class="row mb-4 align-items-center page-title-section">
         <div class="col-12">
-            <h3 class="fw-bolder text-dark mb-2" style="letter-spacing: -0.5px;">Dashboard Mahasiswa</h3>
-            <p class="text-muted mb-0" style="font-size: 15px;">
+            <h3 class="fw-bolder mb-2" style="letter-spacing: -0.5px; color: var(--text-dark);">Dashboard Mahasiswa</h3>
+            <p class="mb-0" style="font-size: 15px; color: var(--text-muted);">
                 Halo, <span class="fw-bold text-sage">{{ Auth::user()->username }}</span>. Pantau terus kesehatan mental Anda secara berkala.
             </p>
         </div>
@@ -146,12 +155,12 @@
                     <div class="d-inline-flex align-items-center justify-content-center bg-sage-light text-sage rounded-circle mb-3" style="width: 70px; height: 70px;">
                         <i class="bi bi-activity fs-2"></i>
                     </div>
-                    <h6 class="text-muted fw-bold mb-2 text-uppercase" style="letter-spacing: 1.5px; font-size: 12.5px;">Total Skrining</h6>
-                    <h1 class="display-3 fw-bolder text-dark mb-4" style="letter-spacing: -2px;">{{ $totalScreening ?? 0 }}</h1>
+                    <h6 class="fw-bold mb-2 text-uppercase" style="letter-spacing: 1.5px; font-size: 12.5px; color: var(--text-muted);">Total Skrining</h6>
+                    <h1 class="display-3 fw-bolder mb-4" style="letter-spacing: -2px; color: var(--text-dark);">{{ $totalScreening ?? 0 }}</h1>
                     
                     <div class="mt-auto">
                         @if(($totalScreening ?? 0) == 0)
-                            <p class="text-muted small mb-3">Anda belum pernah melakukan skrining.</p>
+                            <p class="small mb-3" style="color: var(--text-muted);">Anda belum pernah melakukan skrining.</p>
                             <a href="{{ route('mahasiswa.screenings.onboarding') }}" class="btn btn-sage px-4 py-2 w-100 rounded-pill">
                                 <i class="bi bi-plus-circle me-2"></i> Mulai Skrining Pertama
                             </a>
@@ -173,11 +182,11 @@
                         <div class="bg-sage-light p-2 rounded-lg me-3 text-sage">
                             <i class="bi bi-clock-history fs-5"></i>
                         </div>
-                        <h5 class="fw-bold text-dark mb-0">Status Skrining Terakhir</h5>
+                        <h5 class="fw-bold mb-0" style="color: var(--text-dark);">Status Skrining Terakhir</h5>
                     </div>
                     @if($latestScreening)
                         <span class="badge" style="background-color: var(--sage-surface); color: var(--sage-hover); border: 1px solid var(--border-soft); padding: 8px 16px; border-radius: 20px; font-weight: 600;">
-                            {{ $latestScreening->created_at->format('d M Y, H:i') }} WIB
+                            {{ optional($latestScreening->created_at)->format('d M Y, H:i') }} WIB
                         </span>
                     @endif
                 </div>
@@ -200,8 +209,8 @@
                     <div class="row g-3 text-center">
                         <div class="col-12 col-md-4">
                             <div class="stat-box h-100 d-flex flex-column justify-content-between">
-                                <p class="mb-3 fw-bold text-muted text-uppercase" style="font-size: 12px; letter-spacing: 1px;">Depresi</p>
-                                <h2 class="text-dark fw-bolder mb-3" style="font-size: 2.5rem;">{{ $latestScreening->score_depresi ?? 0 }}</h2>
+                                <p class="mb-3 fw-bold text-uppercase" style="font-size: 12px; letter-spacing: 1px; color: var(--text-muted);">Depresi</p>
+                                <h2 class="fw-bolder mb-3" style="font-size: 2.5rem; color: var(--text-dark);">{{ $latestScreening->score_depresi ?? 0 }}</h2>
                                 <span class="badge-modern {{ $classDepresi }}">
                                     {{ ucfirst($latestScreening->status_depresi ?? '-') }}
                                 </span>
@@ -210,8 +219,8 @@
                         
                         <div class="col-12 col-md-4">
                             <div class="stat-box h-100 d-flex flex-column justify-content-between">
-                                <p class="mb-3 fw-bold text-muted text-uppercase" style="font-size: 12px; letter-spacing: 1px;">Kecemasan</p>
-                                <h2 class="text-dark fw-bolder mb-3" style="font-size: 2.5rem;">{{ $latestScreening->score_kecemasan ?? 0 }}</h2>
+                                <p class="mb-3 fw-bold text-uppercase" style="font-size: 12px; letter-spacing: 1px; color: var(--text-muted);">Kecemasan</p>
+                                <h2 class="fw-bolder mb-3" style="font-size: 2.5rem; color: var(--text-dark);">{{ $latestScreening->score_kecemasan ?? 0 }}</h2>
                                 <span class="badge-modern {{ $classCemas }}">
                                     {{ ucfirst($latestScreening->status_kecemasan ?? '-') }}
                                 </span>
@@ -220,8 +229,8 @@
                         
                         <div class="col-12 col-md-4">
                             <div class="stat-box h-100 d-flex flex-column justify-content-between">
-                                <p class="mb-3 fw-bold text-muted text-uppercase" style="font-size: 12px; letter-spacing: 1px;">Stres</p>
-                                <h2 class="text-dark fw-bolder mb-3" style="font-size: 2.5rem;">{{ $latestScreening->score_stres ?? 0 }}</h2>
+                                <p class="mb-3 fw-bold text-uppercase" style="font-size: 12px; letter-spacing: 1px; color: var(--text-muted);">Stres</p>
+                                <h2 class="fw-bolder mb-3" style="font-size: 2.5rem; color: var(--text-dark);">{{ $latestScreening->score_stres ?? 0 }}</h2>
                                 <span class="badge-modern {{ $classStres }}">
                                     {{ ucfirst($latestScreening->status_stres ?? '-') }}
                                 </span>
@@ -233,7 +242,7 @@
                         <div class="mb-3" style="width: 80px; height: 80px; background: var(--sage-light); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                             <i class="bi bi-folder2-open fs-1 text-sage"></i>
                         </div>
-                        <span class="text-muted fw-medium">Belum ada data hasil skrining.</span>
+                        <span class="fw-medium" style="color: var(--text-muted);">Belum ada data hasil skrining.</span>
                     </div>
                 @endif
             </div>
@@ -248,8 +257,8 @@
                 <i class="bi bi-graph-up text-sage fs-5"></i>
             </div>
             <div>
-                <h5 class="mb-0 fw-bold text-dark">Grafik Pemantauan DASS-42</h5>
-                <small class="text-muted" style="font-size: 13.5px;">Perkembangan skor kesehatan mental Anda dari waktu ke waktu</small>
+                <h5 class="mb-0 fw-bold" style="color: var(--text-dark);">Grafik Pemantauan DASS-42</h5>
+                <small style="font-size: 13.5px; color: var(--text-muted);">Perkembangan skor kesehatan mental Anda dari waktu ke waktu</small>
             </div>
         </div>
         <div class="card-body px-4 px-md-5 pb-5 pt-3">
@@ -270,15 +279,16 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const canvas = document.getElementById('dashboardHistoryChart');
-        if(!canvas) return;
+        if (!canvas) return;
         const ctx = canvas.getContext('2d');
         
-        const labels = Object.values({!! json_encode($labels ?? []) !!});
-        const dataDepresi = Object.values({!! json_encode($dataDepresi ?? []) !!}).map(Number);
-        const dataKecemasan = Object.values({!! json_encode($dataKecemasan ?? []) !!}).map(Number);
-        const dataStres = Object.values({!! json_encode($dataStres ?? []) !!}).map(Number);
+        // Menggunakan direktif Blade @json yang bersih
+        const labels = @json($labels ?? []);
+        const dataDepresi = (@json($dataDepresi ?? [])).map(Number);
+        const dataKecemasan = (@json($dataKecemasan ?? [])).map(Number);
+        const dataStres = (@json($dataStres ?? [])).map(Number);
 
-        if(labels.length === 0) return;
+        if (!labels || labels.length === 0) return;
 
         const chartWrapper = document.getElementById('chartWrapper');
         const parentLayar = chartWrapper.parentElement;
@@ -301,7 +311,7 @@
                     {
                         label: 'Skor Depresi',
                         data: dataDepresi,
-                        borderColor: '#4A7A6D', // Sage
+                        borderColor: '#4A7A6D',
                         backgroundColor: 'rgba(74, 122, 109, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
@@ -314,7 +324,7 @@
                     {
                         label: 'Skor Kecemasan',
                         data: dataKecemasan,
-                        borderColor: '#E9C46A', // Soft Gold
+                        borderColor: '#E9C46A',
                         backgroundColor: 'rgba(233, 196, 106, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
@@ -327,7 +337,7 @@
                     {
                         label: 'Skor Stres',
                         data: dataStres,
-                        borderColor: '#E76F51', // Terracotta
+                        borderColor: '#E76F51',
                         backgroundColor: 'rgba(231, 111, 81, 0.1)',
                         borderWidth: 2,
                         tension: 0.4,
@@ -354,14 +364,14 @@
                             color: 'rgba(74, 122, 109, 0.1)',
                             drawBorder: false,
                         },
-                        title: { display: true, text: 'Skor Penilaian', font: { weight: '600', family: "'Plus Jakarta Sans', sans-serif" }, color: '#64748B' }
+                        title: { display: true, text: 'Skor Penilaian', font: { weight: '600' }, color: '#64748B' }
                     },
                     x: {
                         grid: {
                             display: false,
                             drawBorder: false,
                         },
-                        title: { display: true, text: 'Tanggal Skrining', font: { weight: '600', family: "'Plus Jakarta Sans', sans-serif" }, color: '#64748B' }
+                        title: { display: true, text: 'Tanggal Skrining', font: { weight: '600' }, color: '#64748B' }
                     }
                 },
                 plugins: {
@@ -371,14 +381,14 @@
                         labels: {
                             usePointStyle: true,
                             padding: 20,
-                            font: { family: "'Plus Jakarta Sans', sans-serif", weight: '600', size: 13 },
+                            font: { weight: '600', size: 13 },
                             color: '#1e293b'
                         }
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(30, 41, 59, 0.95)', // text-dark with opacity
-                        titleFont: { family: "'Plus Jakarta Sans', sans-serif", size: 13, weight: '700' },
-                        bodyFont: { family: "'Plus Jakarta Sans', sans-serif", size: 13 },
+                        backgroundColor: 'rgba(30, 41, 59, 0.95)',
+                        titleFont: { size: 13, weight: '700' },
+                        bodyFont: { size: 13 },
                         padding: 12,
                         cornerRadius: 12,
                         displayColors: true
