@@ -4,19 +4,68 @@
 
 <style>
     /* ===========================
+        VARIABEL TEMA FORM ADMIN
+    =========================== */
+    :root {
+        --form-bg-card: #FFFFFF;
+        --form-header-bg: #F8FAFC;
+        --form-border: rgba(226, 232, 240, 0.8);
+        --form-text-main: #0F172A;
+        --form-text-muted: #64748B;
+        --form-input-bg: #FFFFFF;
+        --form-input-border: #CBD5E1;
+        --form-input-text: #1E293B;
+        --form-input-placeholder: #94A3B8;
+        --form-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05);
+        
+        --btn-cancel-bg: #FFFFFF;
+        --btn-cancel-border: #CBD5E1;
+        --btn-cancel-text: #475569;
+        --btn-cancel-hover-bg: #F8FAFC;
+        --btn-cancel-hover-border: #94A3B8;
+        --btn-cancel-hover-text: #0F172A;
+        --border-divider: #F1F5F9;
+    }
+
+    html.dark, body.dark-mode, [data-bs-theme="dark"] {
+        --form-bg-card: #1e293b;
+        --form-header-bg: #0f172a;
+        --form-border: rgba(255, 255, 255, 0.1);
+        --form-text-main: #f8fafc;
+        --form-text-muted: #94a3b8;
+        --form-input-bg: #1e293b;
+        --form-input-border: #475569;
+        --form-input-text: #f8fafc;
+        --form-input-placeholder: #94a3b8;
+        --form-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+        
+        --btn-cancel-bg: #1e293b;
+        --btn-cancel-border: #475569;
+        --btn-cancel-text: #cbd5e1;
+        --btn-cancel-hover-bg: rgba(255, 255, 255, 0.05);
+        --btn-cancel-hover-border: #94a3b8;
+        --btn-cancel-hover-text: #f8fafc;
+        --border-divider: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Helper Classes */
+    .text-adaptive { color: var(--form-text-main) !important; }
+    .text-adaptive-muted { color: var(--form-text-muted) !important; }
+
+    /* ===========================
         CUSTOM STYLE FORM ADMIN
     =========================== */
     .admin-form-card {
-        border: 1px solid rgba(226, 232, 240, 0.8);
+        border: 1px solid var(--form-border);
         border-radius: 20px;
-        background: #FFFFFF;
-        box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05);
+        background: var(--form-bg-card);
+        box-shadow: var(--form-shadow);
         overflow: hidden;
     }
 
     .admin-form-header {
-        background: #F8FAFC;
-        border-bottom: 1px solid #F1F5F9;
+        background: var(--form-header-bg);
+        border-bottom: 1px solid var(--border-divider);
         padding: 24px 30px;
         display: flex;
         align-items: center;
@@ -37,16 +86,16 @@
 
     .form-label {
         font-weight: 600;
-        color: #334155;
+        color: var(--form-text-main);
         font-size: 14px;
         margin-bottom: 8px;
     }
 
     /* Input Group Styling */
     .input-group {
-        border: 1px solid #CBD5E1;
+        border: 1px solid var(--form-input-border);
         border-radius: 14px;
-        background: #FFFFFF;
+        background: var(--form-input-bg);
         transition: all 0.3s ease;
         overflow: hidden;
     }
@@ -59,7 +108,7 @@
     .input-group-text {
         background: transparent;
         border: none;
-        color: #94A3B8;
+        color: var(--form-input-placeholder);
         padding-left: 16px;
         padding-right: 10px;
     }
@@ -74,7 +123,7 @@
         border: none;
         border-radius: 0 14px 14px 0;
         font-size: 14.5px;
-        color: #1E293B;
+        color: var(--form-input-text);
         background: transparent;
     }
     
@@ -82,6 +131,12 @@
         height: 52px;
         padding-left: 6px;
         cursor: pointer;
+    }
+
+    /* Memperbaiki warna opsi dropdown select pada dark mode */
+    .form-select option {
+        background-color: var(--form-bg-card);
+        color: var(--form-text-main);
     }
 
     .form-control:not(textarea) {
@@ -101,10 +156,11 @@
         box-shadow: none;
         border: none;
         outline: none;
+        color: var(--form-input-text);
     }
 
     .form-control::placeholder {
-        color: #94A3B8;
+        color: var(--form-input-placeholder);
         font-size: 14px;
     }
 
@@ -145,15 +201,15 @@
     }
 
     .btn-cancel {
-        background: #FFFFFF;
-        border: 1px solid #CBD5E1;
-        color: #475569;
+        background: var(--btn-cancel-bg);
+        border: 1px solid var(--btn-cancel-border);
+        color: var(--btn-cancel-text);
     }
 
     .btn-cancel:hover {
-        background: #F8FAFC;
-        border-color: #94A3B8;
-        color: #0F172A;
+        background: var(--btn-cancel-hover-bg);
+        border-color: var(--btn-cancel-hover-border);
+        color: var(--btn-cancel-hover-text);
     }
 
     @media(max-width: 576px) {
@@ -181,8 +237,8 @@
                         <i class="bi bi-patch-question-fill"></i>
                     </div>
                     <div>
-                        <h4 class="mb-1 fw-bold text-dark" style="letter-spacing: -0.5px;">Tambah Pertanyaan</h4>
-                        <p class="text-muted mb-0" style="font-size: 13.5px;">Tambahkan instrumen kuesioner baru ke dalam sistem DASS-42.</p>
+                        <h4 class="mb-1 fw-bold text-adaptive" style="letter-spacing: -0.5px;">Tambah Pertanyaan</h4>
+                        <p class="text-adaptive-muted mb-0" style="font-size: 13.5px;">Tambahkan instrumen kuesioner baru ke dalam sistem DASS-42.</p>
                     </div>
                 </div>
                 
@@ -233,7 +289,7 @@
                         </div>
                         
                         <!-- Action Buttons -->
-                        <div class="d-flex justify-content-between action-buttons border-top pt-4 mt-2">
+                        <div class="d-flex justify-content-between action-buttons border-top pt-4 mt-2" style="border-color: var(--border-divider) !important;">
                             <a href="{{ route('admin.questions.index') }}" class="text-decoration-none btn-action btn-cancel">
                                 <i class="bi bi-arrow-left me-2"></i> Kembali
                             </a>
