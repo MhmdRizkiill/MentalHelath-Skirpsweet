@@ -4,19 +4,95 @@
 
 <style>
     /* ===========================
+        VARIABEL TEMA FORM ADMIN
+    =========================== */
+    :root {
+        --card-bg: #FFFFFF;
+        --card-border: rgba(226, 232, 240, 0.8);
+        --card-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05);
+        
+        --header-bg: #F8FAFC;
+        --header-border: #F1F5F9;
+        
+        --text-main: #1E293B;
+        --text-label: #334155;
+        --text-muted: #64748B;
+        --text-placeholder: #94A3B8;
+        
+        --icon-box-bg: rgba(79, 70, 229, 0.1);
+        --icon-box-color: #4F46E5;
+        
+        --input-bg: #FFFFFF;
+        --input-border: #CBD5E1;
+        --input-focus-border: #4F46E5;
+        --input-focus-shadow: rgba(79, 70, 229, 0.1);
+        
+        --info-box-bg: rgba(79, 70, 229, 0.05);
+        --info-box-border: rgba(79, 70, 229, 0.3);
+        
+        --btn-cancel-bg: #FFFFFF;
+        --btn-cancel-border: #CBD5E1;
+        --btn-cancel-text: #475569;
+        --btn-cancel-hover-bg: #F8FAFC;
+        --btn-cancel-hover-border: #94A3B8;
+        --btn-cancel-hover-text: #0F172A;
+        
+        --border-color: #E2E8F0;
+    }
+
+    html.dark, body.dark-mode, [data-bs-theme="dark"] {
+        --card-bg: #1e293b;
+        --card-border: rgba(255, 255, 255, 0.1);
+        --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+        
+        --header-bg: #0f172a;
+        --header-border: rgba(255, 255, 255, 0.05);
+        
+        --text-main: #f8fafc;
+        --text-label: #e2e8f0;
+        --text-muted: #94a3b8;
+        --text-placeholder: #64748b;
+        
+        --icon-box-bg: rgba(99, 102, 241, 0.15);
+        --icon-box-color: #818cf8;
+        
+        --input-bg: #0f172a;
+        --input-border: #475569;
+        --input-focus-border: #818cf8;
+        --input-focus-shadow: rgba(129, 140, 248, 0.15);
+        
+        --info-box-bg: rgba(99, 102, 241, 0.05);
+        --info-box-border: rgba(99, 102, 241, 0.3);
+        
+        --btn-cancel-bg: #1e293b;
+        --btn-cancel-border: #475569;
+        --btn-cancel-text: #cbd5e1;
+        --btn-cancel-hover-bg: #0f172a;
+        --btn-cancel-hover-border: #64748b;
+        --btn-cancel-hover-text: #f8fafc;
+        
+        --border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Helper Classes */
+    .text-adaptive { color: var(--text-main) !important; }
+    .text-adaptive-muted { color: var(--text-muted) !important; }
+    .border-adaptive { border-color: var(--border-color) !important; }
+
+    /* ===========================
         CUSTOM STYLE FORM ADMIN
     =========================== */
     .admin-form-card {
-        border: 1px solid rgba(226, 232, 240, 0.8);
+        border: 1px solid var(--card-border);
         border-radius: 20px;
-        background: #FFFFFF;
-        box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05);
+        background: var(--card-bg);
+        box-shadow: var(--card-shadow);
         overflow: hidden;
     }
 
     .admin-form-header {
-        background: #F8FAFC;
-        border-bottom: 1px solid #F1F5F9;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--header-border);
         padding: 24px 30px;
         display: flex;
         align-items: center;
@@ -25,8 +101,8 @@
     .header-icon-box {
         width: 48px;
         height: 48px;
-        background: rgba(79, 70, 229, 0.1);
-        color: #4F46E5;
+        background: var(--icon-box-bg);
+        color: var(--icon-box-color);
         border-radius: 12px;
         display: flex;
         align-items: center;
@@ -37,29 +113,29 @@
 
     .form-label {
         font-weight: 600;
-        color: #334155;
+        color: var(--text-label);
         font-size: 14px;
         margin-bottom: 8px;
     }
 
     /* Input Group Styling */
     .input-group {
-        border: 1px solid #CBD5E1;
+        border: 1px solid var(--input-border);
         border-radius: 14px;
-        background: #FFFFFF;
+        background: var(--input-bg);
         transition: all 0.3s ease;
         overflow: hidden;
     }
 
     .input-group:focus-within {
-        border-color: #4F46E5;
-        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        border-color: var(--input-focus-border);
+        box-shadow: 0 0 0 4px var(--input-focus-shadow);
     }
 
     .input-group-text {
         background: transparent;
         border: none;
-        color: #94A3B8;
+        color: var(--text-placeholder);
         padding-left: 16px;
         padding-right: 10px;
     }
@@ -70,7 +146,7 @@
         height: 52px;
         padding-left: 6px;
         font-size: 14.5px;
-        color: #1E293B;
+        color: var(--text-main);
         background: transparent;
     }
 
@@ -78,10 +154,11 @@
         background: transparent;
         box-shadow: none;
         border: none;
+        color: var(--text-main);
     }
 
     .form-control::placeholder {
-        color: #94A3B8;
+        color: var(--text-placeholder);
         font-size: 14px;
     }
 
@@ -95,8 +172,8 @@
 
     /* Custom Password Info Box */
     .password-info-box {
-        background: rgba(79, 70, 229, 0.05);
-        border: 1px dashed rgba(79, 70, 229, 0.3);
+        background: var(--info-box-bg);
+        border: 1px dashed var(--info-box-border);
         border-radius: 12px;
         padding: 16px 20px;
         display: flex;
@@ -133,15 +210,15 @@
     }
 
     .btn-cancel {
-        background: #FFFFFF;
-        border: 1px solid #CBD5E1;
-        color: #475569;
+        background: var(--btn-cancel-bg);
+        border: 1px solid var(--btn-cancel-border);
+        color: var(--btn-cancel-text);
     }
 
     .btn-cancel:hover {
-        background: #F8FAFC;
-        border-color: #94A3B8;
-        color: #0F172A;
+        background: var(--btn-cancel-hover-bg);
+        border-color: var(--btn-cancel-hover-border);
+        color: var(--btn-cancel-hover-text);
     }
 
     @media(max-width: 576px) {
@@ -168,8 +245,8 @@
                         <i class="bi bi-person-gear"></i>
                     </div>
                     <div>
-                        <h4 class="mb-1 fw-bold text-dark" style="letter-spacing: -0.5px;">Edit Akun Mahasiswa</h4>
-                        <p class="text-muted mb-0" style="font-size: 13.5px;">Perbarui data username atau atur ulang password akun anonim.</p>
+                        <h4 class="mb-1 fw-bold text-adaptive" style="letter-spacing: -0.5px;">Edit Akun Mahasiswa</h4>
+                        <p class="text-adaptive-muted mb-0" style="font-size: 13.5px;">Perbarui data username atau atur ulang password akun anonim.</p>
                     </div>
                 </div>
                 
@@ -200,14 +277,14 @@
                         <div class="password-info-box">
                             <i class="bi bi-info-circle text-primary fs-4 me-3"></i>
                             <div>
-                                <h6 class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Reset Password?</h6>
-                                <p class="text-muted mb-0" style="font-size: 13px;">Kosongkan kolom password di bawah ini jika Anda <strong>tidak ingin</strong> mengubah password mahasiswa saat ini.</p>
+                                <h6 class="fw-bold text-adaptive mb-1" style="font-size: 13.5px;">Reset Password?</h6>
+                                <p class="text-adaptive-muted mb-0" style="font-size: 13px;">Kosongkan kolom password di bawah ini jika Anda <strong class="text-adaptive">tidak ingin</strong> mengubah password mahasiswa saat ini.</p>
                             </div>
                         </div>
                         
                         <div class="row g-4 mb-5">
                             <div class="col-md-6">
-                                <label for="password" class="form-label">Password Baru <span class="text-muted fw-normal">(Opsional)</span></label>
+                                <label for="password" class="form-label">Password Baru <span class="text-adaptive-muted fw-normal">(Opsional)</span></label>
                                 <div class="input-group @error('password') is-invalid-group @enderror">
                                     <span class="input-group-text">
                                         <i class="bi bi-unlock"></i>
@@ -238,7 +315,7 @@
                             </div>
                         </div>
                         
-                        <div class="d-flex justify-content-between action-buttons border-top pt-4 mt-2">
+                        <div class="d-flex justify-content-between action-buttons pt-4 mt-2 border-top border-adaptive">
                             <a href="{{ route('admin.users.index') }}" class="text-decoration-none btn-action btn-cancel">
                                 <i class="bi bi-arrow-left me-2"></i> Kembali
                             </a>
