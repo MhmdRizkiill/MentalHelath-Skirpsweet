@@ -4,6 +4,37 @@
 
 <style>
     /* ===========================
+        VARIABEL TEMA DASHBOARD
+    =========================== */
+    :root {
+        --admin-bg-card: #FFFFFF;
+        --admin-border: rgba(226, 232, 240, 1);
+        --admin-text-main: #334155;
+        --admin-text-muted: #64748B;
+        --admin-bg-header: #FFFFFF;
+        --admin-bg-hover: #F8FAFC;
+        --admin-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
+        --admin-btn-light-bg: #f8fafc;
+        --admin-btn-light-border: #e2e8f0;
+    }
+
+    html.dark, body.dark-mode, [data-bs-theme="dark"] {
+        --admin-bg-card: #1e293b;
+        --admin-border: rgba(255, 255, 255, 0.1);
+        --admin-text-main: #f8fafc;
+        --admin-text-muted: #94a3b8;
+        --admin-bg-header: #1e293b;
+        --admin-bg-hover: #334155;
+        --admin-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        --admin-btn-light-bg: #334155;
+        --admin-btn-light-border: #475569;
+    }
+
+    /* Helper Classes */
+    .text-adaptive { color: var(--admin-text-main) !important; }
+    .text-adaptive-muted { color: var(--admin-text-muted) !important; }
+
+    /* ===========================
         CUSTOM STYLE ADMIN DASHBOARD
     =========================== */
     .admin-header {
@@ -12,10 +43,10 @@
 
     /* Kartu Ringkasan */
     .stat-card {
-        border: 1px solid rgba(226, 232, 240, 0.8);
+        border: 1px solid var(--admin-border);
         border-radius: 18px;
-        background: #FFFFFF;
-        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
+        background: var(--admin-bg-card);
+        box-shadow: var(--admin-shadow);
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         overflow: hidden;
         position: relative;
@@ -23,7 +54,7 @@
 
     .stat-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 12px 25px rgba(15, 23, 42, 0.06);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
     }
 
     .stat-icon-wrapper {
@@ -36,48 +67,60 @@
         font-size: 28px;
     }
 
-    .bg-icon-primary { background: rgba(59, 130, 246, 0.1); color: #3B82F6; }
-    .bg-icon-success { background: rgba(16, 185, 129, 0.1); color: #10B981; }
-    .bg-icon-warning { background: rgba(79, 70, 229, 0.1); color: #4F46E5; }
+    .bg-icon-primary { background: rgba(59, 130, 246, 0.15); color: #3B82F6; }
+    .bg-icon-success { background: rgba(16, 185, 129, 0.15); color: #10B981; }
+    .bg-icon-warning { background: rgba(79, 70, 229, 0.15); color: #6366f1; }
 
     /* Panel Dashboard umum */
     .dashboard-panel {
-        border: 1px solid rgba(226, 232, 240, 0.8);
+        border: 1px solid var(--admin-border);
         border-radius: 20px;
-        background: #FFFFFF;
-        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
+        background: var(--admin-bg-card);
+        box-shadow: var(--admin-shadow);
         margin-bottom: 24px;
     }
 
     .panel-header {
-        background: #FFFFFF;
-        border-bottom: 1px solid #F1F5F9;
+        background: var(--admin-bg-header);
+        border-bottom: 1px solid var(--admin-border);
         padding: 20px 24px;
         border-radius: 20px 20px 0 0;
+    }
+
+    .btn-adaptive-light {
+        background-color: var(--admin-btn-light-bg);
+        border-color: var(--admin-btn-light-border);
+        color: var(--admin-text-main);
+    }
+    
+    .btn-adaptive-light:hover {
+        background-color: var(--admin-bg-hover);
+        color: var(--admin-text-main);
     }
 
     /* Tabel Modern */
     .custom-table {
         margin-bottom: 0;
+        color: var(--admin-text-main);
     }
 
     .custom-table thead th {
-        background: #F8FAFC;
-        color: #64748B;
+        background: var(--admin-bg-hover);
+        color: var(--admin-text-muted);
         font-size: 12px;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         padding: 16px 20px;
-        border-bottom: 1px solid #E2E8F0;
+        border-bottom: 1px solid var(--admin-border);
         border-top: none;
     }
 
     .custom-table tbody td {
         padding: 16px 20px;
-        color: #334155;
+        color: var(--admin-text-main);
         font-size: 14.5px;
-        border-bottom: 1px solid #F1F5F9;
+        border-bottom: 1px solid var(--admin-border);
         vertical-align: middle;
     }
 
@@ -86,7 +129,7 @@
     }
 
     .custom-table tbody tr:hover {
-        background-color: #F8FAFC;
+        background-color: var(--admin-bg-hover);
     }
 
     /* Modifikasi Label Badge */
@@ -101,8 +144,8 @@
 
 <div class="row mb-4 align-items-center">
     <div class="col-12">
-        <h3 class="fw-bold text-dark admin-header mb-1">Dashboard Admin</h3>
-        <p class="text-muted mb-0">
+        <h3 class="fw-bold text-adaptive admin-header mb-1">Dashboard Admin</h3>
+        <p class="text-adaptive-muted mb-0">
             Selamat datang, <span class="fw-semibold text-primary">{{ Auth::user()->username }}</span>. Berikut adalah ringkasan sistem saat ini.
         </p>
     </div>
@@ -115,8 +158,8 @@
                 <i class="bi bi-people-fill"></i>
             </div>
             <div>
-                <p class="text-muted fw-semibold text-uppercase mb-1" style="font-size: 12px; letter-spacing: 0.5px;">Total Mahasiswa</p>
-                <h2 class="fw-bold text-dark mb-0" style="letter-spacing: -1px;">{{ $totalMahasiswa ?? 0 }}</h2>
+                <p class="text-adaptive-muted fw-semibold text-uppercase mb-1" style="font-size: 12px; letter-spacing: 0.5px;">Total Mahasiswa</p>
+                <h2 class="fw-bold text-adaptive mb-0" style="letter-spacing: -1px;">{{ $totalMahasiswa ?? 0 }}</h2>
             </div>
         </div>
     </div>
@@ -127,8 +170,8 @@
                 <i class="bi bi-clipboard2-data-fill"></i>
             </div>
             <div>
-                <p class="text-muted fw-semibold text-uppercase mb-1" style="font-size: 12px; letter-spacing: 0.5px;">Total Skrining</p>
-                <h2 class="fw-bold text-dark mb-0" style="letter-spacing: -1px;">{{ $totalScreening ?? 0 }}</h2>
+                <p class="text-adaptive-muted fw-semibold text-uppercase mb-1" style="font-size: 12px; letter-spacing: 0.5px;">Total Skrining</p>
+                <h2 class="fw-bold text-adaptive mb-0" style="letter-spacing: -1px;">{{ $totalScreening ?? 0 }}</h2>
             </div>
         </div>
     </div>
@@ -139,8 +182,8 @@
                 <i class="bi bi-patch-question-fill"></i>
             </div>
             <div>
-                <p class="text-muted fw-semibold text-uppercase mb-1" style="font-size: 12px; letter-spacing: 0.5px;">Pertanyaan DASS-42</p>
-                <h2 class="fw-bold text-dark mb-0" style="letter-spacing: -1px;">{{ $totalQuestion ?? 42 }}</h2>
+                <p class="text-adaptive-muted fw-semibold text-uppercase mb-1" style="font-size: 12px; letter-spacing: 0.5px;">Pertanyaan DASS-42</p>
+                <h2 class="fw-bold text-adaptive mb-0" style="letter-spacing: -1px;">{{ $totalQuestion ?? 42 }}</h2>
             </div>
         </div>
     </div>
@@ -154,8 +197,8 @@
                     <i class="bi bi-bar-chart-line text-primary fs-5"></i>
                 </div>
                 <div>
-                    <h6 class="text-dark fw-bold mb-0">Distribusi Kondisi Mental Mahasiswa</h6>
-                    <small class="text-muted">Akumulasi keseluruhan data skrining DASS-42</small>
+                    <h6 class="text-adaptive fw-bold mb-0">Distribusi Kondisi Mental Mahasiswa</h6>
+                    <small class="text-adaptive-muted">Akumulasi keseluruhan data skrining DASS-42</small>
                 </div>
             </div>
             <div class="card-body p-4">
@@ -175,9 +218,9 @@
                     <div class="bg-primary bg-opacity-10 p-2 rounded-lg me-3">
                         <i class="bi bi-clock-history text-primary fs-5"></i>
                     </div>
-                    <h6 class="text-dark fw-bold mb-0">5 Riwayat Skrining Terbaru</h6>
+                    <h6 class="text-adaptive fw-bold mb-0">5 Riwayat Skrining Terbaru</h6>
                 </div>
-                <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-light border shadow-sm rounded-pill px-3">
+                <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-adaptive-light border shadow-sm rounded-pill px-3">
                     <i class="bi bi-arrow-repeat me-1"></i> Segarkan
                 </a>
             </div>
@@ -208,41 +251,41 @@
                             @forelse($recentScreenings as $scr)
                             <tr>
                                 <td class="align-middle text-start ps-4">
-                                    <div class="fw-semibold text-dark">{{ $scr->created_at->format('d M Y') }}</div>
-                                    <div class="text-muted small"><i class="bi bi-clock me-1"></i> {{ $scr->created_at->format('H:i') }} WIB</div>
+                                    <div class="fw-semibold text-adaptive">{{ $scr->created_at->format('d M Y') }}</div>
+                                    <div class="text-adaptive-muted small"><i class="bi bi-clock me-1"></i> {{ $scr->created_at->format('H:i') }} WIB</div>
                                 </td>
                                 <td class="align-middle text-start">
                                     <div class="fw-bold text-primary">{{ $scr->user->username ?? 'Akun Dihapus' }}</div>
-                                    <div class="text-muted small"><i class="bi bi-person-badge"></i> Pengguna Anonim</div>
+                                    <div class="text-adaptive-muted small"><i class="bi bi-person-badge"></i> Pengguna Anonim</div>
                                 </td>
                                 
                                 <td class="align-middle text-center">
                                     <span class="badge badge-modern rounded-pill mb-1" style="{{ $badgeColors[$scr->status_depresi ?? ''] ?? 'background-color: #64748B; color: white;' }}">
                                         {{ $scr->status_depresi ?? '-' }}
                                     </span><br>
-                                    <small class="text-muted fw-medium">Skor: {{ $scr->score_depresi ?? 0 }}</small>
+                                    <small class="text-adaptive-muted fw-medium">Skor: {{ $scr->score_depresi ?? 0 }}</small>
                                 </td>
                                 
                                 <td class="align-middle text-center">
                                     <span class="badge badge-modern rounded-pill mb-1" style="{{ $badgeColors[$scr->status_kecemasan ?? ''] ?? 'background-color: #64748B; color: white;' }}">
                                         {{ $scr->status_kecemasan ?? '-' }}
                                     </span><br>
-                                    <small class="text-muted fw-medium">Skor: {{ $scr->score_kecemasan ?? 0 }}</small>
+                                    <small class="text-adaptive-muted fw-medium">Skor: {{ $scr->score_kecemasan ?? 0 }}</small>
                                 </td>
 
                                 <td class="align-middle text-center">
                                     <span class="badge badge-modern rounded-pill mb-1" style="{{ $badgeColors[$scr->status_stres ?? ''] ?? 'background-color: #64748B; color: white;' }}">
                                         {{ $scr->status_stres ?? '-' }}
                                     </span><br>
-                                    <small class="text-muted fw-medium">Skor: {{ $scr->score_stres ?? 0 }}</small>
+                                    <small class="text-adaptive-muted fw-medium">Skor: {{ $scr->score_stres ?? 0 }}</small>
                                 </td>
                             </tr>
                             @empty
                             <tr>
                                 <td colspan="5" class="text-center py-5">
                                     <div class="d-flex flex-column align-items-center justify-content-center opacity-50">
-                                        <i class="bi bi-inbox fs-1 text-muted mb-3"></i>
-                                        <span class="text-muted fw-medium">Belum ada data riwayat skrining mahasiswa.</span>
+                                        <i class="bi bi-inbox fs-1 text-adaptive-muted mb-3"></i>
+                                        <span class="text-adaptive-muted fw-medium">Belum ada data riwayat skrining mahasiswa.</span>
                                     </div>
                                 </td>
                             </tr>
@@ -268,13 +311,16 @@
         const dataKecemasan = {!! json_encode($chartKecemasan ?? [0,0,0,0,0]) !!};
         const dataStres = {!! json_encode($chartStres ?? [0,0,0,0,0]) !!};
         
-        // Cek jika belum ada data sama sekali (semua 0)
         const totalData = [...dataDepresi, ...dataKecemasan, ...dataStres].reduce((a, b) => a + b, 0);
         
         if (totalData === 0) {
-            canvas.parentElement.innerHTML = '<div class="d-flex flex-column align-items-center justify-content-center h-100 opacity-50"><i class="bi bi-bar-chart-steps fs-1 text-muted mb-2"></i><p class="text-muted fw-medium">Belum ada data skrining untuk ditampilkan grafik.</p></div>';
+            canvas.parentElement.innerHTML = '<div class="d-flex flex-column align-items-center justify-content-center h-100 opacity-50"><i class="bi bi-bar-chart-steps fs-1 text-adaptive-muted mb-2"></i><p class="text-adaptive-muted fw-medium">Belum ada data skrining untuk ditampilkan grafik.</p></div>';
             return;
         }
+
+        // Ambil root style untuk warna grid adaptif (menggunakan warna netral abu-abu tembus pandang)
+        const gridColor = 'rgba(148, 163, 184, 0.2)'; 
+        const textColor = '#94a3b8'; // Abu-abu yang cocok di mode gelap maupun terang
 
         new Chart(ctx, {
             type: 'bar', 
@@ -284,21 +330,21 @@
                     {
                         label: 'Depresi',
                         data: dataDepresi,
-                        backgroundColor: '#3B82F6', // Biru
+                        backgroundColor: '#3B82F6',
                         borderRadius: 6,
                         borderSkipped: false
                     },
                     {
                         label: 'Kecemasan',
                         data: dataKecemasan,
-                        backgroundColor: '#EAB308', // Kuning
+                        backgroundColor: '#EAB308',
                         borderRadius: 6,
                         borderSkipped: false
                     },
                     {
                         label: 'Stres',
                         data: dataStres,
-                        backgroundColor: '#EF4444', // Merah
+                        backgroundColor: '#EF4444',
                         borderRadius: 6,
                         borderSkipped: false
                     }
@@ -316,20 +362,24 @@
                         beginAtZero: true,
                         ticks: { 
                             stepSize: 1,
+                            color: textColor,
                             font: { family: "'Plus Jakarta Sans', sans-serif" }
                         },
                         grid: {
-                            color: 'rgba(226, 232, 240, 0.6)',
+                            color: gridColor,
                             drawBorder: false,
                         },
-                        title: { display: true, text: 'Jumlah Mahasiswa', font: { weight: '600', family: "'Plus Jakarta Sans', sans-serif" }, color: '#64748B' }
+                        title: { display: true, text: 'Jumlah Mahasiswa', font: { weight: '600', family: "'Plus Jakarta Sans', sans-serif" }, color: textColor }
                     },
                     x: {
                         grid: {
                             display: false,
                             drawBorder: false,
                         },
-                        ticks: { font: { family: "'Plus Jakarta Sans', sans-serif", weight: '500' } }
+                        ticks: { 
+                            color: textColor,
+                            font: { family: "'Plus Jakarta Sans', sans-serif", weight: '500' } 
+                        }
                     }
                 },
                 plugins: {
@@ -338,11 +388,14 @@
                         labels: {
                             usePointStyle: true,
                             padding: 20,
+                            color: textColor,
                             font: { family: "'Plus Jakarta Sans', sans-serif", weight: '600' }
                         }
                     },
                     tooltip: {
                         backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
                         titleFont: { family: "'Plus Jakarta Sans', sans-serif", size: 13 },
                         bodyFont: { family: "'Plus Jakarta Sans', sans-serif", size: 13 },
                         padding: 12,
